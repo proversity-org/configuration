@@ -9,7 +9,7 @@
 #
 #
 # Tasks for role edx-notes-api
-# 
+#
 # Overview:
 #
 # Role for installing the edx-notes-api Django application, https://github.com/edx/edx-notes-api.
@@ -36,7 +36,7 @@
 #     nginx_sites:
 #       - edx-notes-api
 #   - aws
-#   - edx-notes-api 
+#   - edx-notes-api
 #   - role: datadog
 #     when: COMMON_ENABLE_DATADOG
 #   - role: splunkforwarder
@@ -58,8 +58,11 @@
 
 - name: Migrate
   shell: >
-    DB_MIGRATION_USER='{{ COMMON_MYSQL_MIGRATE_USER }}'
-    DB_MIGRATION_PASS='{{ COMMON_MYSQL_MIGRATE_PASS }}'
+    chdir={{ edx_notes_api_code_dir }}
+    DB_MIGRATION_HOST={{ EDX_NOTES_API_MYSQL_HOST }}
+    DB_MIGRATION_USER={{ COMMON_MYSQL_MIGRATE_USER }}
+    DB_MIGRATION_PASS={{ COMMON_MYSQL_MIGRATE_PASS }}
+    DB_MIGRATION_NAME={{ EDX_NOTES_API_DATASTORE_NAME }}
     {{ edx_notes_api_home }}/venvs/{{ edx_notes_api_service_name }}/bin/python {{ edx_notes_api_manage }} migrate --noinput --settings="notesserver.settings.yaml_config"
   args:
     chdir: "{{ edx_notes_api_code_dir }}"
@@ -94,7 +97,6 @@
     - install
     - install:configuration
 
-
 - name: Write supervisord config
   template:
     src: "edx/app/supervisor/conf.d.available/edx_notes_api.conf.j2"
@@ -116,7 +118,6 @@
   tags:
     - install
     - install:configuration
-
 
 - name: Enable supervisor script
   file:
