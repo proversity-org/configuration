@@ -10,8 +10,9 @@
   roles:
     - aws
     - mysql
-    - edxlocal
     - memcache
+    - role: edxlocal
+      when: EDXAPP_MYSQL_HOST == 'localhost'
     - analytics_api
     - analytics_pipeline
     - role: nginx
