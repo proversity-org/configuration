@@ -8,6 +8,7 @@
     CLUSTER_NAME: 'analytics-api'
     migrate_db: 'yes'
   roles:
+    - { role: swapfile, SWAPFILE_SIZE: "2GB" }
     - aws
     - role: nginx
       nginx_sites:
