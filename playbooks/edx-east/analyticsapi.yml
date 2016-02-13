@@ -6,6 +6,7 @@
     ENABLE_DATADOG: False
     ENABLE_NEWRELIC: False
     CLUSTER_NAME: 'analytics-api'
+    migrate_db: 'yes'
   roles:
     - aws
     - role: nginx
