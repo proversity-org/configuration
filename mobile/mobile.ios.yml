@@ -1,0 +1,22 @@
+---
+  PLATFORM_NAME: "Proversity"
+  ENVIRONMENT_DISPLAY_NAME: "Proversity"
+  API_HOST_URL: "http://staging.learn.proversity.io"
+  PLATFORM_DESTINATION_NAME: "staging.learn.proversity.io"
+  FEEDBACK_EMAIL_ADDRESS: "feedback@proversity.io"
+  OAUTH_CLIENT_ID: "a1j1hfwRQ4uxcXqeYta5zM3j90V9310m"
+  SOCIAL_SHARING:
+    ENABLED: true
+  COURSE_ENROLLMENT:
+    ENABLED: true
+    COURSE_SEARCH_URL: "http://staging.learn.proversity.io/api/courses/v1/courses/"
+    EXTERNAL_COURSE_SEARCH_URL: "http://staging.learn.proversity.io/api/courses/v1/courses/"
+    COURSE_INFO_URL_TEMPLATE: "http://staging.learn.proversity.io/api/courses/v1/courses/{path_id}"
+  SPEED_TEST_ENABLED: false
+  #ZERO_RATING:
+  #  ENABLED: true
+  #  CARRIERS: ["63514"]
+  #  WHITE_LIST_OF_DOMAINS: ["52.53.238.79","localhost","webview.edx.org","courses.edx.org","edx.org","cdn.segment.io","ssl.google-analytics.com","api.segment.io","e.crashyltics.com","settings.crashlytics.com","mobile-collector.newrelic.com","www.google-analytics.com","android.clients.google.com","play.googleapis.com","cdn.optimizely.com"]
+  #SEGMENT:
+  #  SEGMENT_IO_WRITE_KEY: 'd3q35zMPdifpnVDPnnwmTukmfmyJVJh9'
+  #  ENABLED: true
