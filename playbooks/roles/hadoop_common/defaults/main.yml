@@ -9,7 +9,7 @@
 #
 ##
 # Defaults for role hadoop_common
-# 
+#
 
 HADOOP_COMMON_VERSION: 2.3.0
 HADOOP_COMMON_USER_HOME: "{{ COMMON_APP_DIR }}/hadoop"
@@ -24,6 +24,17 @@ HADOOP_COMMON_PROTOBUF_VERSION: 2.5.0
 HADOOP_COMMON_SERVICES_DIR: "{{ HADOOP_COMMON_USER_HOME }}/services.d"
 HADOOP_COMMON_SERVICE_HEAP_MAX: 256
 HADOOP_COMMON_TOOL_HEAP_MAX: 128
+
+# https://hadoop.apache.org/docs/r2.4.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml
+yarn_nodemanager_resource_memory_mb: 8192
+yarn_nodemanager_vmem_pmem_ratio: 2.1
+
+# https://hadoop.apache.org/docs/r2.7.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml
+mapreduce_map_memory_mb: 2048
+mapreduce_reduce_memory_mb: 4096
+mapreduce_task_io_sort_mb: 1024
+mapreduce_task_io_sort_factor: 100
+mapreduce_reduce_shuffle_parallelcopies: 50
 
 hadoop_common_role_name: hadoop_common
 hadoop_common_user: hadoop
