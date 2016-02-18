@@ -80,8 +80,6 @@ edx_notes_api_service_config:
       URL: "{{ EDX_NOTES_API_ELASTICSEARCH_URL }}"
       INDEX_NAME: '{{ EDX_NOTES_API_DATASTORE_NAME }}'
   DISABLE_TOKEN_CHECK: "{{ EDX_NOTES_API_DISABLE_TOKEN_CHECK }}"
-  EDXNOTES_CONFIG_ROOT: "{{ COMMON_CFG_DIR }}"
-  CONFIG_FILE: "{{ edx_notes_api_service_name }}.yml"
 
 #
 # vars are namespace with the module name.
