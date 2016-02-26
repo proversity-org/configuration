@@ -13,7 +13,7 @@
   </property>
   <property>
     <name>mapreduce.map.java.opts</name>
-    <value>-Xmx{{ mapreduce_map_memory_mb }}M</value>
+    <value>{{ mapreduce_map_java_opts }}</value>
   </property>
 
   <property>
@@ -22,7 +22,7 @@
   </property>
   <property>
     <name>mapreduce.reduce.java.opts</name>
-    <value>-Xmx{{ mapreduce_reduce_memory_mb }}M</value>
+    <value>{{ mapreduce_reduce_java_opts }}</value>
   </property>
 
   <property>
