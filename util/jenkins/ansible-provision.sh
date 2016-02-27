@@ -37,7 +37,13 @@ run_ansible() {
 }
 
 # This DATE_TIME will be used as instance launch time tag
-TERMINATION_DATE_TIME=`date +"%m-%d-%Y %T" --date="-7 days ago"`
+if [[ ! -n ${sandbox_life//[0-9]/} ]]  && [[ ${sandbox_life} -le 30 ]]; then
+    TERMINATION_DATE_TIME=`date +"%m-%d-%Y %T" --date "${sandbox_life=7} days"`
+else
+   echo "Please enter the valid value for the sandbox_life(between 1 to 30)"
+   exit 1
+fi
+
 
 if [[ -z $BUILD_USER ]]; then
     BUILD_USER=jenkins
@@ -103,6 +109,10 @@ if [[ -z $name_tag ]]; then
   name_tag=${github_username}-${environment}
 fi
 
+if [[ -z $sandbox_platform_name ]]; then
+    sandbox_platform_name=$dns_name
+fi
+
 if [[ -z $ami ]]; then
   if [[ $server_type == "full_edx_installation" ]]; then
     ami="ami-c8093ea2"
@@ -162,6 +172,7 @@ configuration_version: $configuration_version
 edx_ansible_source_repo: ${configuration_source_repo}
 edx_platform_repo: ${edx_platform_repo}
 
+EDXAPP_PLATFORM_NAME: $sandbox_platform_name
 EDXAPP_COMPREHENSIVE_THEME_DIR: $edxapp_comprehensive_theme_dir
 
 EDXAPP_STATIC_URL_BASE: $static_url_base

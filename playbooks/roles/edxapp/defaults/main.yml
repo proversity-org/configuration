@@ -139,6 +139,9 @@ EDXAPP_ENABLE_EDXNOTES: false
 EDXAPP_ENABLE_CREDIT_ELIGIBILITY: false
 EDXAPP_ENABLE_CREDIT_API: false
 
+# Settings for enabling and JWT auth for DRF API's
+EDXAPP_ENABLE_JWT_AUTH: false
+
 EDXAPP_MODULESTORE_MAPPINGS:
     'preview\.': 'draft-preferred'
 
@@ -194,6 +197,7 @@ EDXAPP_FEATURES:
   ENABLE_CREDIT_API: "{{ EDXAPP_ENABLE_CREDIT_API }}"
   ENABLE_CREDIT_ELIGIBILITY: "{{ EDXAPP_ENABLE_CREDIT_ELIGIBILITY }}"
   ENABLE_SPECIAL_EXAMS: false
+  ENABLE_JWT_AUTH: "{{ EDXAPP_ENABLE_JWT_AUTH }}"
 
 EDXAPP_BOOK_URL: ""
 # This needs to be set to localhost
@@ -311,8 +315,6 @@ EDXAPP_AUTOMATOR_AUTHORIZED_KEYS: []
 EDXAPP_AUTOMATOR_SUDO_CMDS:
 - "ALL=({{ common_web_user }})  NOPASSWD:SETENV:{{ COMMON_BIN_DIR }}/python.edxapp {{ COMMON_BIN_DIR }}/manage.edxapp lms migrate *"
 - "ALL=({{ common_web_user }})  NOPASSWD:SETENV:{{ COMMON_BIN_DIR }}/python.edxapp {{ COMMON_BIN_DIR }}/manage.edxapp cms migrate *"
-- "ALL=({{ common_web_user }})  NOPASSWD:SETENV:{{ COMMON_BIN_DIR }}/python.edxapp {{ COMMON_BIN_DIR }}/manage.edxapp lms syncdb *"
-- "ALL=({{ common_web_user }})  NOPASSWD:SETENV:{{ COMMON_BIN_DIR }}/python.edxapp {{ COMMON_BIN_DIR }}/manage.edxapp cms syncdb *"
 - "ALL=({{ common_web_user }})  NOPASSWD:SETENV:{{ COMMON_BIN_DIR }}/python.edxapp {{ COMMON_BIN_DIR }}/manage.edxapp lms seed_permissions_roles *"
 - "ALL=({{ common_web_user }})  NOPASSWD:SETENV:{{ COMMON_BIN_DIR }}/python.edxapp {{ COMMON_BIN_DIR }}/manage.edxapp lms set_staff *"
 - "ALL=({{ common_web_user }})  NOPASSWD:SETENV:{{ COMMON_BIN_DIR }}/python.edxapp {{ COMMON_BIN_DIR }}/manage.edxapp lms transfer_students *"
@@ -596,7 +598,6 @@ edxapp_aa_command: "{% if EDXAPP_SANDBOX_ENFORCE %}aa-enforce{% else %}aa-compla
 edxapp_helper_scripts:
     - edxapp-migrate
     - edxapp-runserver
-    - edxapp-syncdb
     - edxapp-update-assets
     - edxapp-shell
 
@@ -661,6 +662,9 @@ edxapp_generic_auth_config:  &edxapp_generic_auth
     ADDITIONAL_OPTIONS: "{{ EDXAPP_CONTENTSTORE_ADDITIONAL_OPTS }}"
     DOC_STORE_CONFIG: *edxapp_generic_default_docstore
   DATABASES:
+    # edxapp's edxapp-migrate scripts and the edxapp_migrate play
+    # will ensure that any DB not named read_replica will be migrated
+    # for both the lms and cms.
     read_replica:
       ENGINE: 'django.db.backends.mysql'
       NAME: "{{ EDXAPP_MYSQL_REPLICA_DB_NAME }}"
