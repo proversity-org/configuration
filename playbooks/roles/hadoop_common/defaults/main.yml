@@ -70,11 +70,8 @@ mapreduce_map_memory_mb: 768
 mapreduce_map_java_opts: '-Xmx512M'
 mapreduce_reduce_memory_mb: 1024
 mapreduce_reduce_java_opts: '-Xmx768M'
-mapreduce_task_io_sort_mb: 100
-mapreduce_task_io_sort_factor: 10
-mapreduce_reduce_shuffle_parallelcopies: 5
 
-yarn_app_mapreduce_am_resource_mb: 4096
+yarn_app_mapreduce_am_resource_mb: 1024
 yarn_scheduler_minimum_allocation_mb: 32
 yarn_scheduler_maximum_allocation_mb: 2048
 yarn_nodemanager_resource_memory_mb: 2048
