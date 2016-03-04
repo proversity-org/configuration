@@ -7,22 +7,13 @@
     <value>yarn</value>
   </property>
 
+{% if mapred_site_config is defined %}
+{% for key,value in mapred_site_config %}
   <property>
-    <name>mapreduce.map.memory.mb</name>
-    <value>{{ mapreduce_map_memory_mb }}</value>
+    <name>{{ key }}}</name>
+    <value>{{ value }}</value>
   </property>
-  <property>
-    <name>mapreduce.map.java.opts</name>
-    <value>{{ mapreduce_map_java_opts }}</value>
-  </property>
-
-  <property>
-    <name>mapreduce.reduce.memory.mb</name>
-    <value>{{ mapreduce_reduce_memory_mb }}</value>
-  </property>
-  <property>
-    <name>mapreduce.reduce.java.opts</name>
-    <value>{{ mapreduce_reduce_java_opts }}</value>
-  </property>
+{% endfor %}
+{% endif %}
 
 </configuration>

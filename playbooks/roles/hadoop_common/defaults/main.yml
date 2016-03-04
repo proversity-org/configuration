@@ -65,14 +65,18 @@ hadoop_common_redhat_pkgs: []
 # MapReduce/Yarn memory config (defaults for m1.medium)
 # http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/TaskConfiguration_H2.html
 #
+# mapred_site_config:
+#   mapreduce.map.memory_mb: 768
+#   mapreduce.map.java.opts: '-Xmx512M'
+#   mapreduce.reduce.memory.mb: 1024
+#   mapreduce.reduce.java.opts: '-Xmx768M'
 
-mapreduce_map_memory_mb: 768
-mapreduce_map_java_opts: '-Xmx512M'
-mapreduce_reduce_memory_mb: 1024
-mapreduce_reduce_java_opts: '-Xmx768M'
+# yarn_site_config:
+#   yarn.app.mapreduce.am.resource.mb: 1024
+#   yarn.scheduler.minimum-allocation-mb: 32
+#   yarn.scheduler.maximum-allocation-mb: 2048
+#   yarn.nodemanager.resource.memory-mb: 2048
+#   yarn.nodemanager.vmem-pmem-ratio: 2.1
 
-yarn_app_mapreduce_am_resource_mb: 1024
-yarn_scheduler_minimum_allocation_mb: 32
-yarn_scheduler_maximum_allocation_mb: 2048
-yarn_nodemanager_resource_memory_mb: 2048
-yarn_nodemanager_vmem_pmem_ratio: 2.1
+mapred_site_config: {}
+yarn_site_config: {}
