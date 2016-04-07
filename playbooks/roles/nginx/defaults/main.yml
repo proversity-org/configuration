@@ -112,8 +112,6 @@ NGINX_EDXAPP_ERROR_PAGES:
 
 CMS_HOSTNAME: '~^((stage|prod)-)?studio.*'
 
-NGINX_USER_API_ALLOW_ORIGIN: False
-
 nginx_template_dir: "edx/app/nginx/sites-available"
 
 nginx_xserver_gunicorn_hosts:

@@ -235,9 +235,6 @@ error_page {{ k }} {{ v }};
   }
 
   location /user_api {
-    {% if NGINX_USER_API_ALLOW_ORIGIN -%}
-    add_header Access-Control-Allow-Origin {{ NGINX_USER_API_ALLOW_ORIGIN }};
-    {% endif -%}
     try_files $uri @proxy_to_lms_app;
   }
 
