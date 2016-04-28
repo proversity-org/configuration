@@ -13,8 +13,12 @@ IFS=","
             -h        this
 
     <repo> - must be one of edx-platform, edx-workers, xqueue, cs_comments_service, credentials, xserver, configuration,
+<<<<<<< HEAD
     read-only-certificate-code, edx-analytics-data-api, edx-ora2, insights, ecommerce, course_discovery,
     notifier, video_web_frontend, video_delivery_worker, veda_pipeline_worker, video_encode_worker
+=======
+    read-only-certificate-code, edx-analytics-data-api, edx-ora2, insights, ecommerce, course_discovery, notifier, edx-notes-api
+>>>>>>> add notes to update script
     <version> - can be a commit or tag
 
 EO
@@ -61,11 +65,15 @@ repos_to_cmd["insights"]="$edx_ansible_cmd insights.yml -e 'INSIGHTS_VERSION=$2'
 repos_to_cmd["ecommerce"]="$edx_ansible_cmd ecommerce.yml -e 'ECOMMERCE_VERSION=$2'"
 repos_to_cmd["discovery"]="$edx_ansible_cmd discovery.yml -e 'DISCOVERY_VERSION=$2'"
 repos_to_cmd["notifier"]="$edx_ansible_cmd notifier.yml -e 'NOTIFIER_VERSION=$2'"
+<<<<<<< HEAD
 repos_to_cmd["video_web_frontend"]="$edx_ansible_cmd veda_web_frontend.yml -e 'VEDA_WEB_FRONTEND_VERSION=$2'"
 repos_to_cmd["video_delivery_worker"]="$edx_ansible_cmd veda_delivery_worker.yml -e 'VEDA_DELIVERY_WORKER_VERSION=$2'"
 repos_to_cmd["veda_pipeline_worker"]="$edx_ansible_cmd veda_pipeline_worker.yml -e 'VEDA_PIPELINE_WORKER_VERSION=$2'"
 repos_to_cmd["video_encode_worker"]="$edx_ansible_cmd veda_encode_worker.yml -e 'VEDA_ENCODE_WORKER_VERSION=$2'"
 
+=======
+repos_to_cmd["edx-notes-api"]="$edx_ansible_cmd notes.yml -e 'EDX_NOTES_API_VERSION=$2'"
+>>>>>>> add notes to update script
 
 if [[ -z $1 || -z $2 ]]; then
     echo
