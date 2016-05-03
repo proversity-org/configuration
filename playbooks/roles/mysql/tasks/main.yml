@@ -10,5 +10,7 @@
     name: "{{ item }}"
     install_recommends: yes
     state: present
+  environment:
+    DEBIAN_FRONTEND: "noninteractive"
   with_items: mysql_debian_pkgs
   when: (mysql_56_installed.rc == 1)
