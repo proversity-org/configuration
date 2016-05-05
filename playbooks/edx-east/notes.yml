@@ -5,12 +5,13 @@
   vars:
     ENABLE_DATADOG: False
     ENABLE_NEWRELIC: True
+    migrate_db: 'yes'
   roles:
     - aws
     - role: nginx
       nginx_sites:
         - edx_notes_api
-    - edx_notes_api 
+    - edx_notes_api
     - role: datadog
       when: COMMON_ENABLE_DATADOG
     - role: splunkforwarder
