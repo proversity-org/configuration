@@ -18,7 +18,9 @@ map $http_origin $cors_origin {
 }
 
 server {
-  listen {{ INSIGHTS_NGINX_PORT }} default_server;
+  listen {{ INSIGHTS_NGINX_PORT }};
+
+  server_name {{ INSIGHTS_HOSTNAME }};
 
   {% if NGINX_ENABLE_SSL %}
   listen {{ INSIGHTS_NGINX_SSL_PORT }} ssl;
@@ -73,21 +75,21 @@ location @proxy_to_app {
 
   # Prevent invalid display courseware in IE 10+ with high privacy settings
   add_header P3P '{{ NGINX_P3P_MESSAGE }}';
-  
+
   # Nginx does not support nested condition or or conditions so
   # there is an unfortunate mix of conditonals here.
   {% if NGINX_REDIRECT_TO_HTTPS %}
      {% if NGINX_HTTPS_REDIRECT_STRATEGY == "scheme" %}
   # Redirect http to https over single instance
-  if ($scheme != "https") 
-  { 
+  if ($scheme != "https")
+  {
    set $do_redirect_to_https "true";
   }
 
      {% elif NGINX_HTTPS_REDIRECT_STRATEGY == "forward_for_proto" %}
 
-  # Forward to HTTPS if we're an HTTP request... and the server is behind ELB 
-  if ($http_x_forwarded_proto = "http") 
+  # Forward to HTTPS if we're an HTTP request... and the server is behind ELB
+  if ($http_x_forwarded_proto = "http")
   {
    set $do_redirect_to_https "true";
   }

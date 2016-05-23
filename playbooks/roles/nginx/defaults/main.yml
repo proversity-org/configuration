@@ -111,6 +111,13 @@ NGINX_EDXAPP_ERROR_PAGES:
   "504": "{{ nginx_default_error_page }}"
 
 CMS_HOSTNAME: '~^((stage|prod)-)?studio.*'
+<<<<<<< HEAD
+=======
+ECOMMERCE_HOSTNAME: '~^((stage|prod)-)?ecommerce.*'
+CREDENTIALS_HOSTNAME: '~^((stage|prod)-)?credentials.*'
+INSIGHTS_HOSTNAME: '~^((stage|prod)-)?insights.*'
+ANALYTICS_API_HOSTNAME: '~^((stage|prod)-)?analytics.*'
+>>>>>>> updating insights and analytics api nginx config to handle hostname
 
 nginx_template_dir: "edx/app/nginx/sites-available"
 
