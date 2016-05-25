@@ -113,6 +113,16 @@
     - manage
     - manage:app-users
 
+- name: create elasticsearch learners indices
+  shell: >
+    chdir={{ analytics_api_code_dir }}
+    {{ analytics_api_home }}/venvs/{{ analytics_api_service_name }}/bin/python manage.py create_elasticsearch_learners_indices
+  sudo_user: "{{ analytics_api_user }}"
+  environment: "{{ analytics_api_environment }}"
+  tags:
+    - manage
+    - manage:app-users
+
 - name: write out the supervisor wrapper
   template:
     src: edx/app/analytics_api/analytics_api.sh.j2
