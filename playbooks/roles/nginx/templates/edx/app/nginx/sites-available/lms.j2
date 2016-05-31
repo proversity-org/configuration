@@ -63,21 +63,19 @@ geo $http_x_forwarded_for $embargo {
 server {
   # LMS configuration file for nginx, templated by ansible
 
+  # error pages
   {% if NGINX_EDXAPP_ENABLE_S3_MAINTENANCE %}
-
-  # Do not include a 502 error in NGINX_ERROR_PAGES when
-  # NGINX_EDXAPP_ENABLE_MAINTENANCE is enabled.
-
-  error_page 502 @maintenance;
+  {% for k, v in NGINX_EDXAPP_ERROR_PAGES.iteritems() %}
+  error_page {{ k }} @maintenance;
+  {% endfor %}
 
     {% include "s3_maintenance.j2" %}
 
-  {% endif %}
-
-  # error pages
+  {% else %}
   {% for k, v in NGINX_EDXAPP_ERROR_PAGES.iteritems() %}
-error_page {{ k }} {{ v }};
+  error_page {{ k }} {{ v }};
   {% endfor %}
+  {% endif %}
 
   listen {{ EDXAPP_LMS_NGINX_PORT }} {{ default_site }};
 
