@@ -935,6 +935,7 @@ edxapp_generic_doc_store_config: &edxapp_generic_default_docstore
   connectTimeoutMS: 2000 # default is 20000, I believe raises pymongo.errors.ConnectionFailure
   # Not setting waitQueueTimeoutMS and waitQueueMultiple since pymongo defaults to nobody being allowed to wait
 
+<<<<<<< HEAD
 EDXAPP_LMS_DRAFT_DOC_STORE_CONFIG:
   <<: *edxapp_generic_default_docstore
   read_preference: "{{ EDXAPP_LMS_DRAFT_DOC_STORE_READ_PREFERENCE }}"
@@ -946,6 +947,14 @@ EDXAPP_LMS_SPLIT_DOC_STORE_CONFIG:
 EDXAPP_CMS_DOC_STORE_CONFIG:
   <<: *edxapp_generic_default_docstore
   read_preference: "{{ EDXAPP_MONGO_CMS_READ_PREFERENCE }}"
+=======
+
+EDXAPP_LMS_DRAFT_DOC_STORE_CONFIG: "{{ edxapp_generic_doc_store_config }}"
+
+EDXAPP_LMS_SPLIT_DOC_STORE_CONFIG: "{{ edxapp_generic_doc_store_config }}"
+
+EDXAPP_CMS_DOC_STORE_CONFIG: "{{ edxapp_generic_doc_store_config }}"
+>>>>>>> fix assignment of mongo docstore config
 
 edxapp_databases:
 # edxapp's edxapp-migrate scripts and the edxapp_migrate play
@@ -1020,9 +1029,13 @@ edxapp_generic_auth_config:  &edxapp_generic_auth
       user: "{{ EDXAPP_MONGO_USER }}"
       ssl: "{{ EDXAPP_MONGO_USE_SSL }}"
     ADDITIONAL_OPTIONS: "{{ EDXAPP_CONTENTSTORE_ADDITIONAL_OPTS }}"
+<<<<<<< HEAD
     DOC_STORE_CONFIG:
       <<: *edxapp_generic_default_docstore
 >>>>>>> fixing doc store config assignment for contentstore
+=======
+    DOC_STORE_CONFIG: "{{ edxapp_generic_doc_store_config }}"
+>>>>>>> fix assignment of mongo docstore config
   DATABASES: "{{ edxapp_databases }}"
   EMAIL_HOST_USER: "{{ EDXAPP_EMAIL_HOST_USER }}"
   EMAIL_HOST_PASSWORD: "{{ EDXAPP_EMAIL_HOST_PASSWORD }}"
