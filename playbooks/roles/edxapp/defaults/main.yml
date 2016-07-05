@@ -1004,6 +1004,25 @@ edxapp_generic_auth_config:  &edxapp_generic_auth
     basic_auth: "{{ EDXAPP_XQUEUE_BASIC_AUTH }}"
     django_auth: "{{ EDXAPP_XQUEUE_DJANGO_AUTH }}"
     url: "{{ EDXAPP_XQUEUE_URL }}"
+<<<<<<< HEAD
+=======
+  CONTENTSTORE:
+    ENGINE:  'xmodule.contentstore.mongo.MongoContentStore'
+    #
+    # connection strings are duplicated temporarily for
+    # backward compatibility
+    #
+    OPTIONS:
+      db: "{{ EDXAPP_MONGO_DB_NAME }}"
+      host: "{{ EDXAPP_MONGO_HOSTS }}"
+      password: "{{ EDXAPP_MONGO_PASSWORD }}"
+      port: "{{ EDXAPP_MONGO_PORT }}"
+      user: "{{ EDXAPP_MONGO_USER }}"
+      ssl: "{{ EDXAPP_MONGO_USE_SSL }}"
+    ADDITIONAL_OPTIONS: "{{ EDXAPP_CONTENTSTORE_ADDITIONAL_OPTS }}"
+    DOC_STORE_CONFIG:
+      <<: *edxapp_generic_default_docstore
+>>>>>>> fixing doc store config assignment for contentstore
   DATABASES: "{{ edxapp_databases }}"
   EMAIL_HOST_USER: "{{ EDXAPP_EMAIL_HOST_USER }}"
   EMAIL_HOST_PASSWORD: "{{ EDXAPP_EMAIL_HOST_PASSWORD }}"
