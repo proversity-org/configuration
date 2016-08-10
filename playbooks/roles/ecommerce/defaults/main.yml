@@ -178,6 +178,8 @@ ecommerce_service_config_overrides:
   PLATFORM_NAME: '{{ ECOMMERCE_PLATFORM_NAME }}'
   THEME_SCSS: '{{ ECOMMERCE_THEME_SCSS }}'
 
+  SUPPORT_URL: '{{ ECOMMERCE_SUPPORT_URL }}'
+
   BROKER_URL: '{{ ECOMMERCE_BROKER_URL }}'
 
   # Theming config
