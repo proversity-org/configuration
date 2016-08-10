@@ -143,8 +143,8 @@
   become_user: "{{ ecommerce_user }}"
   environment: "{{ ecommerce_environment }}"
   with_items:
-    - "collectstatic --noinput -v0"
-    - "compress -v0 --force"
+    - "collectstatic --noinput"
+    - "compress"
   when: not devstack
   tags:
     - assets
