@@ -14,7 +14,7 @@ export NEW_RELIC_APP_NAME="{{ EDX_NOTES_API_NEWRELIC_APPNAME }}"
 export NEW_RELIC_LICENSE_KEY="{{ NEWRELIC_LICENSE_KEY }}"
 {% endif -%}
 
-source {{ edx_notes_api_home }}/edx_notes_api_env
+source {{ edx_notes_api_home }}/{{ edx_notes_api_service_name }}_env
 
 export PID=/var/tmp/edx_notes_api.pid
 export PORT={{ edx_notes_api_gunicorn_port }}
