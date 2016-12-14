@@ -73,7 +73,11 @@ repos_to_cmd["video_encode_worker"]="$edx_ansible_cmd veda_encode_worker.yml -e 
 
 =======
 repos_to_cmd["edx-notes-api"]="$edx_ansible_cmd notes.yml -e 'EDX_NOTES_API_VERSION=$2'"
+<<<<<<< HEAD
 >>>>>>> add notes to update script
+=======
+repos_to_cmd["notifier"]="$edx_ansible_cmd notifier.yml -e 'NOTIFIER_VERSION=$2'"
+>>>>>>> add notifier to update script
 
 if [[ -z $1 || -z $2 ]]; then
     echo
