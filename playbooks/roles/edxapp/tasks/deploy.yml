@@ -66,26 +66,20 @@
     - install
     - install:code
 
-# edX supports two theme types, Comprehensive themes and the older
-# Stanford-style themes. They are mutually exclusive.
-#
-# To enable Stanford theming, point edxapp_theme_source_repo
-# (yes, lowercase) to a Stanford-style theme and set
-# edxapp_theme_name (again, lowercase) to its name.
-- name: checkout Stanford-style theme
+- name: checkout {{ edxapp_theme_name }} theme into themes directory
   git:
     dest: "{{ edxapp_app_dir }}/themes/{{ edxapp_theme_name }}"
     repo: "{{ edxapp_theme_source_repo }}"
     version: "{{ edxapp_theme_version }}"
+    key_file: "{{ edxapp_git_ssh_key }}"
     accept_hostkey: yes
-  when: edxapp_theme_name != ''
+  when: (edxapp_theme_name is defined and edxapp_theme_name != '') and (edxapp_git_ssh_key is defined and edxapp_git_ssh_key != '')
   become_user: "{{ edxapp_user }}"
-  environment:
-    GIT_SSH: "{{ edxapp_git_ssh }}"
   register: edxapp_theme_checkout
   tags:
     - install
     - install:code
+    - install:theme
 
 # Download a theme and apply small modifications like SASS changes
 # To enable/disable this, set SIMPLETHEME_ENABLE_DEPLOY
@@ -249,9 +243,17 @@
 
 #install with the shell command instead of the ansible npm module so we don't accidentally re-write package.json 
 - name: install node dependencies
+<<<<<<< HEAD
   shell: "{{ edxapp_nodeenv_bin }}/npm install"
   args:
     chdir: "{{ edxapp_code_dir }}"
+=======
+  npm:
+    executable: "{{ edxapp_nodeenv_bin }}/npm"
+    path: "{{ edxapp_code_dir }}"
+    production: yes
+    state: latest
+>>>>>>> removing comments
   environment: "{{ edxapp_environment }}"
   become_user: "{{ edxapp_user }}"
   tags:
