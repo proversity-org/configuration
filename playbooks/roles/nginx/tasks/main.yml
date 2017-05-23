@@ -287,12 +287,12 @@
     
 - name: initial copy of ssl key
   copy:
-    src: "/edx/var/deployment/ssh/{{ NGINX_SSL_CERTIFICATE_NAME }}"
-    dest: "{{ NGINX_SSL_CERTIFICATE }}"
+    src: "/edx/var/deployment/ssh/{{ NGINX_SSL_KEY_NAME }}"
+    dest: "{{ NGINX_SSL_KEY }}"
     owner: root
     group: root
     mode: 0644
-  when: NGINX_ENABLE_SSL and NGINX_SSL_CERTIFICATE != 'ssl-cert-snakeoil.pem'
+  when: NGINX_ENABLE_SSL and NGINX_SSL_KEY != 'ssl-cert-snakeoil.key'
   tags:
     - install
     - install:configuration
