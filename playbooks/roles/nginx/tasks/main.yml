@@ -272,6 +272,30 @@
   tags:
     - install
     - install:configuration
+    
+- name: initial copy of ssl cert
+  copy:
+    src: "/edx/var/deployment/ssh/{{ NGINX_SSL_CERTIFICATE_NAME }}"
+    dest: "{{ NGINX_SSL_CERTIFICATE }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: NGINX_ENABLE_SSL and NGINX_SSL_CERTIFICATE != 'ssl-cert-snakeoil.pem'
+  tags:
+    - install
+    - install:configuration
+    
+- name: initial copy of ssl key
+  copy:
+    src: "/edx/var/deployment/ssh/{{ NGINX_SSL_CERTIFICATE_NAME }}"
+    dest: "{{ NGINX_SSL_CERTIFICATE }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: NGINX_ENABLE_SSL and NGINX_SSL_CERTIFICATE != 'ssl-cert-snakeoil.pem'
+  tags:
+    - install
+    - install:configuration
 
 # Check to see if the ssl cert/key exists before copying.
 # This extra check is done to prevent failures when
