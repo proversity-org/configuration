@@ -7,9 +7,9 @@
     accept_hostkey: yes
   become: true
   become_user: "{{ notifier_user }}"
-  tags:
-    - "install"
-    - "install:code"
+  notify:
+    - restart notifier-scheduler
+    - restart notifier-celery-workers
 
 # Optional auth for git
 - name: Create ssh script for git (not authenticated)
@@ -19,9 +19,6 @@
     owner: "{{ notifier_user }}"
     mode: "0750"
   when: NOTIFIER_GIT_IDENTITY == ""
-  tags:
-    - "install"
-    - "install:code"
 
 - name: Create ssh script for git (authenticated)
   template:
@@ -30,9 +27,6 @@
     owner: "{{ notifier_user }}"
     mode: "0750"
   when: NOTIFIER_GIT_IDENTITY != ""
-  tags:
-    - "install"
-    - "install:code"
 
 - name: Install read-only ssh key
   copy:
@@ -42,9 +36,6 @@
     owner: "{{ notifier_user }}"
     mode: "0600"
   when: NOTIFIER_GIT_IDENTITY != ""
-  tags:
-    - "install"
-    - "install:code"
 
 - name: Checkout theme
   git:
@@ -56,9 +47,6 @@
   become_user: "{{ notifier_user }}"
   environment:
     GIT_SSH: "{{ notifier_git_ssh }}"
-  tags:
-    - "install"
-    - "install:code"
 
 - name: Write notifier local settings
   template:
@@ -66,9 +54,8 @@
     dest: "{{ NOTIFIER_CODE_DIR }}/notifier/settings_local.py"
     mode: "0555"
   when: NOTIFIER_THEME_NAME != ''
-  tags:
-    - "install"
-    - "install:configuration"
+  notify:
+    - restart notifier-celery-workers
 
 - name: Install application requirements
   pip:
@@ -77,9 +64,9 @@
     state: present
   become: true
   become_user: "{{ notifier_user }}"
-  tags:
-    - "install"
-    - "install:app-requirements"
+  notify:
+    - restart notifier-scheduler
+    - restart notifier-celery-workers
 
 # Syncdb for whatever reason always creates the file owned by www-data:www-data, and then
 # complains it can't write because it's running as notifier.  So this is to touch the file into
@@ -92,11 +79,13 @@
     group: "{{ NOTIFIER_WEB_USER }}"
     mode: "0664"
   become: true
+  notify:
+    - restart notifier-scheduler
+    - restart notifier-celery-workers
   tags:
   - deploy
-  - "install"
-  - "install:configuration"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 - name: Migrate the notifier db
   shell: "{{ NOTIFIER_VENV_DIR }}/bin/python manage.py migrate --fake-initial"
@@ -104,6 +93,10 @@
 - name: Migrate
   shell: "{{ NOTIFIER_VENV_DIR }}/bin/python manage.py migrate"
 >>>>>>> migrate notifier, not syncdb
+=======
+- name: Syncdb
+  shell: "{{ NOTIFIER_VENV_DIR }}/bin/python manage.py syncdb"
+>>>>>>> UPD: swaping with edx notifier <currently it breaks>
   args:
     chdir: "{{ NOTIFIER_CODE_DIR }}"
   become: true
@@ -135,3 +128,8 @@
   tags:
     - "manage"
     - "manage:start"
+  environment: notifier_env_vars
+  notify:
+    - restart notifier-scheduler
+    - restart notifier-celery-workers
+
