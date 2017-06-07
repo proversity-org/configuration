@@ -64,6 +64,7 @@
     - demo
     - oauth_client_setup
     - oraclejdk
+    - microsites
     - role: elasticsearch
       when: "'localhost' in EDXAPP_ELASTIC_SEARCH_CONFIG|map(attribute='host')"
     - forum

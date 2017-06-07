@@ -1,0 +1,48 @@
+---
+
+# This role is specific to the asset update.
+# 1. delete the static files directory
+# 2. create the static files directory and set correct premissions
+# 3. run the edxapp-update-assets-cms supervisor script
+# 4. run the edxapp-update-assets-lms supervisor script
+# 5. fire restart for lms and cms
+
+
+# Gather assets using paver if possible (-e 'assets=true')
+
+- name: "gather {{ item }} static assets with paver (-e 'assets=true')"
+  command: "{{ COMMON_BIN_DIR }}/edxapp-update-assets-{{ item }}"
+  when: assets is defined and assets|bool
+  with_items: "{{ service_variants_enabled }}"
+  register: restart
+  tags:
+    - assets
+
+- find:
+    paths: "{{ edxapp_staticfile_dir }}"
+    age: "15m"
+    recurse: yes
+  register: detele_files
+  
+- name: Remove static files that is older than 15m (-e 'assets=true')
+  file:
+      path: "{{ item.path }}"
+      state: "absent"
+      owner: "{{ edxapp_user }}"
+      group: "{{ common_web_group }}"
+      mode:  "0755"
+  when: assets is defined and assets|bool and delete_files.matched != 0
+  with_items: delete_files.files
+  tags:
+    - assets
+   
+- name: restart edxapp
+  supervisorctl:
+    name: "edxapp:"
+    supervisorctl_path: "{{ supervisor_ctl }}"
+    config: "{{ supervisor_cfg }}"
+    state: restarted
+  when: restart.changed|bool
+  become_user: "{{ supervisor_service_user }}"
+  tags:
+    - assets

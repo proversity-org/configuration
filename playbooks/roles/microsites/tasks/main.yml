@@ -1,0 +1,36 @@
+---
+
+# Microsite role
+# This role is able to do the following operations specific to the microsite repository
+# - clone
+# - update
+
+- name: create {{ EDXAPP_MICROSITE_ROOT_DIR }}
+  file:
+    path: "{{ EDXAPP_MICROSITE_ROOT_DIR }}"
+    state: directory
+    owner: "edxapp"
+    group: "www-data"
+    mode: "0750"
+  when: (microsite_repo_url != '' and (edxapp_git_ssh_key is defined and edxapp_git_ssh_key != ''))
+  tags:
+    - install
+    - install:base
+    - microsites
+
+- name: checkout microsite repo into {{ EDXAPP_MICROSITE_ROOT_DIR }} (-e 'edxapp_git_ssh_key=/path/)
+  git:
+    dest: "{{ EDXAPP_MICROSITE_ROOT_DIR }}"
+    repo: "{{ microsite_repo_url }}"
+    version: "{{ microsite_version }}"
+    key_file: "{{ edxapp_git_ssh_key }}"
+    accept_hostkey: yes
+  when: (microsite_repo_url != '' and (edxapp_git_ssh_key is defined and edxapp_git_ssh_key != ''))
+  become_user: "{{ edxapp_user }}"
+  tags:
+    - install
+    - install:code
+    - microsites
+    
+- include_role:
+    name: assets

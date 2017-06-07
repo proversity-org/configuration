@@ -1,0 +1,8 @@
+---
+
+edxapp_user: 'edxapp'
+EDXAPP_GIT_IDENTITY: "github_rsa"
+edxapp_git_identity: "/edx/app/edxapp/edxapp-git-identity"
+edxapp_git_ssh: "/tmp/edxapp_git_ssh.sh"
+EDXAPP_USE_GIT_IDENTITY: true
+edxapp_app_dir: "/edx/app/edxapp"

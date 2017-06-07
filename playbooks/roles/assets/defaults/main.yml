@@ -1,0 +1,20 @@
+---
+
+edxapp_staticfile_dir: "/edx/var/edxapp/staticfiles"
+edxapp_user: "edxapp"
+common_web_group: "www-data"
+COMMON_BIN_DIR: "/edx/bin"
+supervisor_user: 'supervisor'
+supervisor_service_user: 'www-data'
+
+supervisor_http_bind_port: '9001'
+supervisor_app_dir: "/edx/app/supervisor"
+supervisor_cfg_dir: "{{ supervisor_app_dir }}/conf.d"
+supervisor_available_dir: "{{ supervisor_app_dir }}/conf.available.d"
+supervisor_data_dir: "{{ COMMON_DATA_DIR }}/supervisor"
+supervisor_venvs_dir: "{{ supervisor_app_dir }}/venvs"
+supervisor_venv_dir: "{{ supervisor_venvs_dir }}/supervisor"
+supervisor_venv_bin: "{{ supervisor_venv_dir }}/bin"
+supervisor_ctl: "{{ supervisor_venv_bin }}/supervisorctl"
+supervisor_log_dir: "/edx/var/log/supervisor"
+supervisor_cfg: "{{ supervisor_app_dir }}/supervisord.conf"
