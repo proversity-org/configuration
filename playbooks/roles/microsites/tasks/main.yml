@@ -9,9 +9,9 @@
   file:
     path: "{{ EDXAPP_MICROSITE_ROOT_DIR }}"
     state: directory
-    owner: "edxapp"
+    owner: "{{ edxapp_user }}"
     group: "www-data"
-    mode: "0750"
+    mode: "0755"
   when: (microsite_repo_url != '' and (edxapp_git_ssh_key is defined and edxapp_git_ssh_key != ''))
   tags:
     - install
