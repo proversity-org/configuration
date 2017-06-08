@@ -31,6 +31,3 @@
     - install
     - install:code
     - microsites
-    
-- include_role:
-    name: assets
