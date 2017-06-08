@@ -14,12 +14,17 @@ IFS=","
 
     <repo> - must be one of edx-platform, edx-workers, xqueue, cs_comments_service, credentials, xserver, configuration,
 <<<<<<< HEAD
+<<<<<<< HEAD
     read-only-certificate-code, edx-analytics-data-api, edx-ora2, insights, ecommerce, course_discovery,
     notifier, video_web_frontend, video_delivery_worker, veda_pipeline_worker, video_encode_worker
 =======
     read-only-certificate-code, edx-analytics-data-api, edx-ora2, insights, ecommerce, course_discovery, notifier, edx-notes-api
 >>>>>>> add notes to update script
+=======
+    read-only-certificate-code, edx-analytics-data-api, edx-ora2, insights, ecommerce, course_discovery, notifier, edx-notes-api, microsites
+>>>>>>> ADD: adding microsite play (#62)
     <version> - can be a commit or tag
+	when <repo> == microsites, the 3rd argument must be the path to or the actual ssh key locked to the repo
 
 EO
 IFS=$SAVE_IFS
@@ -74,10 +79,14 @@ repos_to_cmd["video_encode_worker"]="$edx_ansible_cmd veda_encode_worker.yml -e 
 =======
 repos_to_cmd["edx-notes-api"]="$edx_ansible_cmd notes.yml -e 'EDX_NOTES_API_VERSION=$2'"
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> add notes to update script
 =======
 repos_to_cmd["notifier"]="$edx_ansible_cmd notifier.yml -e 'NOTIFIER_VERSION=$2'"
 >>>>>>> add notifier to update script
+=======
+repos_to_cmd["microsites"]="$edx_ansible_cmd microsites.yml -e 'microsite_version=$2' -e 'edxapp_git_ssh_key=$3'"
+>>>>>>> ADD: adding microsite play (#62)
 
 if [[ -z $1 || -z $2 ]]; then
     echo
@@ -91,6 +100,13 @@ if [[ -z ${repos_to_cmd[$1]} ]]; then
     echo "ERROR: Invalid repo name"
     usage
     exit 1
+fi
+
+if [[ "$1" == "microsites" && -z $3 ]]; then
+	echo
+	echo "ERROR: You must provide the microsite ssh key"
+	usage
+	exit 1
 fi
 
 cd {{ edx_ansible_code_dir }}/playbooks/edx-east

@@ -1,0 +1,10 @@
+- name: Deploy microsites
+  hosts: all
+  become: True
+  gather_facts: True
+  vars:
+    assets: true
+  roles:
+   - microsites
+   - assets
+
