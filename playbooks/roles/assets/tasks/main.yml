@@ -22,6 +22,7 @@
     paths: "{{ edxapp_staticfile_dir }}"
     age: "15m"
     recurse: yes
+    no_log: True
   register: detele_files
   
 - name: Remove static files that is older than 15m (-e 'assets=true')
