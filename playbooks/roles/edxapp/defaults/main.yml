@@ -1254,7 +1254,6 @@ generic_env_config:  &edxapp_generic_env
   ICP_LICENSE: "{{ EDXAPP_ICP_LICENSE }}"
   # Base Cookie Domain to share cookie across edx domains
   BASE_COOKIE_DOMAIN: "{{ EDXAPP_BASE_COOKIE_DOMAIN }}"
-
   POLICY_CHANGE_GRADES_ROUTING_KEY: "{{ EDXAPP_POLICY_CHANGE_GRADES_ROUTING_KEY }}"
 <<<<<<< HEAD
   PROCTORING_SETTINGS: "{{ EDXAPP_PROCTORING_SETTINGS }}"
