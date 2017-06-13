@@ -66,6 +66,7 @@
     - install
     - install:code
 
+<<<<<<< HEAD
 - name: checkout {{ edxapp_theme_name }} theme into themes directory
   git:
     dest: "{{ edxapp_app_dir }}/themes/{{ edxapp_theme_name }}"
@@ -89,6 +90,8 @@
   include_role:
     name: "simple_theme"
 
+=======
+>>>>>>> Proversity/themes play (#64)
 - name: Stat each requirements file with Github URLs to ensure it exists
   stat:
     path: "{{ item }}"

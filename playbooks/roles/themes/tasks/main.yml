@@ -1,0 +1,40 @@
+---
+#
+# edX Configuration
+#
+# github:     https://github.com/edx/configuration
+# wiki:       https://openedx.atlassian.net/wiki/display/OpenOPS
+# code style: https://openedx.atlassian.net/wiki/display/OpenOPS/Ansible+Code+Conventions
+# license:    https://github.com/edx/configuration/blob/master/LICENSE.TXT
+#
+#
+#
+# Tasks for role themes
+#
+# Overview:
+#
+# This role checksout the themes into the themes directory,
+# and runs the asset play to regather all assets, 
+# but only if the checkout of the theme registers a change.
+
+- name: checkout {{ edxapp_theme_name }} theme into themes directory
+  git:
+    dest: "{{ edxapp_app_dir }}/themes/{{ edxapp_theme_name }}"
+    repo: "{{ edxapp_theme_source_repo }}"
+    version: "{{ edxapp_theme_version }}"
+    key_file: "{{ edxapp_git_ssh_key }}"
+    accept_hostkey: yes
+  when: (edxapp_theme_name is defined and edxapp_theme_name != '') and (edxapp_git_ssh_key is defined and edxapp_git_ssh_key != '')
+  become_user: "{{ edxapp_user }}"
+  register: edxapp_theme_checkout
+  tags:
+    - install
+    - install:code
+    - install:theme
+    
+- include_role:
+    name: assets
+  when: assets|bool and edxapp_theme_checkout.changed|bool
+
+
+
