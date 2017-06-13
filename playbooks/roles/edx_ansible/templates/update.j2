@@ -86,7 +86,11 @@ repos_to_cmd["notifier"]="$edx_ansible_cmd notifier.yml -e 'NOTIFIER_VERSION=$2'
 >>>>>>> add notifier to update script
 =======
 repos_to_cmd["microsites"]="$edx_ansible_cmd microsites.yml -e 'microsite_version=$2' -e 'edxapp_git_ssh_key=$3'"
+<<<<<<< HEAD
 >>>>>>> ADD: adding microsite play (#62)
+=======
+repos_to_cmd["themes"]="$edx_ansible_cmd themes.yml -e 'edxapp_theme_version=$2' -e 'edxapp_git_ssh_key=$3'"
+>>>>>>> Proversity/themes play (#65)
 
 if [[ -z $1 || -z $2 ]]; then
     echo
@@ -102,7 +106,7 @@ if [[ -z ${repos_to_cmd[$1]} ]]; then
     exit 1
 fi
 
-if [[ "$1" == "microsites" && -z $3 ]]; then
+if [[ ["$1" == "microsites" || "$1" == "themes"] && -z $3 ]]; then
 	echo
 	echo "ERROR: You must provide the microsite ssh key"
 	usage

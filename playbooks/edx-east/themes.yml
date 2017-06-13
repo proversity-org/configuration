@@ -1,0 +1,9 @@
+- name: Deploy Themes
+  hosts: all
+  become: True
+  gather_facts: True
+  vars:
+    assets: true
+  roles:
+   - themes
+   - assets
