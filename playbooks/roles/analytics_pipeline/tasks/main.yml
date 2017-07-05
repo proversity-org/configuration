@@ -176,7 +176,7 @@
     - install:app-requirements
 
 - name: Ensure util library is in HDFS
-  shell: ". {{ HADOOP_COMMON_CONF_DIR }}/hadoop-env.sh && hadoop fs -copyFromLocal {{ HADOOP_COMMON_USER_HOME }}/lib/edx-analytics-hadoop-util.jar /edx-analytics-pipeline/packages/"
+  shell: ". {{ HADOOP_COMMON_CONF_DIR }}/hadoop-env.sh && hadoop fs -copyFromLocal -f {{ HADOOP_COMMON_USER_HOME }}/lib/edx-analytics-hadoop-util.jar /edx-analytics-pipeline/packages/"
   become_user: "{{ hadoop_common_user }}"
   tags:
     - install
@@ -206,7 +206,7 @@
   cron:
     user: "{{ hadoop_common_user }}"
     name: "Sync tracking log to HDFS"
-    job: "{{ HADOOP_COMMON_HOME }}/bin/hadoop fs -copyFromLocal {{ COMMON_LOG_DIR }}/tracking/tracking.log {{ ANALYTICS_PIPELINE_HDFS_DATA_DIR }}/tracking.log"
+    job: "{{ HADOOP_COMMON_HOME }}/bin/hadoop fs -copyFromLocal -f {{ COMMON_LOG_DIR }}/tracking/tracking.log {{ ANALYTICS_PIPELINE_HDFS_DATA_DIR }}/tracking.log"
   tags:
     - install
     - install:configuration
