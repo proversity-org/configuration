@@ -1261,7 +1261,11 @@ generic_env_config:  &edxapp_generic_env
 =======
   MICROSITE_TEMPLATE_BACKEND: "{{ EDX_MICROSITE_TEMPLATE_BACKEND }}"
   MICROSITE_BACKEND: "{{ EDX_MICROSITE_BACKEND }}"
+<<<<<<< HEAD
 >>>>>>> ADD: microsite back end configuration
+=======
+  MICROSITE_CONFIG_FILE: "{{ EDXAPP_MICROSITE_CONFIG_FILE }}"
+>>>>>>> Proversity/nvn generate microsite nginx conf (#67)
 
 lms_auth_config:
   <<: *edxapp_generic_auth

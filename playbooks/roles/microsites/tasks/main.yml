@@ -27,7 +27,12 @@
     accept_hostkey: yes
   when: (microsite_repo_url != '' and (edxapp_git_ssh_key is defined and edxapp_git_ssh_key != ''))
   become_user: "{{ edxapp_user }}"
+    
+- name: run the nginx role to update its site configs
+  include_role:
+    name: nginx
+    tasks_from: init_config
   tags:
     - install
-    - install:code
+    - install:configuration
     - microsites

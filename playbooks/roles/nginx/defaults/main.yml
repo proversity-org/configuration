@@ -10,6 +10,19 @@ NGINX_EDXAPP_EXTRA_SITES: []
 NGINX_EDXAPP_EXTRA_CONFIGS: []
 NGINX_EDXAPP_CUSTOM_REDIRECTS: {}
 
+edxapp_cms_gunicorn_port: 8010
+edxapp_cms_gunicorn_host: 127.0.0.1
+edxapp_lms_gunicorn_port: 8000
+edxapp_lms_gunicorn_host: 127.0.0.1
+
+EDXAPP_ENABLE_RATE_LIMITING: false
+EDXAPP_PROFILE_IMAGE_MAX_BYTES: 1048576
+EDXAPP_PROFILE_IMAGE_MIN_BYTES: 100
+
+edxapp_data_dir: "/edx/var/edxapp"
+EDXAPP_MEDIA_URL:  "/media"
+edxapp_media_dir: "{{ edxapp_data_dir }}/media"
+
 # Override these vars for adding user to nginx.htpasswd
 NGINX_USERS:
   - name: "{{ COMMON_HTPASSWD_USER }}"

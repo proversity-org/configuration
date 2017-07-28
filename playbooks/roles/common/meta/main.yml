@@ -5,4 +5,4 @@ dependencies:
   - role: user
     user_info: "{{ COMMON_USER_INFO }}"
   - role: security
-    when: COMMON_SECURITY_UPDATES
+    when: COMMON_SECURITY_UPDATES is defined and COMMON_SECURITY_UPDATES

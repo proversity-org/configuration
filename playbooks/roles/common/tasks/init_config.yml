@@ -1,0 +1,31 @@
+---
+- name: Stat the {{ EDXAPP_MICROSITE_CONFIG_FILE }} to see if we have to gen microsite configs
+  stat:
+    path: "{{ EDXAPP_MICROSITE_CONFIG_FILE }}"
+  register: microsite_config_file
+  tags:
+    - install
+    - install:configuration
+    - microsites
+    
+- name: Download the {{ EDXAPP_MICROSITE_CONFIG_FILE }} if it does not exists
+  get_url:
+    url: "{{ EDXAPP_MICROSITE_CONFIG_URL }}"
+    dest: "{{ EDXAPP_MICROSITE_CONFIG_FILE }}"
+    headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
+  when: microsite_config_file.stat.exists == False
+  ignore_errors: yes
+  register: microsite_config_file_downloaded
+  tags:
+    - install
+    - install:configuration
+    - microsites
+    
+- name: Include {{ EDXAPP_MICROSITE_CONFIG_FILE }} dinamically
+  include_vars:
+    file: "{{ EDXAPP_MICROSITE_CONFIG_FILE }}"
+  when: microsite_config_file.stat.exists == True or microsite_config_file_downloaded.changed == True
+  tags:
+    - install
+    - install:configuration
+    - microsites

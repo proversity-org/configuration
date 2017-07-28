@@ -1,0 +1,125 @@
+---
+- name: run the common init_config
+  include_role:
+    name: common
+    tasks_from: init_config
+  tags:
+    - install
+    - install:configuration
+    - microsites
+    
+- name: download microsite certificate from (server_vars)
+  get_url:
+    url: "{{ EDXAPP_MICROSITE_BASE_URL }}{{ item.key }}/files?file=cert"
+    dest: "{{ item.value.ssl_certificate }}"
+    headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
+    mode: 0644
+  with_dict: "{{ EDXAPP_MICROSITE_CONFIGURATION }}"
+  when: "{{ item.value.generate_nginx_conf }}"
+  become: true
+  tags:
+    - install
+    - install:configuration
+    - microsites
+
+- name: download microsite key from (server_vars)
+  get_url:
+    url: "{{ EDXAPP_MICROSITE_BASE_URL }}{{ item.key }}/files?file=key"
+    dest: "{{ item.value.ssl_certificate_key }}"
+    headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
+    mode: 0644
+  with_dict: "{{ EDXAPP_MICROSITE_CONFIGURATION }}"
+  when: "{{ item.value.generate_nginx_conf }}"
+  become: true
+  tags:
+    - install
+    - install:configuration
+    - microsites
+
+- name: Copying nginx configs for microsites from server_vars
+  template:
+    src: "{{ nginx_template_dir }}/micro_site.j2"
+    dest: "{{ nginx_sites_available_dir }}/lms-{{ item.key }}"
+    owner: root
+    group: "{{ common_web_user }}"
+    mode: "0640"
+  with_dict: "{{ EDXAPP_MICROSITE_CONFIGURATION }}"
+  when: "{{ item.value.generate_nginx_conf }}"
+  notify: reload nginx
+  tags:
+    - install
+    - install:configuration
+    - microsites
+    
+-  name: download microsite certificate from {{ EDXAPP_MICROSITE_CONFIG_FILE }}
+   get_url:
+     url: "{{ EDXAPP_MICROSITE_BASE_URL }}{{ item.key }}/files?file=cert"
+     dest: "{{ item.value.ssl_certificate }}"
+     headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
+     mode: 0644
+   with_dict: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION|default({}) }}"
+   when: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION is defined and item.value.generate_nginx_conf }}"
+   become: true
+   tags:
+    - install
+    - install:configuration
+    - microsites
+   
+-  name: download microsite key from {{ EDXAPP_MICROSITE_CONFIG_FILE }}
+   get_url:
+     url: "{{ EDXAPP_MICROSITE_BASE_URL }}{{ item.key }}/files?file=key"
+     dest: "{{ item.value.ssl_certificate_key }}"
+     headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
+     mode: 0644
+   with_dict: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION|default({}) }}"
+   when: PLATFORM_EDXAPP_MICROSITE_CONFIGURATION is defined and item.value.generate_nginx_conf
+   become: true
+   tags:
+    - install
+    - install:configuration
+    - microsites
+
+- name: Copying nginx configs for microsites from {{ EDXAPP_MICROSITE_CONFIG_FILE }}
+  template:
+    src: "{{ nginx_template_dir }}/micro_site.j2"
+    dest: "{{ nginx_sites_available_dir }}/lms-{{ item.key }}"
+    owner: root
+    group: "{{ common_web_user }}"
+    mode: "0640"
+  with_dict: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION|default({}) }}"
+  when: PLATFORM_EDXAPP_MICROSITE_CONFIGURATION is defined and item.value.generate_nginx_conf
+  notify: reload nginx
+  tags:
+    - install
+    - install:configuration
+    - microsites
+
+- name: Creating nginx config links for microsites from server_vars
+  file:
+    src: "{{ nginx_sites_available_dir }}/lms-{{ item.key  }}"
+    dest: "{{ nginx_sites_enabled_dir }}/lms-{{ item.key }}"
+    state: link
+    owner: root
+    group: root
+  with_dict: "{{ EDXAPP_MICROSITE_CONFIGURATION }}"
+  when: "{{ item.value.generate_nginx_conf }}"
+  notify: reload nginx
+  tags:
+    - install
+    - install:configuration
+    - microsites
+    
+- name: Creating nginx config links for microsites from {{ EDXAPP_MICROSITE_CONFIG_FILE }}
+  file:
+    src: "{{ nginx_sites_available_dir }}/lms-{{ item.key  }}"
+    dest: "{{ nginx_sites_enabled_dir }}/lms-{{ item.key }}"
+    state: link
+    owner: root
+    group: root
+  with_dict: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION|default({}) }}"
+  when: PLATFORM_EDXAPP_MICROSITE_CONFIGURATION is defined and item.value.generate_nginx_conf
+  notify: reload nginx
+  tags:
+    - install
+    - install:configuration
+    - microsites
