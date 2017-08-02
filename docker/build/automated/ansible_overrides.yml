@@ -7,6 +7,6 @@ AUTOMATED_USERS:
   testing:
     sudo_commands:
       - command: "/usr/bin/ls"
-        sudo_user: "ubuntu"
+        become_user: "ubuntu"
         job_name: "ls"
     authorized_keys: "{{ AUTOMATED_AUTHORIZED_KEYS }}"

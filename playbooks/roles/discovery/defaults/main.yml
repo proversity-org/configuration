@@ -149,6 +149,7 @@ discovery_service_config_overrides:
 
   PUBLISHER_FROM_EMAIL: '{{ DISCOVERY_PUBLISHER_FROM_EMAIL }}'
 
+<<<<<<< HEAD
   OPENEXCHANGERATES_API_KEY: '{{ DISCOVERY_OPENEXCHANGERATES_API_KEY }}'
 
   LANGUAGE_CODE: '{{DISCOVERY_LANGUAGE_CODE}}'
@@ -157,3 +158,91 @@ discovery_service_config_overrides:
 
 # See edx_django_service_automated_users for an example of what this should be
 DISCOVERY_AUTOMATED_USERS: {}
+=======
+DISCOVERY_REPOS:
+  - PROTOCOL: "{{ COMMON_GIT_PROTOCOL }}"
+    DOMAIN: "{{ COMMON_GIT_MIRROR }}"
+    PATH: "{{ COMMON_GIT_PATH }}"
+    REPO: course-discovery.git
+    VERSION: "{{ DISCOVERY_VERSION }}"
+    DESTINATION: "{{ discovery_code_dir }}"
+    SSH_KEY: "{{ DISCOVERY_GIT_IDENTITY }}"
+
+
+DISCOVERY_GUNICORN_WORKERS: "2"
+DISCOVERY_GUNICORN_EXTRA: ""
+DISCOVERY_GUNICORN_EXTRA_CONF: ""
+DISCOVERY_GUNICORN_WORKER_CLASS: "sync"
+
+DISCOVERY_HOSTNAME: '~^((stage|prod)-)?discovery.*'
+
+nginx_discovery_gunicorn_hosts:
+  - 127.0.0.1
+
+# Vars that are used when the automated role is "mixed-in" via the deploying play
+# This data structure specifies all the users with access to run command remotely
+# over SSH and the fully qualified command that they can run via sudo to the
+# application user
+
+DISCOVERY_AUTOMATED_USERS:
+  automated_user:
+    sudo_commands:
+      - command: "{{ discovery_venv_dir }}/python {{ discovery_home }}/{{ discovery_service_name }}/manage.py migrate --list"
+        become_user: "discovery"
+    authorized_keys:
+      - "SSH authorized key"
+
+#
+# vars are namespace with the module name.
+#
+discovery_role_name: discovery
+discovery_venv_dir: "{{ discovery_home }}/venvs/{{ discovery_service_name }}"
+
+discovery_environment:
+  DJANGO_SETTINGS_MODULE: "{{ DISCOVERY_DJANGO_SETTINGS_MODULE }}"
+  # rename should synch with app
+  COURSE_DISCOVERY_CFG: "{{ COMMON_CFG_DIR }}/{{ discovery_service_name }}.yml"
+  PATH: "{{ discovery_nodeenv_bin }}:{{ discovery_venv_dir }}/bin:{{ ansible_env.PATH }}"
+
+
+discovery_migration_environment:
+  DJANGO_SETTINGS_MODULE: "{{ DISCOVERY_DJANGO_SETTINGS_MODULE }}"
+  # rename should synch with app
+  COURSE_DISCOVERY_CFG: "{{ COMMON_CFG_DIR }}/{{ discovery_service_name }}.yml"
+  PATH: "{{ discovery_venv_dir }}/bin:{{ ansible_env.PATH }}"
+  DB_MIGRATION_USER: "{{ COMMON_MYSQL_MIGRATE_USER }}"
+  DB_MIGRATION_PASS: "{{ COMMON_MYSQL_MIGRATE_PASS }}"
+
+discovery_service_name: "discovery"
+discovery_user: "{{ discovery_service_name }}"
+discovery_home: "{{ COMMON_APP_DIR }}/{{ discovery_service_name }}"
+discovery_code_dir: "{{ discovery_home }}/{{ discovery_service_name }}"
+
+discovery_nodeenv_dir: "{{ discovery_home }}/nodeenvs/{{ discovery_service_name }}"
+discovery_nodeenv_bin: "{{ discovery_nodeenv_dir }}/bin"
+discovery_node_modules_dir: "{{ discovery_code_dir }}/node_modules"
+discovery_node_bin: "{{ discovery_node_modules_dir }}/.bin"
+discovery_node_version: "{{ common_node_version }}"
+
+discovery_gunicorn_host: "127.0.0.1"
+discovery_gunicorn_port: 8381
+discovery_gunicorn_timeout: 300
+
+discovery_log_dir: "{{ COMMON_LOG_DIR }}/{{ discovery_service_name }}"
+
+#
+# OS packages
+#
+
+discovery_debian_pkgs:
+  - libmysqlclient-dev
+  - libssl-dev
+  - libffi-dev  # Needed to install the Python cryptography library for asymmetric JWT signing
+  - libmemcached-dev # Needed for memcache
+  - libxml2-dev
+  - libxslt-dev
+  - libjpeg-dev
+
+discovery_redhat_pkgs: []
+
+>>>>>>> Proversity/release testing (#69)

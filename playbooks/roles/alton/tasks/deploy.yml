@@ -35,7 +35,7 @@
     src: "{{ alton_supervisor_wrapper | basename }}.j2"
     dest: "{{ alton_supervisor_wrapper }}"
     mode: "0755"
-  sudo_user: "{{ alton_user }}"
+  become_user: "{{ alton_user }}"
   notify: restart alton
 
 - name: Create a supervisor config

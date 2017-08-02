@@ -20,7 +20,7 @@
 #
 # - name: Install Newrelic system agent
 #   hosts: all
-#   sudo: True
+#   become: True
 #   gather_facts: True
 #   roles:
 #     - newrelic

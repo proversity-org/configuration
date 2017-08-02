@@ -431,8 +431,13 @@ EDXAPP_SANDBOX_ENFORCE: true
 EDXAPP_AUTOMATED_USERS:
   automated_user:
     sudo_commands:
+<<<<<<< HEAD
       - command: "{{ edxapp_venv_bin }}/python {{ edxapp_code_dir }}/manage.py lms showmigrations --settings={{ edxapp_settings }}"
         sudo_user: "edxapp"
+=======
+      - command: "{{ edxapp_venv_bin }}/python {{ edxapp_code_dir }}/manage.py lms migrate --list --settings={{ edxapp_settings }}"
+        become_user: "edxapp"
+>>>>>>> Proversity/release testing (#69)
     authorized_keys:
       - "SSH authorized key"
 
@@ -1265,7 +1270,11 @@ generic_env_config:  &edxapp_generic_env
 >>>>>>> ADD: microsite back end configuration
 =======
   MICROSITE_CONFIG_FILE: "{{ EDXAPP_MICROSITE_CONFIG_FILE }}"
+<<<<<<< HEAD
 >>>>>>> Proversity/nvn generate microsite nginx conf (#67)
+=======
+  ENABLE_DOG: "{{ EDXAPP_ENABLE_DOG }}"
+>>>>>>> Proversity/release testing (#69)
 
 lms_auth_config:
   <<: *edxapp_generic_auth

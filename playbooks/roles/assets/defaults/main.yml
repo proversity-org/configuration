@@ -18,3 +18,15 @@ supervisor_venv_bin: "{{ supervisor_venv_dir }}/bin"
 supervisor_ctl: "{{ supervisor_venv_bin }}/supervisorctl"
 supervisor_log_dir: "/edx/var/log/supervisor"
 supervisor_cfg: "{{ supervisor_app_dir }}/supervisord.conf"
+
+supervisor_services_list:
+    - 'analytics-api'
+    - 'certs'
+    - 'edxapp:'
+    - 'edxapp_worker:'
+    - 'forum'
+    - 'insights'
+    - 'notifier-celery-workers'
+    - 'notifier-scheduler'
+    - 'xqueue'
+    - 'xqueue_consumer'

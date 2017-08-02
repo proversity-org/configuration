@@ -441,6 +441,7 @@
   tags:
     - manage
     - manage:db
+<<<<<<< HEAD
 
 - name: reindex all courses
   shell: "{{ edxapp_venv_bin }}/python ./manage.py cms reindex_course --setup --settings={{ edxapp_settings }}"
@@ -451,3 +452,6 @@
   tags:
     - install
     - install:base
+=======
+    - manage
+>>>>>>> Proversity/release testing (#69)

@@ -3,6 +3,7 @@
   stat:
     path: "{{ EDXAPP_MICROSITE_CONFIG_FILE }}"
   register: microsite_config_file
+  ignore_errors: yes
   tags:
     - install
     - install:configuration
@@ -13,8 +14,10 @@
     url: "{{ EDXAPP_MICROSITE_CONFIG_URL }}"
     dest: "{{ EDXAPP_MICROSITE_CONFIG_FILE }}"
     headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
+    mode: 0777
   when: microsite_config_file.stat.exists == False
   ignore_errors: yes
+  become_user: {{ edxapp_user }}
   register: microsite_config_file_downloaded
   tags:
     - install

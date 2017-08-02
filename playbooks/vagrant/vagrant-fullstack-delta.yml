@@ -1,6 +1,6 @@
 - name: Update fullstack to a specific intermediate revision
   hosts: all
-  sudo: True
+  become: True
   gather_facts: True
   vars:
     disable_edx_services: true
