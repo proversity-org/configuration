@@ -1,4 +1,17 @@
 ---
+
+- name: create {{ edxapp_theme_name }}
+  file:
+    path: "{{ edxapp_theme_name }}"
+    state: directory
+    owner: "{{ edxapp_user }}"
+    group: "www-data"
+    mode: "0755"
+  tags:
+    - install
+    - install:base
+    - microsites
+    
 - name: create edxapp configuration dir
   file:
     path: "{{ EDXAPP_CFG_DIR }}"

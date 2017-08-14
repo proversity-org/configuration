@@ -52,10 +52,6 @@
       when: "'localhost' in EDXAPP_MONGO_HOSTS"
     - role: rabbitmq
       rabbitmq_ip: 127.0.0.1
-    - role: themes
-      assets: false
-    - role: microsites
-      assets: false
     - role: edxapp
       celery_worker: True
     - edxapp
@@ -70,6 +66,10 @@
     - role: elasticsearch
       when: "'localhost' in EDXAPP_ELASTIC_SEARCH_CONFIG|map(attribute='host')"
     - forum
+    - role: microsites
+      assets: false
+    - role: themes
+      assets: false
     - discovery
     - role: notifier
       NOTIFIER_DIGEST_TASK_INTERVAL: 5
