@@ -52,6 +52,10 @@
       when: "'localhost' in EDXAPP_MONGO_HOSTS"
     - role: rabbitmq
       rabbitmq_ip: 127.0.0.1
+    - role: themes
+      assets: false
+    - role: microsites
+      assets: false
     - role: edxapp
       celery_worker: True
     - edxapp
@@ -60,10 +64,6 @@
       ECOMMERCE_WORKER_BROKER_HOST: 127.0.0.1
     - analytics_api
     - insights
-    - role: themes
-      assets: false
-    - role: microsites
-      assets: false
     # not ready yet: - edx_notes_api
     - oauth_client_setup
     - oraclejdk
