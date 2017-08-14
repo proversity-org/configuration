@@ -1,8 +1,8 @@
 ---
 
-- name: create {{ edxapp_theme_name }}
+- name: create {{ EDXAPP_COMPREHENSIVE_THEME_DIRS }}
   file:
-    path: "{{ edxapp_theme_name }}"
+    path: "{{ EDXAPP_COMPREHENSIVE_THEME_DIRS }}/{{ edxapp_theme_name }}"
     state: directory
     owner: "{{ edxapp_user }}"
     group: "www-data"
