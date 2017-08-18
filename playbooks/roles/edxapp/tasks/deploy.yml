@@ -449,7 +449,12 @@
   args:
     chdir: "{{ edxapp_code_dir }}"
   become_user: "{{ common_web_user }}"
+<<<<<<< HEAD
   with_items: "{{ SERVICE_WORKER_USERS }}"
+=======
+  with_items: "{{ service_worker_users }}"
+  ignore_errors: "yes"
+>>>>>>> FIX: adding ignore errors this breaks the deployment and it should not
   when: CREATE_SERVICE_WORKER_USERS
   tags:
     - manage
