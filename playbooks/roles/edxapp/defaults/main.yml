@@ -315,11 +315,16 @@ EDXAPP_LMS_SITE_NAME: "{{ EDXAPP_SITE_NAME }}"
 EDXAPP_CMS_SITE_NAME: 'localhost'
 EDXAPP_MEDIA_URL:  "/media"
 EDXAPP_FEEDBACK_SUBMISSION_EMAIL: ""
+<<<<<<< HEAD
 EDXAPP_LOGGING_ENV:  'sandbox'
 
 BADGR_API_TOKEN: "{{ EDXAPP_BADGR_API_TOKEN }}"
 BADGR_BASE_URL: "{{ EDXAPP_BADGR_BASE_URL }}"
 BADGR_ISSUER_SLUG: "{{ EDXAPP_BADGR_ISSUER_SLUG }}"  
+=======
+EDXAPP_CELERY_BROKER_HOSTNAME: ""
+EDXAPP_LOGGING_ENV:  'sandbox' 
+>>>>>>> FIX: correcting placement of badgr vars
 
 EDXAPP_SYSLOG_SERVER: ""
 EDXAPP_RABBIT_HOSTNAME: 'localhost'
@@ -1280,7 +1285,13 @@ generic_env_config:  &edxapp_generic_env
 >>>>>>> Proversity/nvn generate microsite nginx conf (#67)
 =======
   ENABLE_DOG: "{{ EDXAPP_ENABLE_DOG }}"
+<<<<<<< HEAD
 >>>>>>> Proversity/release testing (#69)
+=======
+  BADGR_API_TOKEN: "{{ EDXAPP_BADGR_API_TOKEN }}"
+  BADGR_BASE_URL: "{{ EDXAPP_BADGR_BASE_URL }}"
+  BADGR_ISSUER_SLUG: "{{ EDXAPP_BADGR_ISSUER_SLUG }}" 
+>>>>>>> FIX: correcting placement of badgr vars
 
 lms_auth_config:
   <<: *edxapp_generic_auth
