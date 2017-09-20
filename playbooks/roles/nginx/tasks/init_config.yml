@@ -7,6 +7,7 @@
     - install
     - install:configuration
     - microsites
+
     
 - name: download microsite certificate from (server_vars)
   get_url:
@@ -15,7 +16,7 @@
     headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
     mode: 0644
   with_dict: "{{ EDXAPP_MICROSITE_CONFIGURATION }}"
-  when: "{{ item.value.generate_nginx_conf }}"
+  when: "{{ item.value.generate_nginx_conf }} and {{ item.value.can_download }}"
   become: true
   tags:
     - install
@@ -29,7 +30,7 @@
     headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
     mode: 0644
   with_dict: "{{ EDXAPP_MICROSITE_CONFIGURATION }}"
-  when: "{{ item.value.generate_nginx_conf }}"
+  when: "{{ item.value.generate_nginx_conf }} and {{ item.value.can_download }}"
   become: true
   tags:
     - install
@@ -58,7 +59,7 @@
      headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
      mode: 0644
    with_dict: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION|default({}) }}"
-   when: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION is defined and item.value.generate_nginx_conf }}"
+   when: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION is defined }} and {{ item.value.generate_nginx_conf }} and {{ item.value.can_download }}"
    become: true
    tags:
     - install
@@ -72,7 +73,7 @@
      headers: "Authorization: {{ EDXAPP_MICROSITE_SECRET }}"
      mode: 0644
    with_dict: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION|default({}) }}"
-   when: PLATFORM_EDXAPP_MICROSITE_CONFIGURATION is defined and item.value.generate_nginx_conf
+   when: "{{ PLATFORM_EDXAPP_MICROSITE_CONFIGURATION is defined }} and {{ item.value.generate_nginx_conf }} and {{ item.value.can_download }}"
    become: true
    tags:
     - install
