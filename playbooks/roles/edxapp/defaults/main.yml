@@ -1395,7 +1395,13 @@ lms_env_config:
   ANALYTICS_API_URL: "{{ EDXAPP_LMS_ANALYTICS_API_URL }}"
 =======
   THIRD_PARTY_AUTH_BACKENDS: "{{ EDXAPP_THIRD_PARTY_AUTH_BACKENDS }}"
+<<<<<<< HEAD
 >>>>>>> UPD: third party auth settings - reflect to staging
+=======
+  DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH: "{{ EDXAPP_DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH }}"
+  EXTEND_PROFILE_WITH_LINKEDIN: "{{ EDXAPP_EXTEND_PROFILE_WITH_LINKEDIN }}"
+  LINKEDIN_FIELDS: "{{ EDXAPP_LINKEDIN_FIELDS }}"
+>>>>>>> ADD: lined in profile settings
 
 cms_auth_config:
   <<: *edxapp_generic_auth
