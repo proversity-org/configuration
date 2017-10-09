@@ -1415,6 +1415,7 @@ lms_env_config:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> UPD: third party auth settings - reflect to staging
 =======
   DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH: "{{ EDXAPP_DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH }}"
@@ -1422,6 +1423,8 @@ lms_env_config:
 >>>>>>> we dont need this
 =======
 >>>>>>> Proversity/development (#73)
+=======
+>>>>>>> FIX: we dont nee this
   EXTEND_PROFILE_WITH_LINKEDIN: "{{ EDXAPP_EXTEND_PROFILE_WITH_LINKEDIN }}"
   LINKEDIN_FIELDS: "{{ EDXAPP_LINKEDIN_FIELDS }}"
 >>>>>>> ADD: lined in profile settings
