@@ -1319,7 +1319,11 @@ generic_env_config:  &edxapp_generic_env
 =======
   ANALITICA_TRACK_URL: "{{ ANALITICA_TRACK_URL }}"
   ANALITICA_ACTIVE: "{{ ANALITICA_ACTIVE }}"
+<<<<<<< HEAD
   ANALITICA_TOKEN1: "{{ ANALITICA_ACTIVE }}"
+>>>>>>> fixing =
+=======
+  ANALITICA_TOKEN: "{{ ANALITICA_TOKEN }}"
 >>>>>>> fixing =
 
 lms_auth_config:
