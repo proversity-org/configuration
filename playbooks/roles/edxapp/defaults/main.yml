@@ -1311,10 +1311,16 @@ generic_env_config:  &edxapp_generic_env
 >>>>>>> FIX: correcting placement of badgr vars
 =======
   BADGR_ISSUER_SLUG: "{{ EDXAPP_BADGR_ISSUER_SLUG }}"
+<<<<<<< HEAD
   ANALITICA_TRACK_URL = "{{ ANALITICA_TRACK_URL }}"
   ANALITICA_ACTIVE = "{{ ANALITICA_ACTIVE }}"
   ANALITICA_TOKEN = "{{ ANALITICA_ACTIVE }}"
 >>>>>>> ADD: analitica settings
+=======
+  ANALITICA_TRACK_URL: "{{ ANALITICA_TRACK_URL }}"
+  ANALITICA_ACTIVE: "{{ ANALITICA_ACTIVE }}"
+  ANALITICA_TOKEN1: "{{ ANALITICA_ACTIVE }}"
+>>>>>>> fixing =
 
 lms_auth_config:
   <<: *edxapp_generic_auth
