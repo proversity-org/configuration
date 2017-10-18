@@ -1101,7 +1101,7 @@ generic_env_config:  &edxapp_generic_env
   BADGR_ISSUER_SLUG: "{{ EDXAPP_BADGR_ISSUER_SLUG }}"
   ANALITICA_TRACK_URL: "{{ ANALITICA_TRACK_URL }}"
   ANALITICA_ACTIVE: "{{ ANALITICA_ACTIVE }}"
-  ANALITICA_TOKEN1: "{{ ANALITICA_ACTIVE }}"
+  ANALITICA_TOKEN: "{{ ANALITICA_TOKEN }}"
 
 lms_auth_config:
   <<: *edxapp_generic_auth
