@@ -2,7 +2,7 @@
 
 # Role to update the edx-deployment repo
 
-- name: checkout microsite repo into {{ deployment_repo_dest }} (-e 'edxapp_git_ssh_key=/path/)
+- name: checkout edx-deployment repo into {{ deployment_repo_dest }} (-e 'edxapp_git_ssh_key=/path/)
   git:
     dest: "{{ deployment_repo_dest }}"
     repo: "{{ deployment_repo_url }}"
