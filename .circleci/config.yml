@@ -8,6 +8,18 @@ jobs:
     steps:
       - checkout
       - run:
+          name: apt-get update
+          command: 'sudo apt-get update'
+      - run:
+           name: apt-get install python
+           command: 'sudo apt-get install python-dev --fix-missing'
+      - run:
+          name: pip install awscli
+          command: 'pip install awscli'
+      - run:
+          name: set region
+          command: 'aws configure set default.region eu-west-1'
+      - run:
           name: update configuration on development
           command: 'DEV_SEC_GROUP=$DEV_SEC_GROUP /bin/bash .circleci/deploy.sh development'
 
