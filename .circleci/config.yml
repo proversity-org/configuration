@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  deploy_development:
+    machine:
+        enabled: true
+    working_directory: ~/configuration
+    parallelism: 1
+    steps:
+      - checkout
+      - run:
+          name: update configuration on development
+          command: 'DEV_SEC_GROUP=$DEV_SEC_GROUP /bin/bash circleci/deploy.sh development'
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - deploy_development:
+          filters:
+            branches:
+              only: proversity/development
