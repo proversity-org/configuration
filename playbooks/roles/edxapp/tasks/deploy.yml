@@ -432,6 +432,7 @@
   become_user: "{{ supervisor_service_user }}"
   tags:
     - manage
+    - install:configuration
 
 - name: restart edxapp_workers
   supervisorctl:
