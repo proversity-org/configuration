@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: update configuration on development
-          command: 'DEV_SEC_GROUP=$DEV_SEC_GROUP /bin/bash circleci/deploy.sh development'
+          command: 'DEV_SEC_GROUP=$DEV_SEC_GROUP /bin/bash .circleci/deploy.sh development'
 
 workflows:
   version: 2
