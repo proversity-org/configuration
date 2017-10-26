@@ -630,6 +630,18 @@ EDXAPP_BULK_EMAIL_ROUTING_KEY_SMALL_JOBS: 'edx.lms.core.low'
 EDXAPP_LMS_CELERY_QUEUES: "{{ edxapp_workers|selectattr('service_variant', 'equalto', 'lms')|map(attribute='queue')|map('regex_replace', '(.*)', 'edx.lms.core.\\1')|list }}"
 EDXAPP_CMS_CELERY_QUEUES: "{{ edxapp_workers|selectattr('service_variant', 'equalto', 'cms')|map(attribute='queue')|map('regex_replace', '(.*)', 'edx.cms.core.\\1')|list }}"
 
+EDX_MICROSITE_TEMPLATE_BACKEND: "fileback end"
+EDX_MICROSITE_BACKEND: "file backend"
+EDXAPP_MICROSITE_CONFIG_FILE: "/edx/app/file"
+EDXAPP_ENABLE_DOG: False
+EDXAPP_BADGR_API_TOKEN: "token"
+EDXAPP_BADGR_BASE_URL: "baseurl"
+EDXAPP_BADGR_ISSUER_SLUG: "slug"
+ANALITICA_TRACK_URL: "track url"
+ANALITICA_ACTIVE: False
+ANALITICA_TOKEN: "token"
+USER_COURSE_ENROLLMENTS_ORDER_BY: "created_reverse"
+
 EDXAPP_DEFAULT_CACHE_VERSION: "1"
 EDXAPP_OAUTH_ENFORCE_SECURE: True
 EDXAPP_OAUTH_EXPIRE_CONFIDENTIAL_CLIENT_DAYS: 365
@@ -1332,7 +1344,11 @@ generic_env_config:  &edxapp_generic_env
 >>>>>>> fixing =
 =======
   ANALITICA_TOKEN: "{{ ANALITICA_TOKEN }}"
+<<<<<<< HEAD
 >>>>>>> fixing =
+=======
+  USER_COURSE_ENROLLMENTS_ORDER_BY: "{{ USER_COURSE_ENROLLMENTS_ORDER_BY }}"
+>>>>>>> Adding new USER_COURSE_ENROLLMENTS_ORDER_BY
 
 lms_auth_config:
   <<: *edxapp_generic_auth
