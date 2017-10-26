@@ -1,3 +1,36 @@
+- Role: discovery
+  - Added `DISCOVERY_REPOS` to allow configuring discovery repository details.
+
+- Role: edx_django_service
+  - Made the keys `edx_django_service_git_protocol`, `edx_django_service_git_domain`, and `edx_django_service_git_path` of `edx_django_service_repos` all individually configurable.
+
+- Role: discovery
+  - Updated LANGUAGE_CODE to generic english. Added configuration for multilingual language package django-parler.
+
+- Role: edxapp
+  - Added `EDXAPP_EXTRA_MIDDLEWARE_CLASSES` for configuring additional middleware logic.
+
+- Role: discovery
+  - Added `OPENEXCHANGERATES_API_KEY` for retrieving currency exchange rates.
+
+- Role: edxapp
+  - Added `EDXAPP_SCORM_PKG_STORAGE_DIR`, with default value as it was in the server template.
+  - Added `EDXAPP_SCORM_PLAYER_LOCAL_STORAGE_ROOT`, with default value as it was in the server template.
+
+- Role: edxapp
+  - Added `EDXAPP_ENTERPRISE_TAGLINE` for customized header taglines for different enterprises.
+  - Added `EDXAPP_PLATFORM_DESCRIPTION` used to describe the specific Open edX platform.
+
+- Role: edxapp
+  - Added `ENTERPRISE_SUPPORT_URL` variable used by the LMS.
+
+- Role: edxapp
+  - Added OAUTH_DELETE_EXPIRED to enable automatic deletion of edx-django-oauth2-provider grants, access tokens, and refresh tokens as they are consumed. This will not do a bulk delete of existing rows.
+
+- Role: mongo_3_2
+  - Added role for mongo 3.2, not yet in use.
+  - Removed MONGO_CLUSTERED variable. In this role mongo replication is always configured, even if there is only one node.
+
 - Role: edxapp
   - Added creation of enterprise_worker user to provisioning. This user is used by the edx-enterprise package when making API requests to Open edX IDAs.
 
@@ -63,6 +96,19 @@
 - Role: edxapp
   - Added the EDXAPP_ACTIVATION_EMAIL_SUPPORT_LINK URL with default value `''`.
   - Added the EDXAPP_PASSWORD_RESET_SUPPORT_LINK URL with default value `''`.
+
+- Role: nginx
+  - Modified `server-template.j2` to be more accessible and configurable.
+  - The template should contain the `lang` attribute in the HTML tag.
+  - If the image loaded has some meaning, as a logo, it should have the `alt` attribute.
+  - After the header 1 (h1) there is no relevant text content, so next it can not be
+    another header (h2). It was changed to be a paragraph with the header 2 CSS style.
+  - Added `NGINX_SERVER_ERROR_IMG_ALT` with default value as it was in the server template
+  - Added `NGINX_SERVER_ERROR_LANG` with default value `en`
+  - Added `NGINX_SERVER_ERROR_STYLE_H1` with default value as it was in the server template
+  - Added `NGINX_SERVER_ERROR_STYLE_P_H2` with default value as it was in the server template
+  - Added `NGINX_SERVER_ERROR_STYLE_P` with default value as it was in the server template
+  - Added `NGINX_SERVER_ERROR_STYLE_DIV` with default value as it was in the server template
 
 - Role: edxapp
   - Added the EDXAPP_SHOW_HEADER_LANGUAGE_SELECTOR feature flag with default value [false]
@@ -359,3 +405,21 @@
 - Role: edxapp
   - Added `PASSWORD_MIN_LENGTH` for password minimum length validation on reset page.
   - Added `PASSWORD_MAX_LENGTH` for password maximum length validation on reset page.
+
+- Role: credentials
+  - Replaced `CREDENTIALS_OAUTH_URL_ROOT` with `COMMON_OAUTH_URL_ROOT` from `common_vars`
+  - Replaced `CREDENTIALS_OIDC_LOGOUT_URL` with `COMMON_OAUTH_LOGOUT_URL` from `common_vars`
+  - Replaced `CREDENTIALS_JWT_AUDIENCE` with `COMMON_JWT_AUDIENCE` from `common_vars`
+  - Replaced `CREDENTIALS_JWT_ISSUER` with `COMMON_JWT_ISSUER` from `common_vars`
+  - Replaced `CREDENTIALS_JWT_SECRET_KEY` with `COMMON_JWT_SECRET_KEY` from `common_vars`
+  - Replaced `CREDENTIALS_SOCIAL_AUTH_EDX_OIDC_ISSUER` with `COMMON_JWT_ISSUER` from `common_vars`
+
+- Role: ecommerce
+  - Replaced `ECOMMERCE_OAUTH_URL_ROOT` with `COMMON_OAUTH_URL_ROOT` from `common_vars`
+  - Replaced `ECOMMERCE_OIDC_LOGOUT_URL` with `COMMON_OAUTH_LOGOUT_URL` from `common_vars`
+  - Replaced `ECOMMERCE_JWT_SECRET_KEY` with `COMMON_JWT_SECRET_KEY` from `common_vars`
+  - Replaced `ECOMMERCE_SOCIAL_AUTH_EDX_OIDC_ISSUER` with `COMMON_JWT_ISSUER` from `common_vars`
+
+- Role: edxapp
+  - Added `EDXAPP_VIDEO_TRANSCRIPTS_SETTINGS` to configure S3-backed video transcripts.
+  - Removed unused `EDXAPP_BOOK_URL` setting

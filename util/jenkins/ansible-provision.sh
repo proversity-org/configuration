@@ -127,14 +127,18 @@ fi
 
 if [[ -z $ami ]]; then
   if [[ $server_type == "full_edx_installation" ]]; then
-    ami="ami-c20128d4"
+    ami="ami-dd9d81a6"
   elif [[ $server_type == "ubuntu_16.04" || $server_type == "full_edx_installation_from_scratch" ]]; then
-    ami="ami-20631a36"
+    ami="ami-1d4e7a66"
   fi
 fi
 
 if [[ -z $instance_type ]]; then
   instance_type="t2.large"
+fi
+
+if [[ -z $instance_initiated_shutdown_behavior ]]; then
+  instance_initiated_shutdown_behavior="terminate"
 fi
 
 if [[ -z $enable_newrelic ]]; then
@@ -187,7 +191,6 @@ edx_ansible_source_repo: ${configuration_source_repo}
 edx_platform_repo: ${edx_platform_repo}
 
 EDXAPP_PLATFORM_NAME: $sandbox_platform_name
-EDXAPP_COMPREHENSIVE_THEME_DIRS: $edxapp_comprehensive_theme_dirs
 
 EDXAPP_STATIC_URL_BASE: $static_url_base
 EDXAPP_LMS_NGINX_PORT: 80
@@ -269,6 +272,7 @@ COMMON_USER_INFO:
 USER_CMD_PROMPT: '[$name_tag] '
 COMMON_ENABLE_NEWRELIC_APP: $enable_newrelic
 COMMON_ENABLE_DATADOG: $enable_datadog
+COMMON_OAUTH_BASE_URL: "https://${deploy_host}"
 FORUM_NEW_RELIC_ENABLE: $enable_newrelic
 ENABLE_PERFORMANCE_COURSE: $performance_course
 ENABLE_DEMO_TEST_COURSE: $demo_test_course
@@ -311,6 +315,7 @@ security_group: $security_group
 ami: $ami
 region: $region
 zone: $zone
+instance_initiated_shutdown_behavior: $instance_initiated_shutdown_behavior
 instance_tags:
     environment: $environment
     github_username: $github_username
