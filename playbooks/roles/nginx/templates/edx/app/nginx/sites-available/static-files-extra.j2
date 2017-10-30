@@ -1,4 +1,4 @@
-{% if EDXAPP_SCORM_PLAYER_LOCAL_STORAGE_ROOT %}
+{% if EDXAPP_SCORM_PLAYER_LOCAL_STORAGE_ROOT is defined and EDXAPP_SCORM_PLAYER_LOCAL_STORAGE_ROOT %}
   # w/in scorm/, override default return 403 for these file types
   location ~ ^/static/scorm/(?:.*)(?:\.xml|\.json) {
       try_files /{{ EDXAPP_SCORM_PLAYER_LOCAL_STORAGE_ROOT }}/$file =404;
