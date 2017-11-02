@@ -34,7 +34,9 @@
         - lms
         - forum
         - xqueue
+        - ecommerce
       nginx_default_sites:
+<<<<<<< HEAD
       - lms
 <<<<<<< HEAD
 =======
@@ -42,6 +44,9 @@
       nginx_sites:
       - ecommerce
       when: SANDBOX_ENABLE_ECOMMERCE
+=======
+        - lms
+>>>>>>> Proversity/development (#85)
     - mysql
 >>>>>>> make edxlocal role conditional in edx_sandbox and analytics_single playbooks
     - role: edxlocal

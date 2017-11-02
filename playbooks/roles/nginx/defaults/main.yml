@@ -62,7 +62,11 @@ NGINX_LOG_FORMAT_NAME: 'p_combined'
 # headers to reflect the properties of the incoming request.
 NGINX_SET_X_FORWARDED_HEADERS: False
 
+<<<<<<< HEAD
 # Increasing these values allows studio to process more complex operations.
+=======
+# Increasing these values allows studio to process more complex operations.  
+>>>>>>> Proversity/development (#85)
 # Default timeouts limit CMS connections to 60 seconds.
 
 NGINX_CMS_PROXY_CONNECT_TIMEOUT: !!null

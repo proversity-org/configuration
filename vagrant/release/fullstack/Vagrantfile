@@ -28,7 +28,11 @@ openedx_releases = {
 >>>>>>> Vagrantfiles for test of ficus.2
 =======
   "open-release/ficus.2" => "ficus-fullstack-2017-03-28",
+<<<<<<< HEAD
 >>>>>>> Vagrantfiles for ficus.2
+=======
+  "open-release/ficus.3" => "ficus-fullstack-2017-04-20",
+>>>>>>> Proversity/development (#85)
 
   "open-release/eucalyptus/1rc1" => "eucalyptus-fullstack-1rc1",
   "open-release/eucalyptus.1rc2" => "eucalyptus-fullstack-2016-08-19",

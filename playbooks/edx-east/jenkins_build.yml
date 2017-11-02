@@ -11,19 +11,32 @@
   become: True
   gather_facts: True
   vars:
+<<<<<<< HEAD
     COMMON_ENABLE_DATADOG: False
     COMMON_ENABLE_SPLUNKFORWARDER: True
     COMMON_ENABLE_NEWRELIC: True
+=======
+    COMMON_ENABLE_DATADOG: True
+    COMMON_ENABLE_SPLUNKFORWARDER: True
+>>>>>>> Proversity/development (#85)
     COMMON_SECURITY_UPDATES: yes
     SECURITY_UPGRADE_ON_ANSIBLE: true
 
     SPLUNKFORWARDER_LOG_ITEMS:
+<<<<<<< HEAD
       - source: '/var/lib/jenkins/jobs/edx-platform-*/builds/*/junitResult.xml'
+=======
+      - source: '/var/lib/jenkins/jobs/*/builds/*/junitResult.xml'
+>>>>>>> Proversity/development (#85)
         recursive: true
         index: 'testeng'
         sourcetype: junit
         followSymlink: false
+<<<<<<< HEAD
         blacklist: coverage|private|subset|specific|custom|special|\.gz$
+=======
+        blacklist: '\.gz$'
+>>>>>>> Proversity/development (#85)
         crcSalt: '<SOURCE>'
 
       - source: '/var/lib/jenkins/jobs/*/builds/*/build.xml'
@@ -34,6 +47,7 @@
         crcSalt: '<SOURCE>'
         blacklist: '\.gz$'
 
+<<<<<<< HEAD
       - source: '/var/lib/jenkins/jobs/edx-platform-*/builds/*/archive/.../test_root/log/timing.*.log'
         index: 'testeng'
         recursive: true
@@ -42,6 +56,8 @@
         crcSalt: '<SOURCE>'
         blacklist: coverage|private|subset|specific|custom|special|\.gz$
 
+=======
+>>>>>>> Proversity/development (#85)
       - source: '/var/lib/jenkins/jobs/edx-platform-*/builds/*/archive/test_root/log/timing.*.log'
         index: 'testeng'
         recursive: true
@@ -71,8 +87,11 @@
         - splunkonly
         - jenkins:promote-to-production
       become: True
+<<<<<<< HEAD
 
     - role: newrelic
       when: COMMON_ENABLE_NEWRELIC
       tags:
         - newreliconly
+=======
+>>>>>>> Proversity/development (#85)

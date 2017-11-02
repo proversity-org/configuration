@@ -150,6 +150,7 @@ discovery_service_config_overrides:
   PUBLISHER_FROM_EMAIL: '{{ DISCOVERY_PUBLISHER_FROM_EMAIL }}'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   OPENEXCHANGERATES_API_KEY: '{{ DISCOVERY_OPENEXCHANGERATES_API_KEY }}'
 
   LANGUAGE_CODE: '{{DISCOVERY_LANGUAGE_CODE}}'
@@ -159,6 +160,9 @@ discovery_service_config_overrides:
 # See edx_django_service_automated_users for an example of what this should be
 DISCOVERY_AUTOMATED_USERS: {}
 =======
+=======
+
+>>>>>>> Proversity/development (#85)
 DISCOVERY_REPOS:
   - PROTOCOL: "{{ COMMON_GIT_PROTOCOL }}"
     DOMAIN: "{{ COMMON_GIT_MIRROR }}"
@@ -245,4 +249,16 @@ discovery_debian_pkgs:
 
 discovery_redhat_pkgs: []
 
+<<<<<<< HEAD
 >>>>>>> Proversity/release testing (#69)
+=======
+OPENEXCHANGERATES_API_KEY: '{{ DISCOVERY_OPENEXCHANGERATES_API_KEY }}'
+
+LANGUAGE_CODE: '{{DISCOVERY_LANGUAGE_CODE}}'
+PARLER_DEFAULT_LANGUAGE_CODE: '{{DISCOVERY_PARLER_DEFAULT_LANGUAGE_CODE}}'
+PARLER_LANGUAGES : '{{DISCOVERY_PARLER_LANGUAGES}}'
+
+# See edx_django_service_automated_users for an example of what this should be
+DISCOVERY_AUTOMATED_USERS: {}
+
+>>>>>>> Proversity/development (#85)

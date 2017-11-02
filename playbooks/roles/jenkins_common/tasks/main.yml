@@ -50,6 +50,7 @@
     - install
     - install:system-requirements
 
+<<<<<<< HEAD
 - name: Delete any existing jenkins-configuration folders to avoid unwanted configuration
   file:
     path: '{{ item }}'
@@ -65,6 +66,8 @@
     - install:jenkins-configuration
     - jenkins:local-dev
 
+=======
+>>>>>>> Proversity/development (#85)
 - name: Create necessary folders
   file:
     path: '{{ item }}'
@@ -83,8 +86,11 @@
   tags:
     - install
     - install:base
+<<<<<<< HEAD
     - install:jenkins-configuration
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Download Jenkins war file
   get_url:
@@ -135,7 +141,10 @@
     - install
     - install:base
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Run gradle libs
   shell: './gradlew libs'
@@ -150,19 +159,26 @@
     - install
     - install:base
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Copy init scripts into init.groovy.d
   command: 'cp {{ jenkins_common_git_home }}/jenkins-configuration/{{ jenkins_common_configuration_src_path }}/{{ item }} {{ jenkins_common_home }}/init.groovy.d/'
   with_items: '{{ jenkins_common_configuration_scripts }}'
   become: true
   become_user: '{{ jenkins_common_user }}'
+<<<<<<< HEAD
   register: init_scripts_copied
+=======
+>>>>>>> Proversity/development (#85)
   tags:
     - install
     - install:base
     - install:jenkins-configuration
 
+<<<<<<< HEAD
 - name: Copy all init scripts other than oauth for local dev
   command: 'cp {{ jenkins_common_git_home }}/jenkins-configuration/{{ jenkins_common_configuration_src_path }}/{{ item }} {{ jenkins_common_home }}/init.groovy.d/'
   with_items: '{{ jenkins_common_configuration_scripts }}'
@@ -172,6 +188,8 @@
   tags:
     - jenkins:local-dev
 
+=======
+>>>>>>> Proversity/development (#85)
 - name: Create jenkins config sub folders
   file:
     path: '{{ item }}'
@@ -185,8 +203,11 @@
   tags:
      - install
      - install:base
+<<<<<<< HEAD
      - install:jenkins-configuration
      - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Copy non plugins template files
   template:
@@ -201,6 +222,7 @@
     - install:base
     - install:jenkins-configuration
 
+<<<<<<< HEAD
 - name: For local dev, copy any config files other than oauth
   template:
     src: '{{ role_path }}/templates/config/{{ item }}.yml.j2'
@@ -212,6 +234,8 @@
   tags:
     - jenkins:local-dev
 
+=======
+>>>>>>> Proversity/development (#85)
 - name: Update Github OAUTH settings when promoting jenkins instance to production
   template:
     src: '{{ role_path }}/templates/config/security.yml.j2'
@@ -233,7 +257,10 @@
     - install:base
     - install:plugins
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Copy ec2 config files
   template:
@@ -247,7 +274,10 @@
     - install
     - install:base
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Copy xml config files
   template:
@@ -261,7 +291,10 @@
     - install
     - install:base
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Run plugins.gradle
   shell: './gradlew -b plugins.gradle plugins'
@@ -277,7 +310,10 @@
     - install:base
     - install:plugins
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Copy secret file credentials
   copy:
@@ -289,7 +325,10 @@
     - install
     - install:base
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Copy ssh key credentials
   copy:
@@ -303,7 +342,10 @@
     - install
     - install:base
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Copy ec2 key
   copy:
@@ -316,7 +358,10 @@
     - install
     - install:base
     - install:jenkins-configuration
+<<<<<<< HEAD
     - jenkins:local-dev
+=======
+>>>>>>> Proversity/development (#85)
 
 - name: Start Jenkins Service
   systemd:
