@@ -56,6 +56,11 @@ extra_args="$extra_args -e 'disable_edx_services=true' -e devstack=true"
 declare -A repos_to_cmd
 edx_ansible_cmd="{{ edx_ansible_venv_bin }}/ansible-playbook -i localhost, -c local $extra_args"
 
+asset_stop='false'
+if [[ "$4" == "asset_stop" ]]; then
+    asset_stop='true'
+fi
+
 repos_to_cmd["edx-platform"]="$edx_ansible_cmd edxapp.yml -e 'edx_platform_version=$2'"
 repos_to_cmd["edx-workers"]="$edx_ansible_cmd edxapp.yml -e 'edx_platform_version=$2' -e 'celery_worker=true'"
 repos_to_cmd["xqueue"]="$edx_ansible_cmd xqueue.yml -e 'xqueue_version=$2' -e 'elb_pre_post=false'"
@@ -80,6 +85,7 @@ repos_to_cmd["video_encode_worker"]="$edx_ansible_cmd veda_encode_worker.yml -e 
 repos_to_cmd["edx-notes-api"]="$edx_ansible_cmd notes.yml -e 'EDX_NOTES_API_VERSION=$2'"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> add notes to update script
 =======
 repos_to_cmd["notifier"]="$edx_ansible_cmd notifier.yml -e 'NOTIFIER_VERSION=$2'"
@@ -91,6 +97,10 @@ repos_to_cmd["microsites"]="$edx_ansible_cmd microsites.yml -e 'microsite_versio
 =======
 repos_to_cmd["themes"]="$edx_ansible_cmd themes.yml -e 'edxapp_theme_version=$2' -e 'edxapp_git_ssh_key=$3'"
 >>>>>>> Proversity/themes play (#65)
+=======
+repos_to_cmd["microsites"]="$edx_ansible_cmd microsites.yml -e 'microsite_version=$2' -e 'edxapp_git_ssh_key=$3' -e 'assets_stop=$asset_stop'"
+repos_to_cmd["themes"]="$edx_ansible_cmd themes.yml -e 'edxapp_theme_version=$2' -e 'edxapp_git_ssh_key=$3' -e 'assets_stop=$asset_stop'"
+>>>>>>> ADD: extra var for explicite top and start
 
 if [[ -z $1 || -z $2 ]]; then
     echo
