@@ -62,11 +62,7 @@ NGINX_LOG_FORMAT_NAME: 'p_combined'
 # headers to reflect the properties of the incoming request.
 NGINX_SET_X_FORWARDED_HEADERS: False
 
-<<<<<<< HEAD
-# Increasing these values allows studio to process more complex operations.
-=======
 # Increasing these values allows studio to process more complex operations.  
->>>>>>> Proversity/development (#85)
 # Default timeouts limit CMS connections to 60 seconds.
 
 NGINX_CMS_PROXY_CONNECT_TIMEOUT: !!null
@@ -128,13 +124,11 @@ NGINX_EDXAPP_ERROR_PAGES:
   "504": "{{ nginx_default_error_page }}"
 
 CMS_HOSTNAME: '~^((stage|prod)-)?studio.*'
-<<<<<<< HEAD
-=======
+
 ECOMMERCE_HOSTNAME: '~^((stage|prod)-)?ecommerce.*'
 CREDENTIALS_HOSTNAME: '~^((stage|prod)-)?credentials.*'
 INSIGHTS_HOSTNAME: '~^((stage|prod)-)?insights.*'
 ANALYTICS_API_HOSTNAME: '~^((stage|prod)-)?analytics.*'
->>>>>>> updating insights and analytics api nginx config to handle hostname
 
 nginx_template_dir: "edx/app/nginx/sites-available"
 

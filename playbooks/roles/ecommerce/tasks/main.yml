@@ -1,6 +1,4 @@
 ---
-<<<<<<< HEAD
-=======
 #
 # edX Configuration
 #
@@ -154,7 +152,6 @@
     - install
     - install:configuration
 
->>>>>>> force flag for compress
 - name: Create Apple Pay certificates directory
   file:
     path: "{{ ecommerce_apple_pay_merchant_certificate_directory }}"

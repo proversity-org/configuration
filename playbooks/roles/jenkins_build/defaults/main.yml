@@ -65,11 +65,7 @@ build_jenkins_plugins_list:
     version: '2.5'
     group: 'org.jenkins-ci.plugins'
   - name: 'junit'
-<<<<<<< HEAD
-    version: '1.21'
-=======
     version: '1.3'
->>>>>>> Proversity/development (#85)
     group: 'org.jenkins-ci.plugins'
   - name: 'pam-auth'
     version: '1.2'
@@ -111,11 +107,7 @@ build_jenkins_plugins_list:
     version: '1.5'
     group: 'org.jenkins-ci.plugins'
   - name: 'cobertura'
-<<<<<<< HEAD
     version: '1.11'
-=======
-    version: '1.9.6'
->>>>>>> Proversity/development (#85)
     group: 'org.jenkins-ci.plugins'
   - name: 'copyartifact'
     version: '1.32.1'
@@ -144,12 +136,9 @@ build_jenkins_plugins_list:
   - name: 'github-oauth'
     version: '0.24'
     group: 'org.jenkins-ci.plugins'
-<<<<<<< HEAD
   - name: 'github-api'
     version: '1.90'
     group: 'org.jenkins-ci.plugins'
-=======
->>>>>>> Proversity/development (#85)
   - name: 'gradle'
     version: '1.24'
     group: 'org.jenkins-ci.plugins'
@@ -234,11 +223,7 @@ JENKINS_GITHUB_CONFIG: ''
 build_jenkins_hipchat_room: 'testeng'
 
 # ec2
-<<<<<<< HEAD
 build_jenkins_instance_cap: '500'
-=======
-build_jenkins_instance_cap: '250'
->>>>>>> Proversity/development (#85)
 
 # seed
 build_jenkins_seed_name: 'manually_seed_one_job'

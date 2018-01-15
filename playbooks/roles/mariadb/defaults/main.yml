@@ -9,11 +9,7 @@
 #
 ##
 # Defaults for role mariadb
-<<<<<<< HEAD
 #
-=======
-# 
->>>>>>> Proversity/development (#85)
 MARIADB_APT_KEY_XENIAL_ID: '0xF1656F24C74CD1D8'
 MARIADB_APT_KEY_ID: '0xcbcb082a1bb943db'
 
@@ -36,7 +32,6 @@ MARIADB_LISTEN_ALL: false
 
 MARIADB_DATABASES:
   - {
-<<<<<<< HEAD
       db: "{{ ECOMMERCE_DATABASE_NAME | default(None) }}",
       encoding: "utf8"
     }
@@ -83,63 +78,11 @@ MARIADB_DATABASES:
   - {
       db: "{{ HIVE_METASTORE_DATABASE_NAME | default(None) }}",
       encoding: "latin1"
-=======
-      db: "{{ ECOMMERCE_DEFAULT_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ INSIGHTS_DATABASE_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ XQUEUE_MYSQL_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ EDXAPP_MYSQL_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ EDXAPP_MYSQL_CSMH_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ EDX_NOTES_API_MYSQL_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ PROGRAMS_DEFAULT_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ ANALYTICS_API_DEFAULT_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ ANALYTICS_API_REPORTS_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ CREDENTIALS_DEFAULT_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ DISCOVERY_DEFAULT_DB_NAME | default(None) }}",
-      encoding: "utf8" 
-    }
-  - {
-      db: "{{ HIVE_METASTORE_DATABASE_NAME | default(None) }}",
-      encoding: "latin1" 
->>>>>>> Proversity/development (#85)
     }
 
 MARIADB_USERS:
   - {
-<<<<<<< HEAD
       db: "{{ ECOMMERCE_DATABASE_NAME | default(None) }}",
-=======
-      db: "{{ ECOMMERCE_DEFAULT_DB_NAME | default(None) }}",
->>>>>>> Proversity/development (#85)
       user: "{{ ECOMMERCE_DATABASE_USER | default(None) }}",
       pass: "{{ ECOMMERCE_DATABASE_PASSWORD | default(None) }}"
     }

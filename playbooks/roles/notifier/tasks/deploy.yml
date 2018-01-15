@@ -85,18 +85,11 @@
   tags:
   - deploy
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 - name: Migrate the notifier db
   shell: "{{ NOTIFIER_VENV_DIR }}/bin/python manage.py migrate --fake-initial"
-=======
-- name: Migrate
-  shell: "{{ NOTIFIER_VENV_DIR }}/bin/python manage.py migrate"
->>>>>>> migrate notifier, not syncdb
-=======
+
 - name: Syncdb
   shell: "{{ NOTIFIER_VENV_DIR }}/bin/python manage.py syncdb"
->>>>>>> UPD: swaping with edx notifier <currently it breaks>
   args:
     chdir: "{{ NOTIFIER_CODE_DIR }}"
   become: true

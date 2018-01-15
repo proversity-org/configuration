@@ -2,7 +2,6 @@
 COMMON_GIT_PATH: 'edx'
 ECOMMERCE_VERSION: 'master'
 
-<<<<<<< HEAD
 COMMON_MYSQL_MIGRATE_USER: '{{ ECOMMERCE_MYSQL_USER }}'
 COMMON_MYSQL_MIGRATE_PASS: '{{ ECOMMERCE_MYSQL_PASSWORD }}'
 
@@ -30,7 +29,6 @@ edx_django_service_is_devstack: true
 # NOTE: The creation of demo data requires database access,
 # which we don't have when making new images.
 ecommerce_create_demo_data: false
-=======
 DOCKER_TLD: "edx"
 
 ECOMMERCE_DATABASES:
@@ -46,4 +44,3 @@ ECOMMERCE_DATABASES:
     CONN_MAX_AGE: 60
 
 ECOMMERCE_MEMCACHE: ['edx.devstack.memcached:11211']
->>>>>>> Proversity/development (#85)

@@ -79,7 +79,6 @@
     - install
     - install:code
 
-<<<<<<< HEAD
 - name: checkout {{ edxapp_theme_name }} theme into themes directory
   git:
     dest: "{{ edxapp_app_dir }}/themes/{{ edxapp_theme_name }}"
@@ -103,8 +102,6 @@
   include_role:
     name: "simple_theme"
 
-=======
->>>>>>> Proversity/themes play (#64)
 - name: Stat each requirements file with Github URLs to ensure it exists
   stat:
     path: "{{ item }}"
@@ -450,21 +447,12 @@
   args:
     chdir: "{{ edxapp_code_dir }}"
   become_user: "{{ common_web_user }}"
-<<<<<<< HEAD
-<<<<<<< HEAD
   with_items: "{{ SERVICE_WORKER_USERS }}"
-=======
-  with_items: "{{ service_worker_users }}"
-=======
-  with_items: "{{ SERVICE_WORKER_USERS }}"
->>>>>>> Proversity/development (#85)
   ignore_errors: "yes"
->>>>>>> FIX: adding ignore errors this breaks the deployment and it should not
   when: CREATE_SERVICE_WORKER_USERS
   tags:
     - manage
     - manage:db
-<<<<<<< HEAD
 
 - name: reindex all courses
   shell: "{{ edxapp_venv_bin }}/python ./manage.py cms reindex_course --setup --settings={{ edxapp_settings }}"
@@ -475,6 +463,4 @@
   tags:
     - install
     - install:base
-=======
     - manage
->>>>>>> Proversity/release testing (#69)
