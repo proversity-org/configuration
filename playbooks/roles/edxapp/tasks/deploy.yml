@@ -256,17 +256,9 @@
 
 #install with the shell command instead of the ansible npm module so we don't accidentally re-write package.json 
 - name: install node dependencies
-<<<<<<< HEAD
   shell: "{{ edxapp_nodeenv_bin }}/npm install"
   args:
     chdir: "{{ edxapp_code_dir }}"
-=======
-  npm:
-    executable: "{{ edxapp_nodeenv_bin }}/npm"
-    path: "{{ edxapp_code_dir }}"
-    production: yes
-    state: latest
->>>>>>> removing comments
   environment: "{{ edxapp_environment }}"
   become_user: "{{ edxapp_user }}"
   tags:
