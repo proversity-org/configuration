@@ -37,6 +37,10 @@
     recurse: yes
   no_log: True
   register: delete_files
+
+- debug:
+    var: delete_files
+    verbosity: 2
   
 - name: Remove static files that is older than 15m (-e 'assets=true')
   file:
@@ -47,6 +51,7 @@
       mode:  "0755"
   when: restart is defined and delete_files is defined and delete_files.matched != 0
   with_items: '{{ delete_files.files }}'
+  no_log: True
   tags:
     - assets
    
