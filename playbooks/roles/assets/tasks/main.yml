@@ -37,15 +37,11 @@
     recurse: yes
   no_log: True
   register: delete_files
-
-- debug:
-    var: delete_files
-    verbosity: 2
   
 - name: Remove static files that is older than 59m (-e 'assets=true')
-  shell: find '{{ edxapp_staticfile_dir }}' -mmin +60 type f -delete
+  shell: find '{{ edxapp_staticfile_dir }}' -mmin +60 -type f -delete
   when: restart is defined and delete_files is defined and delete_files.matched != 0
-  no_log: False
+  no_log: True
   tags:
     - assets
    
