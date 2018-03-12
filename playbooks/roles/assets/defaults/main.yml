@@ -1,6 +1,6 @@
 ---
 
-edxapp_staticfile_dir: "/edx/var/edxapp/staticfiles"
+edxapp_staticfile_dir: "/edx/var/edxapp/staticfiles/"
 edxapp_user: "edxapp"
 common_web_group: "www-data"
 COMMON_BIN_DIR: "/edx/bin"
