@@ -45,7 +45,7 @@
 - name: Remove static files that is older than 59m (-e 'assets=true')
   shell: find '{{ edxapp_staticfile_dir }}' -mmin +60 type f -delete
   when: restart is defined and delete_files is defined and delete_files.matched != 0
-  no_log: True
+  no_log: False
   tags:
     - assets
    
