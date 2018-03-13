@@ -30,25 +30,6 @@
   register: restart
   tags:
     - assets
-
-- find:
-    paths: "{{ edxapp_staticfile_dir }}"
-    age: "15m"
-    recurse: yes
-  no_log: True
-  register: detele_files
-  
-- name: Remove static files that is older than 15m (-e 'assets=true')
-  file:
-      path: "{{ item.path }}"
-      state: "absent"
-      owner: "{{ edxapp_user }}"
-      group: "{{ common_web_group }}"
-      mode:  "0755"
-  when: assets is defined and assets|bool and delete_files.matched != 0
-  with_items: delete_files.files
-  tags:
-    - assets
    
 - name: restart edxapp
   supervisorctl:
