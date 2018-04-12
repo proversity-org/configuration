@@ -41,6 +41,10 @@ dependencies:
     edx_django_service_session_expire_at_browser_close: '{{ ECOMMERCE_SESSION_EXPIRE_AT_BROWSER_CLOSE }}'
     edx_django_service_staticfiles_storage: '{{ ECOMMERCE_STATICFILES_STORAGE }}'
     edx_django_service_post_migrate_commands: '{{ ecommerce_post_migrate_commands }}'
+    edx_django_service_oidc_issuer: '{{ ECOMMERCE_OIDC_ISSUER }}'
+    edx_django_service_oidc_logout_url: '{{ ECOMMERCE_LOGOUT_URL }}'
+    edx_django_service_oauth_public_url_root: '{{ ECOMMERCE_OAUTH_PUBLIC_URL_ROOT }}'
+    edx_django_service_oauth_url_root: '{{ ECOMMERCE_OAUTH_URL_ROOT }}'
     edx_django_service_basic_auth_exempted_paths_extra:
       - payment
       - \.well-known/apple-developer-merchantid-domain-association
