@@ -1,6 +1,32 @@
 - Role: discovery
   - Added `DISCOVERY_REPOS` to allow configuring discovery repository details.
 
+- Role: edxapp
+  - Changed `EDXAPP_RETIRED_USERNAME_FMT` to `EDXAPP_RETIRED_USERNAME_PREFIX`. Changed/split `EDXAPP_RETIRED_EMAIL_FMT` to be `EDXAPP_RETIRED_EMAIL_PREFIX` and `EDXAPP_RETIRED_EMAIL_DOMAIN`.
+
+- Role xqueue
+  - Removed RabbitMQ in earlier changes in XQueue itself, we don't need any of the configuration
+    XQUEUE_RABBITMQ_USER XQUEUE_RABBITMQ_PASS XQUEUE_RABBITMQ_VHOST XQUEUE_RABBITMQ_HOSTNAME 
+    XQUEUE_RABBITMQ_PORT XQUEUE_RABBITMQ_TLS
+  - Added NEWRELIC_APPNAME and NEWRELIC_LICENSE_KEY to the configuration files consumed by XQueue.
+    Useful for external utilities that are reporting NR metrics.
+  - Added XQUEUE_CONSUMER_NEWRELIC_APPNAME which is added to the supervisor start of xqueue_consumer
+    if you have New Relic enabled.
+  - Retired XQUEUE_WORKERS_PER_QUEUE
+    
+- Role edx_django_service
+  - Added maintenance page under the flag EDX_DJANGO_SERVICE_ENABLE_S3_MAINTENANCE.
+  - Added the s3_maintenance.j2 file to point to the s3 maintenance page.
+
+- Role: xqueue
+  - Added XQUEUE_MYSQL_CONN_MAX_AGE so that you can have xqueue use django's persistent DB connections
+
+- Role: edxapp
+  - Added empty `EDXAPP_PASSWORD_COMPLEXITY` setting to ease overriding complexity.
+
+- Role: splunkforwarder
+  - Updated the role so the splunkforwarder can be installed on Amazon Linux OS environment, which is a RHEL variant
+
 - Role: edx_django_service
   - Made the keys `edx_django_service_git_protocol`, `edx_django_service_git_domain`, and `edx_django_service_git_path` of `edx_django_service_repos` all individually configurable.
 
