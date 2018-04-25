@@ -2,6 +2,17 @@
   - Added `DISCOVERY_REPOS` to allow configuring discovery repository details.
 
 - Role: edxapp
+  - Added `RETIREMENT_STATES` to generic_env_config to support making the retirement workflow configurable.
+
+- Removed Vagrantfiles for devstack and fullstack, and supporting files.
+
+- Role: xqueue
+  - Added XQUEUE_SUBMISSION_PROCESSING_DELAY and XQUEUE_CONSUMER_DELAY to xqueue env so they can be passed along to the app.
+
+- Role: edxapp
+  - Moved `PASSWORD_MIN_LENGTH`, `PASSWORD_MAX_LENGTH`, and `PASSWORD_COMPLEXITY` to generic_env_config to allow CMS and LMS to share these configurations
+
+- Role: edxapp
   - Changed `EDXAPP_RETIRED_USERNAME_FMT` to `EDXAPP_RETIRED_USERNAME_PREFIX`. Changed/split `EDXAPP_RETIRED_EMAIL_FMT` to be `EDXAPP_RETIRED_EMAIL_PREFIX` and `EDXAPP_RETIRED_EMAIL_DOMAIN`.
 
 - Role xqueue
