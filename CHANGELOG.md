@@ -1,5 +1,12 @@
+
 - Role: discovery
   - Added `DISCOVERY_REPOS` to allow configuring discovery repository details.
+
+- Role: edxapp
+  - Added `RETIREMENT_STATES` to generic_env_config to support making the retirement workflow configurable.
+
+- Removed Vagrantfiles for devstack and fullstack, and supporting files.
+
 
 - Role: edx_django_service
   - Made the keys `edx_django_service_git_protocol`, `edx_django_service_git_domain`, and `edx_django_service_git_path` of `edx_django_service_repos` all individually configurable.

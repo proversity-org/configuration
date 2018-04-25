@@ -774,6 +774,13 @@ EDXAPP_RETIRED_USER_SALTS:
   - "OVERRIDE ME WITH A RANDOM VALUE"
   - "ROTATE SALTS BY APPENDING NEW VALUES"
 EDXAPP_RETIREMENT_SERVICE_WORKER_USERNAME: "OVERRIDE THIS WITH A VALID LMS USERNAME"
+# These get loaded into database models per environment via management command
+# These are the required states, environmental overrides are in edx-internal.
+EDXAPP_RETIREMENT_STATES:
+  - "PENDING"
+  - "ERRORED"
+  - "ABORTED"
+  - "COMPLETE"
 
 # Comprehensive Theming
 # Deprecated, maintained for backward compatibility
@@ -1333,6 +1340,7 @@ generic_env_config:  &edxapp_generic_env
   RETIRED_EMAIL_FMT: "{{ EDXAPP_RETIRED_EMAIL_FMT }}"
   RETIRED_USER_SALTS: "{{ EDXAPP_RETIRED_USER_SALTS }}"
   RETIREMENT_SERVICE_WORKER_USERNAME: "{{ EDXAPP_RETIREMENT_SERVICE_WORKER_USERNAME }}"
+  RETIREMENT_STATES: "{{ EDXAPP_RETIREMENT_STATES }}"
 
 lms_auth_config:
   <<: *edxapp_generic_auth
