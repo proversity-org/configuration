@@ -188,7 +188,7 @@ build_jenkins_plugins_list:
     version: '1.0'
     group: 'org.jenkins-ci.plugins'
   - name: 'shiningpanda'
-    version: '0.21'
+    version: '0.23'
     group: 'org.jenkins-ci.plugins'
   - name: 'ssh-agent'
     version: '1.14'
