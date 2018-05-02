@@ -138,7 +138,8 @@ EDXAPP_AWS_SES_REGION_ENDPOINT: "email.us-east-1.amazonaws.com"
 
 EDXAPP_LOG_LEVEL: 'INFO'
 
-EDXAPP_MEMCACHE: [ 'localhost:11211' ]
+
+
 EDXAPP_CACHE_COURSE_STRUCTURE_MEMCACHE: "{{ EDXAPP_MEMCACHE }}"
 EDXAPP_COMMENTS_SERVICE_URL:  'http://localhost:18080'
 # EDXAPP_COMMENTS_SERVICE_KEY must match FORUM_API_KEY
@@ -1105,8 +1106,17 @@ generic_cache_config: &default_generic_cache
   BACKEND:  'django.core.cache.backends.memcached.MemcachedCache'
   KEY_FUNCTION:  'util.memcache.safe_key'
 
-custom_cache_config: &custom_cache_config
-  "{{ EDXAPP_CUSTOM_CACHE_BACKEND }}"  
+edxapp_custom_cache_config: &custom_cache_config
+    staticfiles_1:
+    BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
+    KEY_FUNCTION: 'util.memcache.safe_key'
+    KEY_PREFIX: "{{ ansible_hostname|default('staticfiles_1') }}_general_1"
+    LOCATION: "{{ EDXAPP_MEMCACHE }}"
+  staticfiles_2:
+    BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
+    KEY_FUNCTION: 'util.memcache.safe_key'
+    KEY_PREFIX: "{{ ansible_hostname|default('staticfiles_2') }}_general_2"
+    LOCATION: "{{ EDXAPP_MEMCACHE }}"
 
 generic_env_config:  &edxapp_generic_env
   CREDENTIALS_INTERNAL_SERVICE_URL: "{{ EDXAPP_CREDENTIALS_INTERNAL_SERVICE_URL }}"
