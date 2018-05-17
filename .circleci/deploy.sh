@@ -4,7 +4,6 @@ IP="$(curl -s icanhazip.com)"
 
 echo "Received IP = $IP, deplying to $1"
 
-
 if [[ "$1" == "staging" ]]; then
 	echo "Adding IP to EC2"
 	aws ec2 authorize-security-group-ingress --group-id $STAGING_SEC_GROUP --protocol tcp --port 22 --cidr "$IP/32"
