@@ -8,27 +8,6 @@
     assets: true
     theme_users:
       - "{{ edxapp_user | default('edxapp') }}"
-    COMP_THEMES_CODE_DIR: "{{ THEMES_CODE_DIR | default('/edx/var/edx-themes/edx-themes') }}"
-    THEMES_GIT_IDENTITY: !!null
-    THEMES_REPOS:
-      - PROTOCOL: "ssh"
-        DOMAIN: "github.com"
-        PATH: "proversity-org"
-        REPO: "edx-theme-proversity.git"
-        VERSION: "proversity/staging"
-        DESTINATION: "{{ COMP_THEMES_CODE_DIR }}/proversity-theme"
-        SSH_KEY: "{{ THEMES_GIT_IDENTITY }}"
-      - PROTOCOL: "https"
-        DOMAIN: "github.com"
-        PATH: "eduNEXT"
-        REPO: "proversity-openedx-themes.git"
-        VERSION: "master"
-        DESTINATION: "{{ COMP_THEMES_CODE_DIR }}/proversity-openedx-themes"
-        SSH_KEY: "{{ THEMES_GIT_IDENTITY }}"
-    # The vars below are required for edxapp deployment
-    # EDXAPP_COMPREHENSIVE_THEME_DIRS:
-    #   - "{{ COMP_THEMES_CODE_DIR }}"
-    #   - "{{ COMP_THEMES_CODE_DIR }}/proversity-openedx-themes/edx-platform"
   roles:
    - edx_themes
    - assets
