@@ -9,5 +9,6 @@
     theme_users:
       - "{{ edxapp_user | default('edxapp') }}"
   roles:
-   - edx_themes
-   - assets
+    - common_vars
+    - edx_themes
+    - assets
