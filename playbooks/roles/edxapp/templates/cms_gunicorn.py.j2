@@ -14,6 +14,10 @@ pythonpath = "{{ edxapp_code_dir }}"
 max_requests = {{ EDXAPP_CMS_MAX_REQ }}
 {% endif -%}
 
+{% if EDXAPP_CMS_MAX_REQ_JETTER -%}
+max_requests_jitter = {{ EDXAPP_CMS_MAX_REQ_JETTER }}
+{% endif -%}
+
 {% if EDXAPP_WORKERS %}
 workers = {{ EDXAPP_WORKERS.cms }}
 {% else %}
