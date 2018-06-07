@@ -4,6 +4,7 @@ IP="$(curl -s icanhazip.com)"
 
 echo "Received IP = $IP, deplying to $1"
 
+
 if [[ "$1" == "staging" ]]; then
 	echo "Adding IP to EC2"
 	aws ec2 authorize-security-group-ingress --group-id $STAGING_SEC_GROUP --protocol tcp --port 22 --cidr "$IP/32"
@@ -35,6 +36,7 @@ elif [[ "$1" == "development" ]]; then
 	echo "Removing IP from EC2"
 	aws ec2 revoke-security-group-ingress --group-id $DEV_SEC_GROUP --protocol tcp --port 22 --cidr "$IP/32"
 fi
+
 
 if [ "$ERROR" -eq 0 ];
 then
