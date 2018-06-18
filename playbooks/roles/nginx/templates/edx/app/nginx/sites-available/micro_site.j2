@@ -45,7 +45,7 @@ server {
 error_page {{ k }} @maintenance;
   {% endfor %}
 
-  {% include "s3_maintenance.j2" %}
+  {% include "s3_maintenance_microsite.j2" %}
 
   {% else %}
   {% for k, v in NGINX_EDXAPP_ERROR_PAGES.iteritems() %}
