@@ -75,6 +75,7 @@ repos_to_cmd["video_encode_worker"]="$edx_ansible_cmd veda_encode_worker.yml -e 
 repos_to_cmd["edx-notes-api"]="$edx_ansible_cmd notes.yml -e 'EDX_NOTES_API_VERSION=$2'"
 repos_to_cmd["microsites"]="$edx_ansible_cmd microsites.yml -e 'microsite_version=$2' -e 'edxapp_git_ssh_key=$3' -e 'assets_stop=$asset_stop'"
 repos_to_cmd["themes"]="$edx_ansible_cmd themes.yml -e 'edxapp_theme_version=$2' -e 'edxapp_git_ssh_key=$3' -e 'assets_stop=$asset_stop'"
+repos_to_cmd["edx_themes"]="$edx_ansible_cmd edx_themes.yml -e 'THEMES_VERSION=$2' -e 'edxapp_git_ssh_key=$3' -e 'assets_stop=$asset_stop'"
 
 if [[ -z $1 || -z $2 ]]; then
     echo
