@@ -65,6 +65,10 @@ error_page {{ k }} @maintenance;
   
   # request the browser to use SSL for all connections
   add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+  
+  if ($http_x_forwarded_proto = 'http') {
+      return 301 https://$server_name$request_uri;   
+  }
   {% endif %}
 
   # Prevent invalid display courseware in IE 10+ with high privacy settings
