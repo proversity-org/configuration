@@ -5,9 +5,15 @@ gunicorn configuration file: http://docs.gunicorn.org/en/develop/configure.html
 """
 import multiprocessing
 
-preload_app = False
-timeout = 300
+preload_app = True
+timeout = 600
+backlog = 2048
+{% if EDXAPP_GUNICORN_SOCK_LMS %}
+bind = "{{ EDXAPP_GUNICORN_SOCK_LMS }}"
+{% else %}
 bind = "{{ edxapp_lms_gunicorn_host }}:{{ edxapp_lms_gunicorn_port }}"
+{% endif %}
+
 pythonpath = "{{ edxapp_code_dir }}"
 
 {% if EDXAPP_LMS_MAX_REQ -%}
@@ -21,7 +27,7 @@ max_requests_jitter = {{ EDXAPP_LMS_MAX_REQ_JITTER }}
 {% if EDXAPP_WORKERS %}
 workers = {{ EDXAPP_WORKERS.lms }}
 {% else %}
-workers = (multiprocessing.cpu_count()-1) * 2
+workers = (multiprocessing.cpu_count())
 {% endif %}
 
 {{ common_close_all_caches }}
