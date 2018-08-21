@@ -24,6 +24,7 @@ dependencies:
     edx_django_service_django_settings_module: '{{ ECOMMERCE_DJANGO_SETTINGS_MODULE }}'
     edx_django_service_environment_extra: '{{ ecommerce_environment }}'
     edx_django_service_gunicorn_extra: '{{ ECOMMERCE_GUNICORN_EXTRA }}'
+    edx_django_service_hostname: '{{ EDXAPP_ECOMMERCE_PUBLIC_URL_ROOT }}'
     edx_django_service_nginx_port: '{{ ECOMMERCE_NGINX_PORT }}'
     edx_django_service_ssl_nginx_port: '{{ ECOMMERCE_SSL_NGINX_PORT }}'
     edx_django_service_use_python3: false
