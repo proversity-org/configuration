@@ -1,0 +1,17 @@
+# Generates a mysql script to run on a RDS instance and create required databases and users
+
+- name: Mysql script generation
+  hosts: 127.0.0.1
+  connection: local
+  become: True
+  gather_facts: True
+  roles:
+    - common_vars
+  tasks:
+    - name: Mysql RDS script generation
+      template:
+        src: "templates/mysql_db_creation.sql.j2"
+        dest: "templates/mysql_db_creation.sql"
+        owner: "{{ lookup('env','USER') }}"
+        group: "{{ lookup('env','USER') }}"
+        mode: 0644
