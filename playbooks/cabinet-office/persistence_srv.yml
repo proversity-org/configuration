@@ -1,0 +1,21 @@
+---
+# Mongo and Elasticsearch deployment.
+
+# For more details see mongo_3_2.yml 
+# and elasticsearch.yml in edx-east playbooks
+
+- name: Bootstrap instance(s)
+  hosts: all
+  gather_facts: no
+  become: True
+  roles:
+    - python
+
+- name: Deploy MongoDB
+  hosts: persistence_servers
+  become: True
+  gather_facts: True
+  roles:
+    - mongo_3_2
+    - munin_node
+    - elasticsearch
