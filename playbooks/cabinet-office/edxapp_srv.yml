@@ -30,6 +30,7 @@
       tags:
         - edxapp_nginx
     - role: edxapp
+    - role: edxapp
       celery_worker: True
     - role: edx_notes_api
       tags:
