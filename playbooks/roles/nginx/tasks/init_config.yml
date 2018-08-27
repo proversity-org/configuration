@@ -1,14 +1,14 @@
 ---
-- name: run the common init_config
-  include_role:
-    name: common
-    tasks_from: init_config
-  tags:
-    - install
-    - install:configuration
-    - microsites
+# This is not required anymore
+# - name: run the common init_config
+#   include_role:
+#     name: common
+#     tasks_from: init_config
+#   tags:
+#     - install
+#     - install:configuration
+#     - microsites
 
-    
 - name: download microsite certificate from (server_vars)
   get_url:
     url: "{{ EDXAPP_MICROSITE_BASE_URL }}{{ item.key }}/files?file=cert"
@@ -51,7 +51,7 @@
     - install
     - install:configuration
     - microsites
-    
+
 -  name: download microsite certificate from {{ EDXAPP_MICROSITE_CONFIG_FILE }}
    get_url:
      url: "{{ EDXAPP_MICROSITE_BASE_URL }}{{ item.key }}/files?file=cert"
@@ -65,7 +65,7 @@
     - install
     - install:configuration
     - microsites
-   
+
 -  name: download microsite key from {{ EDXAPP_MICROSITE_CONFIG_FILE }}
    get_url:
      url: "{{ EDXAPP_MICROSITE_BASE_URL }}{{ item.key }}/files?file=key"
@@ -109,7 +109,7 @@
     - install
     - install:configuration
     - microsites
-    
+
 - name: Creating nginx config links for microsites from {{ EDXAPP_MICROSITE_CONFIG_FILE }}
   file:
     src: "{{ nginx_sites_available_dir }}/lms-{{ item.key  }}"
