@@ -1,12 +1,13 @@
 ---
-- name: run the common init_config
-  include_role:
-    name: common
-    tasks_from: init_config
-    tags:
-    - install
-    - install:configuration
-    - microsites
+# This is not required anymore
+# - name: run the common init_config
+#   include_role:
+#     name: common
+#     tasks_from: init_config
+#     tags:
+#     - install
+#     - install:configuration
+#     - microsites
 
 - name: create application and auth config
   template:
@@ -43,6 +44,6 @@
     - install:app-configuration
     - microsites
     - edxapp_cfg # Old deprecated tag, will remove when possible
-    
+
 - set_fact:
     edxapp_installed: true

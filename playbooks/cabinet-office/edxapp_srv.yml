@@ -1,0 +1,51 @@
+---
+
+# Playbook to provision single application server
+
+- name: Bootstrap instances
+  hosts: app_servers
+  gather_facts: no
+  become: true
+  roles:
+    - python
+
+- name: Deploy edxapp and related services
+  hosts: app_servers
+  become: True
+  gather_facts: True
+  vars:
+    migrate_db: "no"  # Not really needed, but here for extra security
+  roles:
+    - role: swapfile
+      SWAPFILE_SIZE: 4GB
+    - role: nginx
+      nginx_sites:
+      - cms
+      - lms
+      - forum
+      - edx_notes_api
+      - xqueue
+      nginx_default_sites:
+      - lms
+      tags:
+        - edxapp_nginx
+    - role: edxapp
+    - role: edxapp
+      celery_worker: True
+    - role: edx_notes_api
+      tags:
+        - deploy_edx_notes_api
+    - forum
+    - notifier
+    - xqueue
+    - role: aws
+      when: COMMON_OBJECT_STORE_LOG_SYNC
+
+- name: Deploy memcached and rabbitmq services
+  hosts: app_servers
+  become: True
+  gather_facts: True
+  roles:
+    - memcache
+    - role: rabbitmq
+      rabbitmq_ip: 0.0.0.0
