@@ -2,8 +2,6 @@
 dependencies:
   - common
   - supervisor
-  - elasticsearch
-  - oraclejdk
   - role: rbenv
     rbenv_user: "{{ forum_user }}"
     rbenv_dir: "{{ forum_app_dir }}"
