@@ -10,7 +10,7 @@ if [[ "$1" == "staging" ]]; then
 	aws ec2 authorize-security-group-ingress --group-id $STAGING_SEC_GROUP --protocol tcp --port 22 --cidr "$IP/32"
 	sleep 2
 	echo "Running play to update configuration"
-	ssh ubuntu@staging.learn.proversity.io "/edx/bin/update -v configuration proversity/staging"
+	ssh ubuntu@staging.builds.proversity.io "/edx/bin/update -v configuration proversity/staging"
 	ERROR=$?
 	sleep 2
 	echo "Removing IP from EC2"
