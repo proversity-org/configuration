@@ -1,0 +1,40 @@
+---
+
+- name: Bootstrap instances
+  hosts: all
+  gather_facts: no
+  become: true
+  roles:
+    - python
+
+- name: Install Rocket Chat service
+  hosts: rocketchat_servers
+  gather_facts: yes
+  become: true
+  roles:
+    - role: nginx
+      nginx_extra_sites:
+        - "{{ ROCKETCHAT_NGINX_SITE_CONFIG }}"
+    - role: RocketChat.Server
+  tasks: # This is valid for Ubuntu 16.04
+    - name: Deploy the Rocket.Chat service file override
+      template:
+        src: "{{ rocket_chat_service_template_override.src }}"
+        dest: "{{ rocket_chat_service_template_override.dest }}"
+      tags: service_override
+      ignore_errors: yes
+      when: rocket_chat_service_template_override is defined
+    - name: Reload systemd manager configuration
+      command: systemctl daemon-reload
+      tags: service_override
+    - name: Restart the Rocket.Chat service
+      service:
+        name: rocketchat
+        state: restarted
+      tags: service_override
+    - name: Ensure the Rocket.Chat service is running/enabled
+      service:
+        name: rocketchat
+        state: started
+        enabled: true
+      tags: service_override
