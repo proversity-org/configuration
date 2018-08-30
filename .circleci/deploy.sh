@@ -19,7 +19,7 @@ elif [[ "$1" == "production" ]]; then
 	aws ec2 authorize-security-group-ingress --group-id $PRODUCTION_SEC_GROUP --protocol tcp --port 22 --cidr "$IP/32"
 	sleep 2
 	echo "Running play to update configuration"
-	ssh ubuntu@studio.proversity.org "/edx/bin/update -v configuration proversity/production"
+	ssh ec2-user@nat.proversity.io ". /dev/proversity/secret-builds/configuration.sh"
 	ERROR=$?
 	sleep 2
 	echo "Removing IP from EC2"
