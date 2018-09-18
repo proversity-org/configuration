@@ -11,11 +11,14 @@
   roles:
     - python
 
-- name: Deploy MongoDB
+- name: Deploy persistence services and workers backend
   hosts: persistence_servers
   become: True
   gather_facts: True
   roles:
-    - mongo_3_2
-    - munin_node
-    - elasticsearch
+    - role: memcache
+    - role: mongo_3_2
+    - role: munin_node
+    - role: rabbitmq
+      rabbitmq_ip: 0.0.0.0
+    - role: elasticsearch
