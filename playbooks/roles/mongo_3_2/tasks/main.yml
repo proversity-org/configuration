@@ -328,6 +328,18 @@
     - "manage:db-users"
     - "manage:db-replication"
 
+- name: create super user
+  mongodb_user:
+    name: "{{ MONGO_ADMIN_USER }}"
+    password: "{{ MONGO_ADMIN_PASSWORD }}"
+    database: admin
+    roles: root
+  when: not mongo_configure_replica_set
+  run_once: true
+  tags:
+    - "manage"
+    - "manage:db-replication"
+
 - name: create mongodb users in a single machine
   mongodb_user:
     database: "{{ item.database }}"
