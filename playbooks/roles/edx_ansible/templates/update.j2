@@ -54,7 +54,7 @@ if [[ "$4" == "asset_stop" ]]; then
     asset_stop='true'
 fi
 
-repos_to_cmd["edx-platform"]="$edx_ansible_cmd edxapp.yml -e 'edx_platform_version=$2'"
+repos_to_cmd["edx-platform"]="$edx_ansible_cmd edxapp.yml -e 'edx_platform_version=$2' -e 'edx_platform_repo=$3'"
 repos_to_cmd["edx-workers"]="$edx_ansible_cmd edxapp.yml -e 'edx_platform_version=$2' -e 'celery_worker=true'"
 repos_to_cmd["xqueue"]="$edx_ansible_cmd xqueue.yml -e 'xqueue_version=$2' -e 'elb_pre_post=false'"
 repos_to_cmd["credentials"]="$edx_ansible_cmd credentials.yml -e 'credentials_version=$2'"
