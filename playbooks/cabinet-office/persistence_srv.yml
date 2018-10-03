@@ -19,3 +19,6 @@
     - mongo_3_2
     - munin_node
     - elasticsearch
+    - memcache
+    - role: rabbitmq
+      rabbitmq_ip: 0.0.0.0
