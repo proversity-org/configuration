@@ -3,13 +3,14 @@
 # Configuration example:
 # NGINX_EXTRA_SITES_CONFIGURATIONS:
 #   - edx_django_service_name: 'discovery'
-#     edx_django_service_hostname: 'als-discovery.proversity.io'
+#     edx_django_service_hostname: 'example-discovery.proversity.io'
 #     edx_django_service_nginx_port: 80
 #     edx_django_service_ssl_nginx_port: 443
+#     edx_django_service_enable_basic_auth: False
 #     edx_django_service_basic_auth_exempted_paths: ''
 #     NGINX_ENABLE_SSL: True
 #     NGINX_SSL_CERTIFICATE: ''
 #     NGINX_SSL_KEY: ''
-#     NGINX_SET_X_FORWARDED_HEADERS: ''
+#     NGINX_SET_X_FORWARDED_HEADERS: False
 
 NGINX_EXTRA_SITES_CONFIGURATIONS: []
