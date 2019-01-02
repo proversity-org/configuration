@@ -20,3 +20,5 @@
       when: COMMON_ENABLE_NEWRELIC
     - role: newrelic_infrastructure
       when: COMMON_ENABLE_NEWRELIC_INFRASTRUCTURE
+    - role: nginx_extras
+      when: NGINX_EXTRA_SITES_CONFIGURATIONS is defined and NGINX_EXTRA_SITES_CONFIGURATIONS | length > 0
