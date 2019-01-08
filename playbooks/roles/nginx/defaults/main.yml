@@ -57,8 +57,6 @@ NGINX_SSL_PROTOCOLS: "TLSv1 TLSv1.1 TLSv1.2"
 NGINX_DH_PARAMS_PATH: "/etc/ssl/private/dhparams.pem"
 NGINX_DH_KEYSIZE: 2048
 
-EDXAPP_NGINX_OVERRIDE_SCHEME: '$scheme'
-
 NGINX_LOG_FORMAT_NAME: 'p_combined'
 # When set to False, nginx will pass X-Forwarded-For, X-Forwarded-Port,
 # and X-Forwarded-Proto headers through to the backend unmodified.
