@@ -1,0 +1,75 @@
+#
+# {{ ansible_managed }}
+#
+
+server {
+  server_name {{ item.edx_django_service_hostname }};
+
+  {% if item.NGINX_ENABLE_SSL %}
+
+  listen {{ item.edx_django_service_nginx_port }};
+  listen {{ item.edx_django_service_ssl_nginx_port }} ssl;
+
+  ssl_certificate /etc/ssl/certs/{{ item.NGINX_SSL_CERTIFICATE|basename }};
+  ssl_certificate_key /etc/ssl/private/{{ item.NGINX_SSL_KEY|basename }};
+
+  # request the browser to use SSL for all connections
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+
+  {% else %}
+  listen {{ item.edx_django_service_nginx_port }};
+  {% endif %}
+
+  location ~ ^/static/(?P<file>.*) {
+    root {{ COMMON_DATA_DIR }}/{{ item.edx_django_service_name }};
+    add_header 'Access-Control-Allow-Origin' $cors_origin;
+
+    # Inform downstream caches to take certain headers into account when reading/writing to cache.
+    add_header 'Vary' 'Accept-Encoding,Origin';
+
+    try_files /staticfiles/$file =404;
+  }
+
+  location ~ ^/media/(?P<file>.*) {
+    root {{ COMMON_DATA_DIR }}/{{ item.edx_django_service_name }};
+    try_files /media/$file =404;
+  }
+
+  location / {
+    {% if item.edx_django_service_enable_basic_auth|bool %}
+      {% include 'basic-auth.j2' %}
+    {% endif %}
+
+    try_files $uri @proxy_to_app;
+  }
+
+  location ~ ^/({{ item.edx_django_service_basic_auth_exempted_paths | join('|') }})/ {
+    try_files $uri @proxy_to_app;
+  }
+
+  location @proxy_to_app {
+    {% if item.NGINX_SET_X_FORWARDED_HEADERS %}
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Port $server_port;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    {% else %}
+    proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+    proxy_set_header X-Forwarded-Port $http_x_forwarded_port;
+    proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+    {% endif %}
+    proxy_set_header Host $http_host;
+
+    proxy_redirect off;
+    proxy_pass http://{{ item.edx_django_service_name }}_app_server;
+  }
+
+  # Forward to HTTPS if we're an HTTP request...
+  if ($http_x_forwarded_proto = "http") {
+    set $do_redirect "true";
+  }
+
+  # Run our actual redirect...
+  if ($do_redirect = "true") {
+    rewrite ^ https://$host$request_uri? permanent;
+  }
+}

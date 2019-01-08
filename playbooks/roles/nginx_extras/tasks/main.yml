@@ -1,0 +1,21 @@
+---
+
+- name: Copy the nginx proxy pass configuration for each site
+  template:
+    src: proxy_pass.j2
+    dest: "{{ nginx_sites_available_dir }}/{{ item.edx_django_service_hostname }}"
+    owner: root
+    group: www-data
+  with_items: "{{ NGINX_EXTRA_SITES_CONFIGURATIONS }}"
+
+- name: Create the link for proxy pass enabled configurations
+  file:
+    path: "/etc/nginx/sites-enabled/{{ item.edx_django_service_hostname }}"
+    src: "{{ nginx_sites_available_dir }}/{{ item.edx_django_service_hostname }}"
+    state: link
+  with_items: "{{ NGINX_EXTRA_SITES_CONFIGURATIONS }}"
+
+- name: Reload nginx after cert has been generated.
+  service:
+    name: nginx
+    state: reloaded
