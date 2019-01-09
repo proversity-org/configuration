@@ -10,8 +10,8 @@ server {
   listen {{ item.edx_django_service_nginx_port }};
   listen {{ item.edx_django_service_ssl_nginx_port }} ssl;
 
-  ssl_certificate /etc/ssl/certs/{{ item.NGINX_SSL_CERTIFICATE|basename }};
-  ssl_certificate_key /etc/ssl/private/{{ item.NGINX_SSL_KEY|basename }};
+  ssl_certificate {{ item.NGINX_SSL_CERTIFICATE }};
+  ssl_certificate_key {{ item.NGINX_SSL_KEY }};
 
   # request the browser to use SSL for all connections
   add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
