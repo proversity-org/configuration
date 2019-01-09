@@ -7,14 +7,14 @@ upstream {{ edx_notes_api_service_name }}_app_server {
 server {
 
   {% if NGINX_ENABLE_SSL %}
-  listen {{ edx_notes_api_nginx_port }} default_server ssl;
+  listen {{ edx_notes_api_nginx_port }} ssl;
 
   ssl_certificate /etc/ssl/certs/{{ NGINX_SSL_CERTIFICATE|basename }};
   ssl_certificate_key /etc/ssl/private/{{ NGINX_SSL_KEY|basename }};
   # request the browser to use SSL for all connections
   add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
   {% else %}
-  listen {{ edx_notes_api_nginx_port }} default_server;
+  listen {{ edx_notes_api_nginx_port }};
   {% endif %}
 
   {% if NGINX_ENABLE_SSL or NGINX_REDIRECT_TO_HTTPS %}
@@ -52,6 +52,11 @@ server {
   return 301 https://$host$request_uri;
   }
   {% endif %}
+
+  server_name {{ EDX_NOTES_API_HOSTNAME }};
+
+  access_log {{ nginx_log_dir }}/access.log {{ NGINX_LOG_FORMAT_NAME }};
+  error_log {{ nginx_log_dir }}/error.log error;
 
   location / {
     try_files $uri @proxy_to_app;
