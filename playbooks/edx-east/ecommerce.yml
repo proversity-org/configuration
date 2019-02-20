@@ -11,7 +11,10 @@
     - role: nginx
       nginx_default_sites:
         - ecommerce
-    - ecommerce
+    - role: ecommerce
+      edx_django_service_git_path: "{{ ECOMMERCE_REPO_COMMON_GIT_PATH }}"
+      edx_django_service_hostname: "{{ ECOMMERCE_HOSTNAME }}"
+      edx_django_service_repo: "{{ ECOMMERCE_REPO_NAME }}"
     - role: datadog
       when: COMMON_ENABLE_DATADOG
     - role: splunkforwarder
