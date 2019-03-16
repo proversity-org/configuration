@@ -1,0 +1,26 @@
+---
+
+# Inisghts and analytics-api Deployment:
+
+- name: Bootstrap instances
+  hosts: all
+  gather_facts: no
+  become: true
+  roles:
+    - python
+
+- name: Configure analytics servers
+  hosts: insights_servers
+  become: True
+  gather_facts: True
+  roles:
+    - role: swapfile
+      SWAPFILE_SIZE: 2GB
+    - role: nginx
+      nginx_sites:
+        - analytics_api
+        - insights
+      nginx_default_sites:
+        - insights
+    - analytics_api
+    - insights

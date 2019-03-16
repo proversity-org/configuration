@@ -1,0 +1,39 @@
+-- Creating databases
+{% for item in edxlocal_databases %}
+{% if item %}
+CREATE DATABASE IF NOT EXISTS `{{ item }}` CHARACTER SET utf8 COLLATE utf8_general_ci;
+{% endif %}
+{% endfor %}
+
+-- Creating basic databases users and granting access to them
+{% for item in edxlocal_database_users %}
+{% if item.db and item.user and item.pass %}
+CREATE USER '{{ item.user }}'@'%' IDENTIFIED BY '{{ item.pass }}';
+GRANT ALL PRIVILEGES ON `{{ item.db }}`.* TO '{{ item.user }}'@'%';
+{% endif %}
+{% endfor %}
+
+-- Creating common migrate user and granting access to him
+CREATE USER '{{ COMMON_MYSQL_MIGRATE_USER }}'@'%' IDENTIFIED BY '{{ COMMON_MYSQL_MIGRATE_PASS }}';
+CREATE USER '{{ COMMON_MYSQL_READ_ONLY_USER }}'@'%' IDENTIFIED BY '{{ COMMON_MYSQL_READ_ONLY_PASS }}';
+{% for item in edxlocal_databases %}
+{% if item %}
+GRANT ALL PRIVILEGES ON `{{ item }}`.* TO '{{ COMMON_MYSQL_MIGRATE_USER }}'@'%', '{{ COMMON_MYSQL_READ_ONLY_USER }}'@'%';
+{% endif %}
+{% endfor %}
+
+-- Creating default analytics api user and granting access to him
+CREATE USER '{{ ANALYTICS_API_DEFAULT_USER }}'@'%' IDENTIFIED BY '{{ ANALYTICS_API_DEFAULT_PASSWORD }}';
+GRANT ALL PRIVILEGES ON `{{ ANALYTICS_API_DEFAULT_DB_NAME }}`.* TO '{{ ANALYTICS_API_DEFAULT_USER }}'@'%';
+GRANT SELECT ON {{ ANALYTICS_API_REPORTS_DB_NAME }}.* TO '{{ ANALYTICS_API_DEFAULT_USER }}'@'%';
+
+-- Creating reports analytics api user and granting access to him
+CREATE USER '{{ ANALYTICS_API_REPORTS_USER }}'@'%' IDENTIFIED BY '{{ ANALYTICS_API_REPORTS_PASSWORD }}';
+GRANT ALL PRIVILEGES ON `{{ ANALYTICS_API_REPORTS_DB_NAME }}`.* TO '{{ ANALYTICS_API_REPORTS_USER }}'@'%';
+
+-- Creating hive metastore db
+CREATE DATABASE IF NOT EXISTS `{{ HIVE_METASTORE_DATABASE_NAME }}` CHARACTER SET latin1;
+
+-- Creating edx notes api user and granting access to him
+CREATE USER '{{ EDX_NOTES_API_MYSQL_DB_USER }}'@'%' IDENTIFIED BY '{{ EDX_NOTES_API_MYSQL_DB_PASS }}';
+GRANT ALL PRIVILEGES ON `{{ EDX_NOTES_API_MYSQL_DB_NAME }}`.* TO '{{ EDX_NOTES_API_MYSQL_DB_USER }}'@'%';
