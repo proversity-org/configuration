@@ -1,0 +1,24 @@
+---
+# Mongo and Elasticsearch deployment.
+
+# For more details see mongo_3_2.yml 
+# and elasticsearch.yml in edx-east playbooks
+
+- name: Bootstrap instance(s)
+  hosts: all
+  gather_facts: no
+  become: True
+  roles:
+    - python
+
+- name: Deploy persistence services and workers backend
+  hosts: persistence_servers
+  become: True
+  gather_facts: True
+  roles:
+    - role: memcache
+    - role: mongo_3_2
+    - role: munin_node
+    - role: rabbitmq
+      rabbitmq_ip: 0.0.0.0
+    - role: elasticsearch
