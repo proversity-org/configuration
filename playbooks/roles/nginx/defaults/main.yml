@@ -21,6 +21,8 @@ EDXAPP_PROFILE_IMAGE_MIN_BYTES: 100
 
 edxapp_data_dir: "/edx/var/edxapp"
 EDXAPP_MEDIA_URL:  "/media"
+EDXAPP_MEDIA_BUCKET: "s3-media-bucket"
+EDXAPP_MEDIA_BUCKET_PREFIX: "media-djfs-pyfs"
 edxapp_media_dir: "{{ edxapp_data_dir }}/media"
 
 # Override these vars for adding user to nginx.htpasswd
