@@ -305,11 +305,21 @@ error_page {{ k }} {{ v }};
     try_files $uri @proxy_to_lms_app;
   }
 
-location ~ ^{{ EDXAPP_MEDIA_URL }}/(?P<file>.*) {
-    root {{ edxapp_media_dir }};
-    try_files /$file =404;
-    expires {{ EDXAPP_PROFILE_IMAGE_MAX_AGE }}s;
-}
+  location /media/djfs-pyfs/ {
+    proxy_http_version     1.1;
+    proxy_set_header       Connection "";
+    proxy_set_header       Authorization '';
+    proxy_set_header       Host {{ EDXAPP_MEDIA_BUCKET }}.s3.amazonaws.com;
+    proxy_hide_header      x-amz-id-2;
+    proxy_hide_header      x-amz-request-id;
+    proxy_hide_header      x-amz-meta-server-side-encryption;
+    proxy_hide_header      x-amz-server-side-encryption;
+    proxy_hide_header      Set-Cookie;
+    proxy_ignore_headers   Set-Cookie;
+    proxy_intercept_errors on;
+    add_header             Cache-Control max-age=31536000;
+    proxy_pass             https://{{ EDXAPP_MEDIA_BUCKET }}.s3.amazonaws.com/{{ EDXAPP_MEDIA_BUCKET_PREFIX }}/;
+  }
 
   {% include "robots.j2" %}
   {% include "static-files.j2" %}
