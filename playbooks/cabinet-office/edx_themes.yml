@@ -1,0 +1,13 @@
+---
+
+- name: Deploy Openedx Themes
+  hosts: all
+  become: True
+  gather_facts: True
+  vars:
+    assets: true
+    theme_users:
+      - "{{ edxapp_user | default('edxapp') }}"
+  roles:
+    - common_vars
+    - edx_themes

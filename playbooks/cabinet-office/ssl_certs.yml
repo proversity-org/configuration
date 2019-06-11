@@ -1,0 +1,9 @@
+---
+
+- name: install letsencrypt certs
+  hosts: monitoring_servers
+  become: True
+  gather_facts: True
+  roles:
+  - certbot
+
