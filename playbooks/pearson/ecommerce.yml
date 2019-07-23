@@ -1,0 +1,27 @@
+- name: Deploy edX Ecommerce
+  hosts: all
+  become: True
+  gather_facts: True
+  vars:
+    ENABLE_DATADOG: False
+    ENABLE_NEWRELIC: False
+    CLUSTER_NAME: 'ecommerce'
+  roles:
+    - aws
+    - role: nginx
+      nginx_default_sites:
+        - ecommerce
+    - role: ecommerce
+      edx_django_service_git_path: "{{ ECOMMERCE_REPO_COMMON_GIT_PATH }}"
+      edx_django_service_hostname: "{{ ECOMMERCE_HOSTNAME }}"
+      edx_django_service_repo: "{{ ECOMMERCE_REPO_NAME }}"
+    - role: datadog
+      when: COMMON_ENABLE_DATADOG
+    - role: splunkforwarder
+      when: COMMON_ENABLE_SPLUNKFORWARDER
+    - role: newrelic
+      when: COMMON_ENABLE_NEWRELIC
+    - role: newrelic_infrastructure
+      when: COMMON_ENABLE_NEWRELIC_INFRASTRUCTURE
+    - role: nginx_extras
+      when: NGINX_EXTRA_SITES_CONFIGURATIONS is defined and NGINX_EXTRA_SITES_CONFIGURATIONS | length > 0
