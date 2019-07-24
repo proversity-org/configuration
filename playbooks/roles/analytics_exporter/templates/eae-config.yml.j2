@@ -1,0 +1,73 @@
+# Sample configuration for exporting data for all orgs from Jenkins.
+
+defaults:
+  auth_file: /path/to/the/auth/file
+  gpg_master_key: the-master-key@example.com
+  gpg_keys: gpg-keys
+  work_dir: {{ ANALYTICS_EXPORTER_WORK_DIR }}
+  external_prefix: 'edx-analytics-exporter'
+  output_bucket: proversity-pearson-prod
+  pipeline_bucket: proversity-pearson-prod
+  output_prefix: 'edx-analytics-exporter/'
+  se_bucket: the-stack-exchange-bucket
+  django_admin: '/edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/django/bin/django-admin.py'
+  django_pythonpath: '/edx/app/edxapp/venvs/edxapp/bin/python'
+  django_settings: lms.envs.aws
+  django_cms_settings: cms.envs.aws
+  django_database: the_django_database
+  mongo_collection: modulestore
+  sql_user: {{ MYSQL_LOGIN_USER }}
+  sql_db: {{ EDXAPP_MYSQL_DB_NAME }}
+  sql_password: {{ MYSQL_LOGIN_PASS }}
+  secret_key: ''
+  monitor: false
+  graphite_host: localhost
+  graphite_port: 8125
+  graphite_prefix: edx.analytics.research
+  bucket: pearson-prod
+
+environments:
+  prod:
+    django_config: /edx/app/edxapp/
+    mongo_host: {{ PEARSON_PERSISTENCE_AND_WORKERS_HOST }}:27017
+    mongo_db: {{ EDXAPP_MONGO_DB_NAME }}
+    mongo_user: {{ EDXAPP_MONGO_USER}}
+    mongo_password: {{ EDXAPP_MONGO_PASSWORD }}
+    name: prod-mongodb
+    sql_host: {{ PEARSON_MYSQL_HOST }}
+  edge:
+    django_config: /edge/django/config
+    mongo_host: 0.0.0.0:8888
+    mongo_db: the_mongo_db
+    name: edge-mongodb
+    sql_host: edge-sql-host.example.com
+  local:
+    django_config: /edx/app/edxapp/
+    mongo_host: edx.devstack.mongo:27017
+    mongo_db: edxapp
+    mongo_user: edxapp
+    mongo_password: password
+    name: local-mongodb
+    sql_host: edx.devstack.mysql
+
+organizations:
+  px:
+    recipients:
+      - daniel.quiroga@edunext.co
+    courses:
+      - course-v1:PX+PTE001+2019_T4
+      - course-v1:PX+9780134000046-1+2019
+      - course-v1:PX+9780134578323-1+2019
+      - course-v1:PX+9780789760401-1+2019_T1
+    other_names:
+      - PX
+  itp:
+    recipients:
+      - daniel.quiroga@edunext.co
+    courses:
+      - course-v1:ITP+9780789755407+2019
+      - course-v1:ITP+9780789760364+2019
+      - course-v1:ITP+9780789756466+2019
+      - course-v1:ITP+9780135647424+2019
+    other_names:
+      - ITP

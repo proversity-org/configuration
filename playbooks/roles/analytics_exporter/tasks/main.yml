@@ -1,0 +1,66 @@
+---
+- name: create src folder
+  file:
+    path: "{{ ANALYTICS_EXPORTER_DEST }}"
+    state: directory
+    mode: 0755
+    owner: edxapp
+    group: www-data
+  tags:
+    - install:clone
+
+- name: create course-data folder
+  file:
+    path: "{{ ANALYTICS_EXPORTER_COURSE_DATA }}"
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+  tags:
+    - install:clone
+
+- name: create work_dir folder
+  file:
+    path: "{{ ANALYTICS_EXPORTER_WORK_DIR }}"
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+  tags:
+    - install:clone
+
+- name: clone edx-analytics-exporter repo
+  git:
+    repo: "{{ ANALYTICS_EXPORTER_REPO }}"
+    dest: "{{ ANALYTICS_EXPORTER_FOLDER }}"
+    version: "{{ ANALYTICS_EXPORTER_VERSION }}"
+  become: true
+  become_user: edxapp
+  tags:
+    - install:clone
+
+- name: write analytics-exporter conf
+  template:
+    src: eae-config.yml.j2
+    dest: "{{ ANALYTICS_EXPORTER_FOLDER }}/eae-config.yml"
+    mode: 0755
+    owner: www-data
+    group: www-data
+  tags:
+    - install:configuration
+
+- name: install github_requirements
+  shell: >
+    chdir="{{ ANALYTICS_EXPORTER_FOLDER }}"
+    {{ ANALYTICS_EXPORTER_PYTHON_PATH }}pip install -r github_requirements.txt
+  become_user: edxapp
+  tags:
+    - install:requirements
+
+- name: install requirements
+  shell: >
+    chdir="{{ ANALYTICS_EXPORTER_FOLDER }}"
+    {{ ANALYTICS_EXPORTER_PYTHON_PATH }}pip install -e {{ ANALYTICS_EXPORTER_FOLDER }}
+  become_user: edxapp
+  tags:
+    - install:requirements

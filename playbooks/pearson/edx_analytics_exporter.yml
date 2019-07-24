@@ -1,0 +1,7 @@
+---
+- name: Bootstrap instances
+  hosts: app_servers
+  gather_facts: true
+  become: true
+  roles:
+    - analytics_exporter
