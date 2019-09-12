@@ -23,8 +23,6 @@
       - cms
       - lms
       - forum
-      - edx_notes_api
-      - xqueue
       nginx_default_sites:
       - lms
       tags:
@@ -32,11 +30,7 @@
     - role: edxapp
     - role: edxapp
       celery_worker: True
-    - role: edx_notes_api
-      tags:
-        - deploy_edx_notes_api
     - forum
     - notifier
-    - xqueue
     - role: aws
       when: COMMON_OBJECT_STORE_LOG_SYNC
