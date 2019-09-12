@@ -20,7 +20,6 @@
     - role: nginx
     - role: ecommerce
       edx_django_service_git_path: "{{ ECOMMERCE_REPO_COMMON_GIT_PATH }}"
-      edx_django_service_hostname: "{{ ECOMMERCE_HOSTNAME }}"
     - role: ecomworker
     - role: discovery
     - role: edx_notes_api
