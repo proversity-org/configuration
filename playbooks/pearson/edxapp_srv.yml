@@ -31,6 +31,5 @@
     - role: edxapp
       celery_worker: True
     - forum
-    - notifier
     - role: aws
       when: COMMON_OBJECT_STORE_LOG_SYNC
