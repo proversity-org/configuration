@@ -22,6 +22,7 @@
       edx_django_service_git_path: "{{ ECOMMERCE_REPO_COMMON_GIT_PATH }}"
     - role: ecomworker
     - role: discovery
+      edx_django_service_hostname: "{{ DISCOVERY_HOSTNAME }}"
     - role: edx_notes_api
       tags:
         - deploy_edx_notes_api
