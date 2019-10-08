@@ -1,9 +1,7 @@
----
-
 # write the supervisor scripts for the service variants
 - name: "writing daphne supervisor script"
   template:
-    src: "{{ supervisor_available_dir }}/daphne.conf.j2"
+    src: "daphne.conf.j2"
     dest: "{{ supervisor_available_dir }}/daphne.conf"
     owner: "{{ supervisor_user }}"
     group: "{{ supervisor_user }}"

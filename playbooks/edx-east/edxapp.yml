@@ -33,3 +33,5 @@
      when: COMMON_ENABLE_NEWRELIC_INFRASTRUCTURE
    - role: minos
      when: COMMON_ENABLE_MINOS
+   - role: daphne
+     when: ENABLE_DAPHNE is defined and ENABLE_DAPHNE|lower == "yes"
