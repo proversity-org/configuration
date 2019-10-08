@@ -24,11 +24,6 @@
     - install
     - install:configuration
 
-- name: Restart supervisor service
-  service:
-    name: supervisor
-    state: restarted
-
 - name: ensure daphne has started
   supervisorctl:
     name: "daphne"
