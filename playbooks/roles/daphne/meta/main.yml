@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: edxapp
+    EDXAPP_ENV_EXTRA: {{ DAPHNE_ENV_EXTRA }}
+  - role: rabbitmq
+    RABBIT_USERS: {{ DAPHNE_RABBIT_USERS }}
+    RABBITMQ_VHOSTS: {{ DAPHNE_RABBITMQ_VHOSTS }}
