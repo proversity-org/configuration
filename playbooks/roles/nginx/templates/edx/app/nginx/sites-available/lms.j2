@@ -14,6 +14,13 @@ upstream lms-backend {
     {%- endif -%}
 }
 
+
+{%- if ENABLE_DAPHNE == "yes" -%}
+  upstream channels-backend {
+      server {{ DAPHNE_HOST }}:{{ DAPHNE_PORT }};
+  }
+{%- endif -%}
+
 {%- if EDXAPP_ENABLE_RATE_LIMITING -%}
 # Make Zone
 limit_req_zone $cookie_{{ EDXAPP_SESSION_COOKIE_NAME }} zone=cookies:10m rate={{ EDXAPP_COURSES_REQUEST_RATE }};
@@ -92,11 +99,11 @@ error_page {{ k }} {{ v }};
   {% if NGINX_ENABLE_SSL or NGINX_REDIRECT_TO_HTTPS %}
   # request the browser to use SSL for all connections
   add_header Strict-Transport-Security "max-age={{ NGINX_HSTS_MAX_AGE }}";
-  
+
   if ($http_x_forwarded_proto = 'http') {
-       return 301 https://$server_name$request_uri;   
+       return 301 https://$server_name$request_uri;
   }
-  
+
   {% endif %}
 
   # Prevent invalid display courseware in IE 10+ with high privacy settings
@@ -191,6 +198,20 @@ error_page {{ k }} {{ v }};
 
     try_files $uri @proxy_to_lms_app;
   }
+
+
+  {%- if ENABLE_DAPHNE == "yes" -%}
+  location @proxy_to_daphne {
+    proxy_pass http://channels-backend;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+  }
+
+  location {{ DAPHNE_ROOT_PATH_NGINX }} {
+    try_files $uri @proxy_to_daphne;
+  }
+  {%- endif -%}
 
   # /login?next=<any image> can be used by 3rd party sites in <img> tags to
   # determine whether a user on their site is logged into edX.
