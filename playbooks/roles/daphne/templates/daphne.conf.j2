@@ -2,7 +2,7 @@
 
 {% set executable = edxapp_venv_dir + '/bin/daphne' -%}
 
-command={{ executable }} -p {{ DAPHNE_PORT }} lms.asgi:{{ CHANNEL_LAYER_VARIABLE }}
+command={{ executable }} -p {{ DAPHNE_PORT }} {{ DAPHNE_ASGI }}:{{ CHANNEL_LAYER_VARIABLE }}
 
 directory={{ edxapp_code_dir }}
 environment={% if COMMON_ENABLE_NEWRELIC_APP %}NEW_RELIC_APP_NAME={{ EDXAPP_NEWRELIC_LMS_APPNAME }},NEW_RELIC_LICENSE_KEY={{ NEWRELIC_LICENSE_KEY }},NEW_RELIC_CONFIG_FILE={{ edxapp_app_dir }}/newrelic.ini,{% endif -%} LANG={{ EDXAPP_LANG }},DJANGO_SETTINGS_MODULE={{ EDXAPP_LMS_ENV }},SERVICE_VARIANT="lms",PATH="{{ edxapp_deploy_path }}",BOTO_CONFIG="{{ edxapp_app_dir }}/.boto"

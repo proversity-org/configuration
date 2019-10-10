@@ -10,6 +10,7 @@ RABBITMQ_DAPHNE_PASSWORD: "daphne123"
 RABBITMQ_DAPHNE_VHOST: "daphne"
 DAPHNE_CHANNEL_LAYERS_BACKEND: "asgi_rabbitmq.RabbitmqChannelLayer"
 DAPHNE_CHANNEL_LAYERS_ROUTING: "openedx_proversity_notifications.routing.channel_routing"
+DAPHNE_ASGI: "lms.asgi"
 
 #this variable is necessary, please defined this on deploy customer data.
 #DAPHNE_CHANNEL_LAYERS:
