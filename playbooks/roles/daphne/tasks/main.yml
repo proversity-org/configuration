@@ -1,0 +1,36 @@
+# write the supervisor scripts for the service variants
+- name: "writing daphne supervisor script"
+  template:
+    src: "daphne.conf.j2"
+    dest: "{{ supervisor_available_dir }}/daphne.conf"
+    owner: "{{ supervisor_user }}"
+    group: "{{ supervisor_user }}"
+    mode: 0644
+  become_user: "{{ supervisor_user }}"
+  when: ENABLE_DAPHNE is defined and ENABLE_DAPHNE|lower == "yes"
+  tags:
+    - install
+    - install:configuration
+
+- name: enable daphne supervisor script
+  file:
+    src: "{{ supervisor_available_dir }}/daphne.conf"
+    dest: "{{ supervisor_cfg_dir }}/daphne.conf"
+    state: link
+    force: yes
+  become_user: "{{ supervisor_user }}"
+  when: ENABLE_DAPHNE is defined and ENABLE_DAPHNE|lower == "yes"
+  tags:
+    - install
+    - install:configuration
+
+- name: ensure daphne has started
+  supervisorctl:
+    name: "daphne"
+    supervisorctl_path: "{{ supervisor_ctl }}"
+    config: "{{ supervisor_cfg }}"
+    state: started
+  become_user: "{{ supervisor_service_user }}"
+  when: ENABLE_DAPHNE is defined and ENABLE_DAPHNE|lower == "yes"
+  tags:
+    - manage

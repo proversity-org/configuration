@@ -1,0 +1,5 @@
+---
+dependencies:
+  - role: rabbitmq
+    RABBIT_USERS: "{{ DAPHNE_RABBIT_USERS }}"
+    RABBITMQ_VHOSTS: "{{ DAPHNE_RABBITMQ_VHOSTS }}"
