@@ -24,7 +24,7 @@
       - lms
       - forum
       - edx_notes_api
-      - xqueue
+#      - xqueue
       nginx_default_sites:
       - lms
       tags:
@@ -36,7 +36,7 @@
       tags:
         - deploy_edx_notes_api
     - forum
-    - notifier
-    - xqueue
+#    - notifier
+#    - xqueue
     - role: aws
       when: COMMON_OBJECT_STORE_LOG_SYNC

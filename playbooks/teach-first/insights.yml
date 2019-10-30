@@ -10,17 +10,17 @@
     - python
 
 - name: Configure analytics servers
-  hosts: insights_servers
+  hosts: analytics_servers
   become: True
   gather_facts: True
   roles:
     - role: swapfile
-      SWAPFILE_SIZE: 2GB
+      when: SWAPFILE_SIZE is defined and SWAPFILE_SIZE != ""
     - role: nginx
       nginx_sites:
-        - analytics_api
         - insights
+#        - analytics_api
       nginx_default_sites:
         - insights
-    - analytics_api
     - insights
+    - analytics_api
