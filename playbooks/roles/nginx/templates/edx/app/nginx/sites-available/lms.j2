@@ -297,7 +297,7 @@ location ^~ /media/djfs-pyfs/ {
     proxy_http_version     1.1;
     proxy_set_header       Connection "";
     proxy_set_header       Authorization '';
-    proxy_set_header       Host proversity-pearson-prod-media.s3.amazonaws.com;
+    proxy_set_header       Host {{ EDXAPP_MEDIA_BUCKET }}.s3.amazonaws.com;
     proxy_hide_header      x-amz-id-2;
     proxy_hide_header      x-amz-request-id;
     proxy_hide_header      x-amz-meta-server-side-encryption;
@@ -306,7 +306,7 @@ location ^~ /media/djfs-pyfs/ {
     proxy_ignore_headers   Set-Cookie;
     proxy_intercept_errors on;
     add_header             Cache-Control max-age=31536000;
-    proxy_pass             https://proversity-pearson-prod-media.s3.amazonaws.com/media-djfs-pyfs/;
+    proxy_pass             https://{{ EDXAPP_MEDIA_BUCKET }}.s3.amazonaws.com/{{ EDXAPP_MEDIA_BUCKET_PREFIX }}/;
   }
 
 
