@@ -65,13 +65,13 @@ server {
 
   {% if NGINX_EDXAPP_ENABLE_S3_MAINTENANCE %}
 
-  # Do not include a 502 error in NGINX_ERROR_PAGES when 
+  # Do not include a 502 error in NGINX_ERROR_PAGES when
   # NGINX_EDXAPP_ENABLE_S3_MAINTENANCE is enabled.
 
   error_page 502 @maintenance;
 
     {% include "s3_maintenance.j2" %}
-  
+
   {% endif %}
 
   # error pages
@@ -107,7 +107,7 @@ error_page {{ k }} {{ v }};
 
 
   {% include "handle-tls-redirect-and-ip-disclosure.j2" %}
-  
+
   access_log {{ nginx_log_dir }}/access.log {{ NGINX_LOG_FORMAT_NAME }};
   error_log {{ nginx_log_dir }}/error.log error;
 
@@ -292,6 +292,23 @@ location ~ ^{{ EDXAPP_MEDIA_URL }}/(?P<file>.*) {
     try_files /$file =404;
     expires {{ EDXAPP_PROFILE_IMAGE_MAX_AGE }}s;
 }
+
+location ^~ /media/djfs-pyfs/ {
+    proxy_http_version     1.1;
+    proxy_set_header       Connection "";
+    proxy_set_header       Authorization '';
+    proxy_set_header       Host proversity-pearson-prod-media.s3.amazonaws.com;
+    proxy_hide_header      x-amz-id-2;
+    proxy_hide_header      x-amz-request-id;
+    proxy_hide_header      x-amz-meta-server-side-encryption;
+    proxy_hide_header      x-amz-server-side-encryption;
+    proxy_hide_header      Set-Cookie;
+    proxy_ignore_headers   Set-Cookie;
+    proxy_intercept_errors on;
+    add_header             Cache-Control max-age=31536000;
+    proxy_pass             https://proversity-pearson-prod-media.s3.amazonaws.com/media-djfs-pyfs/;
+  }
+
 
 {% if NGINX_ADMIN_ACCESS_CIDRS and EDXAPP_ENABLE_DJANGO_ADMIN_RESTRICTION %}
   location /admin {
