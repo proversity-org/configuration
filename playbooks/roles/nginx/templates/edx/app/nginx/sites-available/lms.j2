@@ -106,7 +106,7 @@ error_page {{ k }} {{ v }};
   add_header P3P '{{ NGINX_P3P_MESSAGE }}';
 
   # Fix scrom issue
-  add_header Content-Security-Policy "frame-src 'self' https://{{ EDXAPP_MEDIA_BUCKET }}.s3-{{ aws_cwa_region }}.amazonaws.com;";
+  add_header Content-Security-Policy "frame-src *;";
 
   {% include "handle-tls-redirect-and-ip-disclosure.j2" %}
 
