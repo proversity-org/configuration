@@ -18,9 +18,8 @@
       SWAPFILE_SIZE: 2GB
     - role: nginx
       nginx_sites:
-        - analytics_api
         - insights
       nginx_default_sites:
         - insights
-    - analytics_api
     - insights
+    - analytics_api
