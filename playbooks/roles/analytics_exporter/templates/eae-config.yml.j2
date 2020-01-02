@@ -24,7 +24,7 @@ defaults:
   graphite_host: localhost
   graphite_port: 8125
   graphite_prefix: edx.analytics.research
-  bucket: pearson-prod
+  bucket: {{ EDXAPP_AWS_STORAGE_BUCKET_NAME }}
 
 environments:
   prod:
