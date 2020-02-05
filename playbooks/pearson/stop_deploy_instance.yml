@@ -1,0 +1,20 @@
+- name: Terminate deploy instance
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: true
+  become: false
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ ASG_DEPLOYMENT_AWS_ACCESS_KEY_ID }}"
+    AWS_SECRET_ACCESS_KEY: "{{ ASG_DEPLOYMENT_AWS_SECRET_ACCESS_KEY }}"
+    AWS_DEFAULT_REGION: "{{ ASG_DEPLOYMENT_AWS_REGION }}"
+  tasks:
+  - name: Get deployment instance facts (AMI id included)
+    ec2_remote_facts:
+      filters:
+        private-ip-address: "{{ ASG_DEPLOYMENT_EDXAPP_INSTANCE_PRIVATE_IP }}"
+        "tag:Name": "{{ ASG_DEPLOYMENT_EDXAPP_INSTANCE_NAME }}"
+    register: deployment_instance_facts
+  - name: Stop deployment instance
+    ec2:
+      state: 'stopped'
+      instance_ids: "{{ deployment_instance_facts.instances[0].id }}"
