@@ -1,0 +1,13 @@
+---
+
+- name: Making backups in persistence servers
+  become: True
+  hosts: persistence_servers
+  gather_facts: True
+  roles:
+    - role: mysql_backup  # ednx role
+      tags:
+        - mysql_backup
+    - role: mongo_backup  # ednx role
+      tags:
+        - mongo_backup
