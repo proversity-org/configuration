@@ -17,6 +17,8 @@
   gather_facts: True
   roles:
     - role: memcache
+    - role: mongo_3_2
+    - role: munin_node
     - role: rabbitmq
       rabbitmq_ip: 0.0.0.0
     - role: elasticsearch
