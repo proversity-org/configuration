@@ -1,8 +1,5 @@
 ---
-# Mongo and Elasticsearch deployment.
-
-# For more details see mongo_3_2.yml 
-# and elasticsearch.yml in edx-east playbooks
+# Persistence services deploy: Memcache, RabbitMQ and Elasticsearch
 
 - name: Bootstrap instance(s)
   hosts: all
@@ -12,7 +9,7 @@
     - python
 
 - name: Deploy persistence services and workers backend
-  hosts: persistence_servers
+  hosts: all
   become: True
   gather_facts: True
   roles:
