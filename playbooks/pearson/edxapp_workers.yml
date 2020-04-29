@@ -1,0 +1,28 @@
+---
+
+# Playbook to provision single async server
+
+- name: Bootstrap instances
+  hosts: app_workers_servers
+  gather_facts: no
+  become: true
+  roles:
+    - python
+
+- name: Configure app async server instance(s)
+  hosts: app_workers_servers
+  become: True
+  gather_facts: True
+  pre_tasks:
+    - name: Restart servers to release memory
+      command: /edx/bin/supervisorctl restart all
+      ignore_errors: True
+  roles:
+    - role: edxapp
+      celery_worker: True
+    - role: aws
+      when: COMMON_OBJECT_STORE_LOG_SYNC
+  post_tasks:
+    - name: Restart servers to make sure the theming is loaded
+      command: /edx/bin/supervisorctl restart all
+      ignore_errors: True
