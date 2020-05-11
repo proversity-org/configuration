@@ -1,0 +1,20 @@
+---
+# Installation of exporters and Prometheus data gatherer
+
+- name: Bootstrap instances
+  hosts: all
+  gather_facts: no
+  become: true
+  roles:
+    - python
+
+- hosts: monitored_servers
+  become: True
+  roles:
+    - cloudalchemy.node-exporter
+
+
+- hosts: monitoring_servers
+  become: True
+  roles:
+  - cloudalchemy.prometheus
