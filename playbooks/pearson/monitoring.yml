@@ -12,9 +12,10 @@
   become: True
   roles:
     - cloudalchemy.node-exporter
-
+  tags: install:nodes
 
 - hosts: monitoring_servers
   become: True
   roles:
   - cloudalchemy.prometheus
+  tags: install:prometheus
