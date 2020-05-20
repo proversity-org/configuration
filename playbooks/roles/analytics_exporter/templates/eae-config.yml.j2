@@ -29,7 +29,7 @@ defaults:
 environments:
   prod:
     django_config: /edx/app/edxapp/
-    mongo_host: {{ PEARSON_PERSISTENCE_AND_WORKERS_HOST }}:27017
+    mongo_host: {{ PEARSON_MONGO_HOST[0] }}:27017
     mongo_db: {{ EDXAPP_MONGO_DB_NAME }}
     mongo_user: {{ EDXAPP_MONGO_USER}}
     mongo_password: {{ EDXAPP_MONGO_PASSWORD }}
