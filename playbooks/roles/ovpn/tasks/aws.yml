@@ -1,0 +1,17 @@
+---
+- name: Install pip
+  apt:
+    name: python-pip
+    state: present
+
+- name: Install AWS CLI
+  pip:
+    name: awscli
+  become: true
+
+- name: Put client configs in S3
+  command: "aws s3 cp --quiet {{ openvpn_base_dir }}/{{item}}-{{inventory_hostname}}.ovpn s3://{{ AWS_S3_OVPN_CLIENTCONFIG_BUCKET }}/{{ item }}.ovpn"
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ AWS_S3_OVPN_AWS_ACCESS_KEY_ID }}"
+    AWS_SECRET_ACCESS_KEY: "{{ AWS_S3_OVPN_AWS_SECRET_ACCESS_KEY }}"
+  with_items: "{{clients}}"
