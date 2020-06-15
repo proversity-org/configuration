@@ -1,0 +1,20 @@
+---
+
+# Edx notes service Deployment:
+
+- name: Bootstrap instances
+  hosts: all
+  gather_facts: no
+  become: true
+  roles:
+    - python
+
+- name: Configure edx notes service
+  hosts: all
+  become: True
+  gather_facts: True
+  roles:
+    - role: nginx
+    - role: edx_notes_api
+      tags:
+        - deploy_edx_notes_api
