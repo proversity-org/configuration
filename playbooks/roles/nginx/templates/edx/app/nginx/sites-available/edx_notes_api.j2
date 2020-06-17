@@ -5,7 +5,7 @@ upstream {{ edx_notes_api_service_name }}_app_server {
 }
 
 server {
-  listen {{ edx_notes_api_nginx_port }} default_server;
+  listen {{ edx_notes_api_nginx_port }};
 
   {% if NGINX_ENABLE_SSL %}
 
@@ -27,6 +27,11 @@ server {
 
   {% include "handle-tls-redirect-and-ip-disclosure.j2" %}
   
+  server_name {{ EDX_NOTES_API_HOSTNAME }};
+
+  access_log {{ nginx_log_dir }}/access.log {{ NGINX_LOG_FORMAT_NAME }};
+  error_log {{ nginx_log_dir }}/error.log error;
+
   location / {
     try_files $uri @proxy_to_app;
   }
