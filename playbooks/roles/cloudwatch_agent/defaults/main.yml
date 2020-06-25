@@ -1,0 +1,411 @@
+---
+#==========================================================================
+# FOLDER PATHS
+#==========================================================================
+aws_cwa_tmp_path: /var/tmp/aws_cwa
+aws_cwa_config_path: /root/.aws
+aws_cwa_edx_log_path : /edx/var/log
+aws_cwa_log_path : /var/log
+
+#==========================================================================
+# FILE PATHS
+#==========================================================================
+aws_cwa_zip_path: "{{ aws_cwa_tmp_path }}/AmazonCloudWatchAgent.zip"
+aws_cwa_config_tmp_path: /tmp/cloudwatch-config.json
+aws_cwa_common_config_path: /opt/aws/amazon-cloudwatch-agent/etc/common-config.toml
+
+aws_cwa_ctl_path: /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl
+
+aws_cwa_supervisor_logs_path: "{{ aws_cwa_edx_log_path }}/supervisor"
+
+#==========================================================================
+# URLs
+#==========================================================================
+aws_cwa_url: https://s3.amazonaws.com/amazoncloudwatch-agent/linux/amd64/latest/AmazonCloudWatchAgent.zip
+aws_cwa_systems_manager: https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_amd64/amazon-ssm-agent.deb
+
+#==========================================================================
+# Constants
+#==========================================================================
+AWS_CWA_PROFILE: AmazonCloudWatchAgent
+aws_cwa_timezone: UTC
+aws_cwa_access_key_id: "None"
+aws_cwa_secret_acces_key: "None"
+aws_cwa_region: "None"
+
+#==========================================================================
+# Logs Config Params
+# The log groups appear in Cloudwatch as:
+#   (common_version).(common_env).(log_suffix)
+#   e.g. V9.stage.applogs.edxapp
+#  The log streams appear as the path where the log file is located
+#   e.g. /edx/var/log/supervisor/edx_notes_apitderr.log
+#==========================================================================
+#THESE VARIABLES SHOULD BE OVERRIDEN !!!
+aws_cwa_common_version: V1
+aws_cwa_common_env: default
+# LOGS LIST CHOICES
+# => aws_cwa_edxapp_workers_logs_list 
+# * Log Group: Workers (Path: /edx/var/log/supervisor)   
+#    Log Streams:   
+#     cms_default_4-stderr.log   
+#     cms_default_4-stdout.log   
+#     cms_high_1-stderr.log   
+#     cms_high_1-stdout.log   
+#     cms_low_3-stderr.log   
+#     cms_low_3-stdout.log   
+#     lms_default_3-stderr.log   
+#     lms_default_3-stdout.log   
+#     lms_high_4-stderr.log   
+#     lms_high_4-stdout.log   
+#     lms_high_mem_2-stderr.log   
+#     lms_high_mem_2-stdout.log   
+#     lms_low_1-stderr.log   
+#     lms_low_1-stdout.log   
+
+# => aws_cwa_edxapp_notes_logs_list 
+# * Log Group: Notes (Path: /edx/var/log/supervisor)   
+#   Log Streams:   
+#     edx_notes_apitderr.log   
+#     edx_notes_apitdout.log   
+
+# => aws_cwa_edxapp_forum_logs_list 
+# * Log Group: CS Comments Service (Path: /edx/var/log/supervisor)   
+#   Log Streams:   
+#     forum-stderr.log   
+#     forum-stdout.log   
+
+# => aws_cwa_edxapp_logs_list 
+# * Log Group: Edxapp   
+#   Log Streams:   
+#     edx.log(Path: /edx/var/log/cms)   
+#     edx.log(Path: /edx/var/log/lms)   
+#     cms-stderr.log(Path: /edx/var/log/supervisor)   
+#     cms-stdout.log(Path: /edx/var/log/supervisor)   
+#     lms-stderr.log(Path: /edx/var/log/supervisor)   
+#     lms-stdout.log(Path: /edx/var/log/supervisor)   
+
+# => aws_cwa_edxapp_nginx_logs_list 
+# * Log Group: Nginx (Path: /edx/var/log/nginx)   
+#   Log Streams:     
+#     access.log  
+#     error.log 
+
+# => aws_cwa_persistence_logs_list
+# * Log Group: DBs Persistence   
+#   Log Streams:   
+#     mongodb.log(Path: /edx/var/log/mongo)   
+#     error.log(Path: /var/log/mysql)   
+#     elasticsearch.log(Path: /var/log/elasticsearch)   
+
+aws_cwa_log_list: >
+  {{ aws_cwa_edxapp_workers_logs_list +
+  aws_cwa_edxapp_notes_logs_list +
+  aws_cwa_edxapp_forum_logs_list +
+  aws_cwa_edxapp_logs_list +
+  aws_cwa_edxapp_nginx_logs_list +
+  aws_cwa_persistence_logs_list +
+  aws_cwa_complementary_logs_list +
+  aws_cwa_insights_logs_list +
+  aws_cwa_xqueue_logs_list}}
+#==========================================================================
+# Logs
+#==========================================================================
+
+# WORKERS
+aws_cwa_edxapp_workers_logs_list:
+- "{{ aws_cwa_cms_default_X_stderr_log }}"  
+- "{{ aws_cwa_cms_default_X_stdout_log }}"
+- "{{ aws_cwa_cms_high_X_stderr_log }}"
+- "{{ aws_cwa_cms_high_X_stdout_log }}"
+- "{{ aws_cwa_cms_low_X_stderr_log }}"
+- "{{ aws_cwa_cms_low_X_stdout_log }}"
+- "{{ aws_cwa_lms_default_X_stderr_log }}"
+- "{{ aws_cwa_lms_default_X_stdout_log }}"
+- "{{ aws_cwa_lms_high_X_stderr_log }}"
+- "{{ aws_cwa_lms_high_X_stdout_log }}"
+- "{{ aws_cwa_lms_high_mem_X_stderr_log }}"
+- "{{ aws_cwa_lms_high_mem_X_stdout_log }}"
+- "{{ aws_cwa_lms_low_X_stderr_log }}"
+- "{{ aws_cwa_lms_low_X_stdout_log }}"
+
+
+aws_cwa_cms_default_X_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/cms_default_*-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/cms_default_X-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_cms_default_X_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/cms_default_*-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/cms_default_X-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_cms_high_X_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/cms_high_*-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/cms_high_X-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_cms_high_X_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/cms_high_*-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/cms_high_X-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_cms_low_X_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/cms_low_*-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/cms_low_X-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_cms_low_X_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/cms_low_*-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/cms_low_X-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_lms_default_X_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms_default_*-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms_default_X-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_lms_default_X_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms_default_*-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms_default_X-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_lms_high_X_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms_high_*-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms_high_X-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_lms_high_X_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms_high_*-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms_high_X-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_lms_high_mem_X_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms_high_mem_*-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms_high_mem_X-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_lms_high_mem_X_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms_high_mem_*-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms_high_mem_X-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_lms_low_X_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms_low_*-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms_low_X-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_lms_low_X_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms_low_*-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms_low_X-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.workers"
+  timezone: "{{ aws_cwa_timezone }}"
+
+# NOTES
+aws_cwa_edxapp_notes_logs_list:
+  - "{{ aws_cwa_edx_notes_apitderr_log }}"
+  - "{{ aws_cwa_edx_notes_apitdout_log }}"
+
+aws_cwa_edx_notes_apitdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/edx_notes_apitdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/edx_notes_apitdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.notes"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+aws_cwa_edx_notes_apitderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/edx_notes_apitderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/edx_notes_apitderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.notes"
+  timezone: "{{ aws_cwa_timezone }}"
+
+# CS_COMMENTS_SERVICE
+aws_cwa_edxapp_forum_logs_list:
+  - "{{ aws_cwa_forum_stderr_log }}"
+  - "{{ aws_cwa_forum_stdout_log }}"
+
+aws_cwa_forum_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/forum-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/forum-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.cs_comments_service"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_forum_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/forum-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/forum-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.cs_comments_service"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+# EDXAPP
+aws_cwa_edxapp_logs_list:
+  - "{{ aws_cwa_cms_edx_log }}"
+  - "{{ aws_cwa_lms_edx_log }}"
+  - "{{ aws_cwa_cms_stderr_log }}"
+  - "{{ aws_cwa_cms_stdout_log }}"
+  - "{{ aws_cwa_lms_stderr_log }}"
+  - "{{ aws_cwa_lms_stdout_log }}"
+
+aws_cwa_cms_edx_log:
+  file_path: "{{ aws_cwa_edx_log_path }}/cms/edx.log"
+  log_stream_name: "{{ aws_cwa_edx_log_path }}/cms/edx.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_lms_edx_log:
+  file_path: "{{ aws_cwa_edx_log_path }}/lms/edx.log"
+  log_stream_name: "{{ aws_cwa_edx_log_path }}/lms/edx.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_cms_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/cms-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/cms-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_cms_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/cms-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/cms-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_lms_stderr_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms-stderr.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms-stderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_lms_stdout_log:
+  file_path: "{{ aws_cwa_supervisor_logs_path }}/lms-stdout.log"
+  log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/lms-stdout.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp"
+  timezone: "{{ aws_cwa_timezone }}"
+
+
+#NGINX
+aws_cwa_edxapp_nginx_logs_list:
+  - "{{ aws_cwa_nginx_access }}"
+  - "{{ aws_cwa_nginx_error }}"
+
+aws_cwa_nginx_access:
+  file_path: "{{ aws_cwa_edx_log_path }}/nginx/access.log"
+  log_stream_name: "{{ aws_cwa_edx_log_path }}/nginx/access.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.nginx"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_nginx_error:
+  file_path: "{{ aws_cwa_edx_log_path }}/nginx/error.log"
+  log_stream_name: "{{ aws_cwa_edx_log_path }}/nginx/error.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.nginx"
+  timezone: "{{ aws_cwa_timezone }}"
+
+#PERSISTENCE
+aws_cwa_persistence_logs_list:
+  - "{{ aws_cwa_mongo_db }}"
+  - "{{ aws_cwa_mysql_error }}"
+  - "{{ aws_cwa_elasticsearch }}"
+
+aws_cwa_mongo_db:
+  file_path: "{{ aws_cwa_edx_log_path }}/mongo/mongodb.log"
+  log_stream_name: "{{ aws_cwa_edx_log_path }}/mongo/mongodb.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.dblogs.persistence"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_mysql_error:
+  file_path: "{{ aws_cwa_log_path }}/mysql/error.log"
+  log_stream_name: "{{ aws_cwa_log_path }}/mysql/error.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.dblogs.persistence"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_elasticsearch:
+  file_path: "{{ aws_cwa_log_path }}/elasticsearch/elasticsearch.log"
+  log_stream_name: "{{ aws_cwa_log_path }}/elasticsearch/elasticsearch.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.dblogs.persistence"
+  timezone: "{{ aws_cwa_timezone }}"
+
+#COMPLEMENTARY
+aws_cwa_complementary_logs_list:
+  - "{{ aws_cwa_ecommerce }}"
+  - "{{ aws_cwa_ecommworker }}"
+  - "{{ aws_cwa_discovery }}"
+
+aws_cwa_ecommerce:
+  file_path: "{{ aws_cwa_edx_log_path }}/ecommerce/edx.log"
+  log_stream_name: "{{ aws_cwa_log_path }}/ecommerce/edx.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.complementary.ecommerce"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_ecommworker:
+  file_path: "{{ aws_cwa_edx_log_path }}/ecomworker/edx.log"
+  log_stream_name: "{{ aws_cwa_log_path }}/ecomworker/edx.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.complementary.ecommerce"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_discovery:
+  file_path: "{{ aws_cwa_edx_log_path }}/discovery/edx.log"
+  log_stream_name: "{{ aws_cwa_log_path }}/discovery/edx.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.complementary.discovery"
+  timezone: "{{ aws_cwa_timezone }}"
+
+# INSIGHTS
+aws_cwa_insights_logs_list:
+  - "{{ aws_cwa_insights}}"
+  - "{{ aws_cwa_analytics_api}}"
+
+aws_cwa_insights:
+  file_path: "{{ aws_cwa_edx_log_path }}/insights/edx.log"
+  log_stream_name: "{{ aws_cwa_log_path }}/insights/edx.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.complementary.insights"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_analytics_api:
+  file_path: "{{ aws_cwa_edx_log_path }}/analytics-api/edx.log"
+  log_stream_name: "{{ aws_cwa_log_path }}/analytics-api/edx.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.complementary.analytics-api"
+  timezone: "{{ aws_cwa_timezone }}"
+
+# XQUEUE
+aws_cwa_xqueue_logs_list:
+  - "{{ aws_cwa_xqueue}}"
+
+aws_cwa_xqueue:
+  file_path: "{{ aws_cwa_edx_log_path }}/xqueue/edx.log"
+  log_stream_name: "{{ aws_cwa_log_path }}/xqueue/edx.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.complementary.xqueue"
+  timezone: "{{ aws_cwa_timezone }}"
+
+#==========================================================================
+# AWS CloudWatch Config Template
+#==========================================================================
+aws_cloudwatch_agent_config:
+  logs: 
+    logs_collected: 
+      files: 
+        collect_list: "{{ aws_cwa_log_list }}"
+    log_stream_name: default.log

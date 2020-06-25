@@ -17,3 +17,6 @@
     - role: rabbitmq
       rabbitmq_ip: 0.0.0.0
     - role: elasticsearch
+    - role: cloudwatch_agent
+      tags:
+        - deploy_logs

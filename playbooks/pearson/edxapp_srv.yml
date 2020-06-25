@@ -31,3 +31,6 @@
     - forum
     - role: aws
       when: COMMON_OBJECT_STORE_LOG_SYNC
+    - role: cloudwatch_agent
+      tags:
+        - deploy_logs

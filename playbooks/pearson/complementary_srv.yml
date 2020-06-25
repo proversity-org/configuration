@@ -24,3 +24,6 @@
     - role: ecomworker
     - role: discovery
       edx_django_service_hostname: "{{ DISCOVERY_HOSTNAME }}"
+    - role: cloudwatch_agent
+      tags:
+        - deploy_logs

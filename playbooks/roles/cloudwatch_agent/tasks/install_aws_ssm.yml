@@ -1,0 +1,15 @@
+---
+#============================================
+# Install AWS System Manager Package
+#============================================
+- name: Check if AWS-SSM is installed.
+  command: dpkg-query -W amazon-ssm-agent
+  register: amazon_ssm_agent_check_deb
+  failed_when: amazon_ssm_agent_check_deb.rc > 1
+  changed_when: amazon_ssm_agent_check_deb.rc == 1
+
+- name: Install AWS-SSM
+  apt: 
+    deb: "{{ aws_cwa_systems_manager }}"
+  become: true
+  when: amazon_ssm_agent_check_deb.rc == 1

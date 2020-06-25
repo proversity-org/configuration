@@ -1,0 +1,26 @@
+--- 
+#=======================================================================
+# Install AWS Command Line Interface. Create config and credentials files
+#=======================================================================
+- name: Install AWS CLI
+  pip:
+    name: awscli
+  become: true
+
+- name: Create AWS config folder
+  file:
+    path: "{{ aws_cwa_config_path }}"
+    state: directory
+  become: true
+
+- name: Deploy AWS-CLI configuration file
+  template:
+    src: "root/.aws/config.j2"
+    dest: "{{ aws_cwa_config_path }}/config"
+  become: true
+
+- name: Deploy AWS-CLI credentials file
+  template:
+    src: "root/.aws/credentials.j2"
+    dest: "{{ aws_cwa_config_path }}/credentials"
+  become: true

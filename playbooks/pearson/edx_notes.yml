@@ -20,3 +20,6 @@
     - role: edx_notes_api
       tags:
         - deploy_edx_notes_api
+    - role: cloudwatch_agent
+      tags:
+        - deploy_logs

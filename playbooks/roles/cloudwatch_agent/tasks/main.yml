@@ -1,0 +1,81 @@
+---
+#=======================================================================
+# Install AWS Cloudwatch Agent. 
+#=======================================================================
+# Install AWS Command Line Interface. Create config and credentials files
+- name: Install and config AWS-CLI
+  include: install_and_config_aws_cli.yml
+
+- name: Check if AWS CWA already exists
+  stat:
+    path: "{{ aws_cwa_ctl_path }}"
+  register: cwa_st
+
+  tags:
+    - check_cwa
+
+# Install AWS Cloud Watch Agent. Config file.
+- name: Create tmp folder
+  file:
+    path: "{{ aws_cwa_tmp_path }}"
+    state: directory
+  when: cwa_st.stat.exists == false
+
+- name: Download CloudWatch Agent
+  get_url:
+    url: "{{ aws_cwa_url }}"
+    dest:  "{{ aws_cwa_zip_path }}"
+  when: cwa_st.stat.exists == false
+
+- name: Verify zip file existance
+  stat:
+    path: "{{ aws_cwa_zip_path }}"
+  register: st
+  when: cwa_st.stat.exists == false
+
+- name: Report download failure
+  fail:
+    msg: "File {{ aws_cwa_zip_path }} doesn't exist"
+  when: 
+    - cwa_st.stat.exists == false
+    - st.stat.exists == false
+
+- name : Unzip file
+  unarchive:
+    src: "{{ aws_cwa_zip_path }}"
+    dest: "{{ aws_cwa_tmp_path }}"
+    copy: no
+  when: cwa_st.stat.exists == false
+  
+- name : Install CloudWatch Agent
+  shell: "./install.sh"
+  args:
+    chdir: "{{ aws_cwa_tmp_path }}"
+
+  when: cwa_st.stat.exists == false
+  
+- name: Delete tmp folder
+  file:
+    path: "{{ aws_cwa_tmp_path }}"
+    state: absent
+  when: cwa_st.stat.exists == false
+  
+- name: Deploy AWS-CWA configuration file
+  template:
+    src: tmp/cloudwatch-config.json.j2
+    dest: "{{ aws_cwa_config_tmp_path }}"
+
+- name: Modify the Common Configuration and Named Profile for CloudWatch Agent
+  lineinfile:
+    dest: "{{ aws_cwa_common_config_path }}"
+    line: '[credentials]'
+
+- name: Modify the Common Configuration and Named Profile for CloudWatch Agent
+  lineinfile:
+    dest: "{{ aws_cwa_common_config_path }}"
+    line: '  shared_credential_profile = "{{AWS_CWA_PROFILE}}"'
+
+# Start CW Agent
+- name: Start CW Agent
+  command: '{{ aws_cwa_ctl_path }} -a fetch-config -m ec2 -c file:{{ aws_cwa_config_tmp_path }} -s'
+

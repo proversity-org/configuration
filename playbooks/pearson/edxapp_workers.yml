@@ -22,6 +22,9 @@
       celery_worker: True
     - role: aws
       when: COMMON_OBJECT_STORE_LOG_SYNC
+    - role: cloudwatch_agent
+      tags:
+        - deploy_logs
   post_tasks:
     - name: Restart servers to make sure the theming is loaded
       command: /edx/bin/supervisorctl restart all
