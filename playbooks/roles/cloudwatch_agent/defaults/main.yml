@@ -230,6 +230,7 @@ aws_cwa_lms_low_X_stdout_log:
 aws_cwa_edxapp_notes_logs_list:
   - "{{ aws_cwa_edx_notes_apitderr_log }}"
   - "{{ aws_cwa_edx_notes_apitdout_log }}"
+  - "{{ aws_cwa_edx_notes_edx_log }}"
 
 aws_cwa_edx_notes_apitdout_log:
   file_path: "{{ aws_cwa_supervisor_logs_path }}/edx_notes_apitdout.log"
@@ -241,6 +242,12 @@ aws_cwa_edx_notes_apitdout_log:
 aws_cwa_edx_notes_apitderr_log:
   file_path: "{{ aws_cwa_supervisor_logs_path }}/edx_notes_apitderr.log"
   log_stream_name: "{{ aws_cwa_supervisor_logs_path }}/edx_notes_apitderr.log"
+  log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.notes"
+  timezone: "{{ aws_cwa_timezone }}"
+
+aws_cwa_edx_notes_edx_log:
+  file_path: "{{ aws_cwa_edx_log_path }}/edx-notes-api/edx.log"
+  log_stream_name: "{{ aws_cwa_edx_log_path }}/edx-notes-api/edx.log"
   log_group_name: "{{ aws_cwa_common_version }}.{{ aws_cwa_common_env }}.applogs.edxapp.notes"
   timezone: "{{ aws_cwa_timezone }}"
 
