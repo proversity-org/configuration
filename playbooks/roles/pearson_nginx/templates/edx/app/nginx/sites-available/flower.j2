@@ -1,0 +1,28 @@
+server {
+    listen 80;
+    server_name {{ PE_NGINX_FLOWER_SERVER_NAME }};
+
+    location / {
+        return 301 $scheme://$host/{{ EDXAPP_FLOWER_URL_PREFIX }}/;
+    }
+
+    location /{{ FLOWER_DEFAULT_URL_PREFIX }}/ {
+        rewrite ^/{{ FLOWER_DEFAULT_URL_PREFIX }}/(.*)$ /$1 break;
+        proxy_pass http://localhost:{{ FLOWER_PORT }};
+        proxy_set_header Host $host;
+        proxy_redirect off;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    location /{{ EDXAPP_FLOWER_URL_PREFIX }}/ {
+        rewrite ^/{{ EDXAPP_FLOWER_URL_PREFIX }}/(.*)$ /$1 break;
+        proxy_pass http://localhost:{{ EDXAPP_FLOWER_PORT }};
+        proxy_set_header Host $host;
+        proxy_redirect off;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}

@@ -1,0 +1,27 @@
+---
+
+- name: Copying nginx configs for {{ PE_NGINX_SITES }}
+  template:
+    src: "{{ PE_NGINX_TEMPLATE_DIR }}/{{ item }}.j2"
+    dest: "{{ PE_NGINX_SITES_AVAILABLE_DIR }}/{{ item }}"
+    owner: root
+    group: "{{ common_web_user }}"
+    mode: "0640"
+  with_items: "{{ PE_NGINX_SITES }}"
+  notify: reload nginx
+  tags:
+    - install
+    - install:configuration
+
+- name: Creating nginx config links for {{ PE_NGINX_SITES }}
+  file:
+    src: "{{ PE_NGINX_SITES_AVAILABLE_DIR }}/{{ item  }}"
+    dest: "{{ PE_NGINX_SITES_ENABLED_DIR }}/{{ item }}"
+    state: link
+    owner: root
+    group: root
+  with_items: "{{ PE_NGINX_SITES }}"
+  notify: reload nginx
+  tags:
+    - install
+    - install:configuration

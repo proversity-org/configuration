@@ -1,0 +1,13 @@
+---
+# Add role default vars
+
+PE_NGINX_SITES: []
+
+PE_NGINX_TEMPLATE_DIR: "edx/app/nginx/sites-available"
+
+PE_NGINX_APP_DIR: "{{ COMMON_APP_DIR }}/nginx"
+PE_NGINX_SITES_AVAILABLE_DIR: "{{ PE_NGINX_APP_DIR }}/sites-available"
+PE_NGINX_SITES_ENABLED_DIR: "/etc/nginx/sites-enabled"
+
+PE_NGINX_FLOWER_SERVER_NAME: "~^((stage|prod)-)?flower.pe.*"
+

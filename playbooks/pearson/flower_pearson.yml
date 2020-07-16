@@ -1,0 +1,73 @@
+---
+
+# Playbook to deploy flower, the celery workers monitor service
+
+- name: Bootstrap instances
+  hosts: all
+  gather_facts: no
+  become: true
+  roles:
+    - python
+
+- name: Flower installation
+  hosts: all
+  gather_facts: True
+  become: True
+  roles:
+    - role: nginx
+      tags:
+        - flower_nginx
+    - role: pearson_nginx
+      PE_NGINX_SITES:
+        - flower
+      tags:
+        - flower_nginx
+    - role: flower
+      tags:
+        - flower_main
+    - role: flower
+      FLOWER_BROKER_USERNAME: "{{ EDXAPP_CELERY_USER }}"
+      FLOWER_BROKER_PASSWORD: "{{ EDXAPP_CELERY_PASSWORD }}"
+      FLOWER_PORT: "{{ EDXAPP_FLOWER_PORT }}"
+      FLOWER_USER: "{{ EDXAPP_FLOWER_USER }}"
+      flower_broker: "{{ edxapp_flower_broker }}"
+      tags:
+        - flower_edxapp
+  tasks:
+    - name: Override flower config main
+      template:
+        src: "{{ FLOWER_CONFIG_TEMPLATE_OVERRIDE }}"
+        dest: "{{ COMMON_APP_DIR }}/{{ FLOWER_USER }}/flowerconfig.py"
+        owner: "{{ FLOWER_USER }}"
+        group: "{{ common_web_group }}"
+        mode: "0640"
+      vars:
+        FLOWER_URL_PREFIX: "{{ FLOWER_DEFAULT_URL_PREFIX }}"
+      tags:
+        - flower_main
+    - name: Override flower config edxapp
+      template:
+        src: "{{ FLOWER_CONFIG_TEMPLATE_OVERRIDE }}"
+        dest: "{{ COMMON_APP_DIR }}/{{ FLOWER_USER }}/flowerconfig.py"
+        owner: "{{ FLOWER_USER }}"
+        group: "{{ common_web_group }}"
+        mode: "0640"
+      vars:
+        FLOWER_PORT: "{{ EDXAPP_FLOWER_PORT }}"
+        FLOWER_USER: "{{ EDXAPP_FLOWER_USER }}"
+        FLOWER_URL_PREFIX: "{{ EDXAPP_FLOWER_URL_PREFIX }}"
+      tags:
+        - flower_edxapp
+    - name: restart flower for all users
+      supervisorctl:
+        state: restarted
+        supervisorctl_path: "{{ supervisor_ctl }}"
+        config: "{{ supervisor_cfg }}"
+        name: "{{ item }}"
+      sudo_user: "{{ supervisor_service_user }}"
+      with_items:
+        - "{{ FLOWER_USER }}"
+        - "{{ EDXAPP_FLOWER_USER }}"
+      tags:
+        - flower_main
+        - flower_edxapp
