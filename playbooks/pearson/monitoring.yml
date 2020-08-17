@@ -12,10 +12,23 @@
   become: True
   roles:
     - cloudalchemy.node-exporter
-  tags: install:nodes
+  tags: 
+    - install:nodes
 
 - hosts: monitoring_servers
   become: True
   roles:
-  - cloudalchemy.prometheus
-  tags: install:prometheus
+  - role: nginx
+    tags:
+      - monitoring_nginx
+  - role: pearson_nginx
+    PE_NGINX_SITES:
+      - grafana
+    tags:
+      - monitoring_nginx
+  - role: cloudalchemy.prometheus
+    tags:
+      - deploy_prometheus
+  - role: cloudalchemy.grafana
+    tags:
+      - deploy_grafana
