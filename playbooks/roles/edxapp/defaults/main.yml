@@ -352,6 +352,7 @@ EDXAPP_HELP_TOKENS_BOOKS:
     course_author: "http://edx.readthedocs.io/projects/open-edx-building-and-running-a-course"
 
 EDXAPP_TECH_SUPPORT_EMAIL: 'technical@example.com'
+EDXAPP_TECH_SUPPORT_LINK : 'http://pearsonadvance.echelp.org/'
 EDXAPP_CONTACT_EMAIL: 'info@example.com'
 EDXAPP_BUGS_EMAIL: 'bugs@example.com'
 EDXAPP_DEFAULT_FROM_EMAIL: 'registration@example.com'
@@ -1282,6 +1283,7 @@ generic_env_config:  &edxapp_generic_env
   SESSION_COOKIE_NAME:  "{{ EDXAPP_SESSION_COOKIE_NAME }}"
   COMMENTS_SERVICE_KEY: "{{ EDXAPP_COMMENTS_SERVICE_KEY }}"
   TECH_SUPPORT_EMAIL: "{{ EDXAPP_TECH_SUPPORT_EMAIL }}"
+  TECH_SUPPORT_LINK: "{{ EDXAPP_TECH_SUPPORT_LINK }}"
   CONTACT_EMAIL: "{{ EDXAPP_CONTACT_EMAIL }}"
   BUGS_EMAIL: "{{ EDXAPP_BUGS_EMAIL }}"
   DEFAULT_FROM_EMAIL: "{{ EDXAPP_DEFAULT_FROM_EMAIL }}"
