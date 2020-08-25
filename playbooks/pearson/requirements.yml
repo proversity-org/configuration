@@ -5,3 +5,5 @@
   version: 2.2.1
 - name: cloudalchemy.node-exporter
   version: 0.8.0
+- name: cloudalchemy.grafana
+  version: 0.9.0
