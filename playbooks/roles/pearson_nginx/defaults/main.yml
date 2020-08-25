@@ -10,4 +10,6 @@ PE_NGINX_SITES_AVAILABLE_DIR: "{{ PE_NGINX_APP_DIR }}/sites-available"
 PE_NGINX_SITES_ENABLED_DIR: "/etc/nginx/sites-enabled"
 
 PE_NGINX_FLOWER_SERVER_NAME: "~^((stage|prod)-)?flower.pe.*"
+PE_NGINX_GRAFANA_SERVER_NAME: "~^((stage|prod)-)?grafana.services.pe.*"
 
+PE_NGINX_GRAFANA_INTERNAL_PORT: 3000
